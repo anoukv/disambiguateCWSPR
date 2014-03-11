@@ -1,1 +1,1 @@
-Hello!
+In this project we work on improving the work from "Linguistic Regularities in Continuous Space Word Representations" by Tomas Mikolov, Wen-tau Yih, and Geoffrey Zweig. We will try to disambiguate words before using them is input to the RNN to achieve better results on syntactic as well as semantic tests. 
