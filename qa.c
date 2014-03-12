@@ -97,6 +97,7 @@ int main(int argc, char **argv)
     while(fscanf(questions,"%s", &stA) != EOF)
     {
         counter++;
+        printf("%d\n", counter);
         fscanf(questions,"%s", &stB);
         fscanf(questions,"%s", &stC);
         
@@ -146,22 +147,39 @@ int main(int argc, char **argv)
             {
                 y[a] = M[a+vB*size]-M[a+vA*size] + M[a+ vC *size];
             }
+
+            // normalize y again.
+            len=0;
+            for (a=0; a<size; a++)
+            {
+                len+=y[a]*y[a];
+            }
+            
+            len=sqrt(len);
+            for (a=0; a<size; a++)
+            {
+                y[a]/=len;
+            }
             
             bestDistance = 0;
             
             // find best match to y
             for (c=0; c<numberOfWords; c++)
             {
-                dist=0;
-                for (a=0; a<size; a++)
+                if(c != vC && c != vA && c != vB)
                 {
-                    dist+=y[a]*M[a+c*size];
+                    dist=0;
+                    for (a=0; a<size; a++)
+                    {
+                        dist+=y[a]*M[a+c*size];
+                    }
+                    if(dist > bestDistance)
+                    {
+                        bestDistance = dist;
+                        strcpy(bestWord, &vocab[c*max_w]);
+                    }
                 }
-                if(dist > bestDistance)
-                {
-                    bestDistance = dist;
-                    strcpy(bestWord, &vocab[c*max_w]);
-                }
+                
             }
         }
         fwrite(bestWord, sizeof(char), strlen(bestWord), output);
