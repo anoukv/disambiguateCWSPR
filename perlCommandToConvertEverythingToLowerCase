@@ -1,0 +1,1 @@
+perl -pe '$_= lc($_)' input.txt > output.txt
