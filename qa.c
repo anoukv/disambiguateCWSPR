@@ -18,7 +18,7 @@ int main(int argc, char **argv)
     float bestDistance, len, dist;
     
     notFoundMessage = "NOTHING";
-    
+
     // argument handling
     if (argc<4) {
         printf("Usage: ./dist <PROJECTIONS> <QUESTIONS> <OUTPUT> \nwhere PROJECTIONS contains word projections, QUESTIONS contains questions and OUTPUT contains the outpute file\n");
@@ -98,7 +98,7 @@ int main(int argc, char **argv)
     
     // as long as we have not reached the EOF, look for answer to the question
     
-    while(fscanf(questions,"%s", &stA) != EOF)
+    while(fscanf(questions,"%s", &stA) != EOF && counter < 100)
     {
         counter++;
         printf("%d\n", counter);
