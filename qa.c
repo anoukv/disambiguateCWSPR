@@ -11,7 +11,7 @@ int main(int argc, char **argv)
 {
     // declarations
     FILE *wordProjections, *questions, *output;
-    int numberOfWords, size, counter, a, b, c, vA, vB, vC;
+    int numberOfWords, size, counter, a, b, c, vA, vB, vC, missing;
     char stA[max_size], stB[max_size], stC[max_size], bestWord[max_size], file_name[max_size], questions_file_name[max_size], output_file_name[max_size];
     float *M, *y;
     char *vocab;
@@ -92,8 +92,10 @@ int main(int argc, char **argv)
     
     // init counter
     counter = 0;
+    missing = 0;
     
     // as long as we have not reached the EOF, look for answer to the question
+    
     while(fscanf(questions,"%s", &stA) != EOF)
     {
         counter++;
@@ -138,9 +140,10 @@ int main(int argc, char **argv)
         
         if (vA == numberOfWords || vB == numberOfWords || vC == numberOfWords)
         {
-            printf("Word was not found in dictionary\n");
+//            printf("Word was not found in dictionary\n");
             fwrite(&vocab[vC*max_w], sizeof(char), strlen(bestWord), output);
             fwrite("\n", sizeof(char), 1, output);
+            missing++;
 
         }
         else
@@ -191,7 +194,7 @@ int main(int argc, char **argv)
     
     fclose(questions);
     fclose(output);
-    printf("Done!");
+    printf("From %d questions, %d were not answered properly. Keep this in mind.\nDone!", counter, missing);
     
     
     return 0;
