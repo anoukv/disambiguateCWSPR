@@ -14,8 +14,10 @@ int main(int argc, char **argv)
     int numberOfWords, size, counter, a, b, c, vA, vB, vC, missing;
     char stA[max_size], stB[max_size], stC[max_size], bestWord[max_size], file_name[max_size], questions_file_name[max_size], output_file_name[max_size];
     float *M, *y;
-    char *vocab;
+    char *vocab, *notFoundMessage;
     float bestDistance, len, dist;
+    
+    notFoundMessage = "NOTHING";
     
     // argument handling
     if (argc<4) {
@@ -141,7 +143,7 @@ int main(int argc, char **argv)
         if (vA == numberOfWords || vB == numberOfWords || vC == numberOfWords)
         {
 //            printf("Word was not found in dictionary\n");
-            fwrite(&vocab[vC*max_w], sizeof(char), strlen(bestWord), output);
+            fwrite(notFoundMessage, sizeof(char), strlen(notFoundMessage), output);
             fwrite("\n", sizeof(char), 1, output);
             missing++;
 
