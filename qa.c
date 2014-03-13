@@ -189,9 +189,10 @@ int main(int argc, char **argv)
                 }
                 
             }
+            fwrite(bestWord, sizeof(char), strlen(bestWord), output);
+            fwrite("\n", sizeof(char), 1, output);
         }
-        fwrite(bestWord, sizeof(char), strlen(bestWord), output);
-        fwrite("\n", sizeof(char), 1, output);
+
     }
     
     fclose(questions);
