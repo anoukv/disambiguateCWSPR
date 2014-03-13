@@ -1,6 +1,6 @@
 import sys
 
-# to split the file of a b c d to a file quesions_extended with a b c and answers_extended with d
+# to split the file of a b c d to a file quesions_extended with a b c and answers_extended with Done
 file_name = sys.argv[1]
 
 file = open(file_name, 'rb')
