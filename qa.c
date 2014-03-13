@@ -98,7 +98,7 @@ int main(int argc, char **argv)
     
     // as long as we have not reached the EOF, look for answer to the question
     
-    while(fscanf(questions,"%s", &stA) != EOF && counter < 100)
+    while(fscanf(questions,"%s", &stA) != EOF)
     {
         counter++;
         printf("%d\n", counter);
