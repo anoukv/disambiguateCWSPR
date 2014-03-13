@@ -139,6 +139,9 @@ int main(int argc, char **argv)
         if (vA == numberOfWords || vB == numberOfWords || vC == numberOfWords)
         {
             printf("Word was not found in dictionary\n");
+            fwrite(&vocab[vC*max_w], sizeof(char), strlen(bestWord), output);
+            fwrite("\n", sizeof(char), 1, output);
+
         }
         else
         {
