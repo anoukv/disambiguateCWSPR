@@ -191,6 +191,7 @@ int main(int argc, char **argv)
             }
             fwrite(bestWord, sizeof(char), strlen(bestWord), output);
             fwrite("\n", sizeof(char), 1, output);
+            // printf("%s, %s, %s, %s", &vocab[vA*max_w], &vocab[vB*max_w], &vocab[vC*max_w], bestWord);
         }
 
     }
