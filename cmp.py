@@ -1,8 +1,8 @@
 import os, sys
 
-if not len(sys.argv) == 3:
+if not len(sys.argv) == 5:
 	print "Call me as:"
-	print "python cmp.py ../wordvectors/vectors80.large ../wordvectors/vectors320.small"
+	print "python cmp.py ../wordvectors/vectors80.large ../wordvectors/vectors320.small QuestionsAnswers/word_relationship.questions QuestionsAnswers/word_relationship.answers"
 	sys.exit()
 
 def compare(together):
@@ -27,8 +27,8 @@ def compare(together):
 
 vecs1 = sys.argv[1]
 vecs2 = sys.argv[2]
-quest = "QuestionsAnswers/word_relationship.questions"
-anser = "QuestionsAnswers/word_relationship.answers"
+quest = sys.argv[3]
+anser = sys.argv[4]
 
 os.system("./qa " + vecs1 + " " + quest + " tmp1")
 os.system("./qa " + vecs2 + " " + quest + " tmp2")
