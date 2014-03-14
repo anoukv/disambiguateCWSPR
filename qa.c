@@ -21,7 +21,7 @@ int main(int argc, char **argv)
 
     // argument handling
     if (argc<4) {
-        printf("Usage: ./dist <PROJECTIONS> <QUESTIONS> <OUTPUT> \nwhere PROJECTIONS contains word projections, QUESTIONS contains questions and OUTPUT contains the outpute file\n");
+        printf("Usage: ./qa <PROJECTIONS> <QUESTIONS> <OUTPUT> \nwhere PROJECTIONS contains word projections, QUESTIONS contains questions and OUTPUT contains the outpute file\n");
         return 0;
     }
     
@@ -101,7 +101,7 @@ int main(int argc, char **argv)
     while(fscanf(questions,"%s", &stA) != EOF)
     {
         counter++;
-        printf("%d\n", counter);
+        // printf("%d\n", counter);
         fscanf(questions,"%s", &stB);
         fscanf(questions,"%s", &stC);
         
@@ -198,7 +198,7 @@ int main(int argc, char **argv)
     
     fclose(questions);
     fclose(output);
-    printf("From %d questions, %d were not answered properly. Keep this in mind.\nDone!", counter, missing);
+    // printf("From %d questions, %d were not answered properly. Keep this in mind.\nDone!", counter, missing);
     
     
     return 0;
