@@ -13,9 +13,10 @@ int main(int argc, char **argv)
     FILE *wordProjections, *questions, *answers,  *output;
     int numberOfWords, size, a, b, c, d, vA, vB, vC, vD, missing = 0;
     char stA[max_size], stB[max_size], stC[max_size], stD[max_size], file_name[max_size], questions_file_name[max_size], answers_file_name[max_size], output_file_name[max_size];
+    char tempC[max_size], tempD[max_size];
     float *M, *y;
     char *vocab, *notFoundMessage;
-    float len, dist;
+    float len, dist, temp;
     
     notFoundMessage = "NOTHING";
 
@@ -163,7 +164,7 @@ int main(int argc, char **argv)
 
     // as long as we have not reached the answer file EOF, look at each answer
     float resultsFirstQuestion[100], resultsSecondQuestion[100], resultsThirdQuestion[100], resultsFourthQuestion[100], resultsAverage[100];
-    char resultsC[100][100], resultsD[100][100];
+    char resultsC[100][max_size], resultsD[100][max_size];
     int NoOfAddedResults = 0, NoOfAddedResultsSecondQuestion = 0, NoOfAddedResultsThirdQuestion = 0, NoOfAddedResultsFourthQuestion = 0,
 	NoOfResultsC = 0, NoOfResultsD = 0;
     
@@ -637,6 +638,25 @@ int main(int argc, char **argv)
 	}
 
     } 
+
+    // sort semantic similarity scores descending
+    for(a = 0; a < NoOfAddedResults; a++)
+    {
+        for(b = a; b < NoOfAddedResults; b++)
+        {
+            if(resultsAverage[a] < resultsAverage[b]){
+                temp = resultsAverage[a];
+		strcpy(tempC, resultsC[a]);
+                strcpy(tempD, resultsD[a]);
+                resultsAverage[a] = resultsAverage[b];
+                strcpy(resultsC[a], resultsC[b]);
+                strcpy(resultsD[a], resultsD[b]);
+                resultsAverage[b] = temp;
+                strcpy(resultsC[b], tempC);
+                strcpy(resultsD[b], tempD);
+            }
+        }
+    }
 
     for(a = 0; a < NoOfAddedResults; a++){
 		fprintf(output, "%f", resultsAverage[a]);
