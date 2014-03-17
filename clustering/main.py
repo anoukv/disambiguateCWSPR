@@ -60,7 +60,7 @@ def getCocMatrix(inpt,skipsize):
 	for word in wordToVec.keys():
 		normalized_wordToVec[word] = normalize_coc(wordToVec[word])
 
-	return normalized_wordToVec
+	return dict( {'voc': vocabulary, 'coc' : normalized_wordToVec} )
 
 def anotate(inpt, skipsize):
 	k = 2
