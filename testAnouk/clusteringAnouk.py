@@ -21,27 +21,36 @@ def test(cocvoc):
 
 	# get all words
 	allWords = coc.keys()
-
+	allWords = ['apple', 'jaguar', 'bank', 'computer', 'memory', 'process', 'water', 'river', 'rain', 'meaning', 'outside', 'nature', 'science', 'university']
 	# we will be evaluating the ambiguousness of every single word
 	for word in allWords:
+		print "\n\nMaking sense of: ", word
+
 		if word != '':
 			listOfDatapoints = []
 
 			# get co-occurences for the word
 			wordCOC = coc[word]
-			cocWords = wordCOC.keys()
+
+			# cut of half of this thing...
+			# is there a better heuristic available? 
+			tupleList = sorted(wordCOC.items(), key=lambda x: x[1], reverse = True)
+			tupleList = tupleList[:len(tupleList)/2]
+			cocWords = [elem[0] for elem in tupleList]
+
+			#cocWords = wordCOC.keys()
 
 			# for every co-occuring word, filter out terms that do not apply
 			# add the remaining vector to the list of datapoints
+			
+			print "Found ", len(wordCOC.keys()), " co-occuring words, only ", len(cocWords), " remain"
+
 			for cocWord in cocWords:
 				vector = coc[cocWord]
 				makeCustomDic(cocWords, vector)
 				listOfDatapoints.append(coc[cocWord])
-			
-			print "\n\nMaking sense of: ", word
-			print "Number of datapoints: ", len(listOfDatapoints)
-			
-			if len(listOfDatapoints) > 0:
+						
+			if len(listOfDatapoints) > 1:
 				# cluster all co-occurence vectors
 				clusters = kmeans_process(listOfDatapoints)
 				
