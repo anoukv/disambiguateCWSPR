@@ -1,6 +1,8 @@
 import sys
 from collections import defaultdict
 from time import time
+import threading
+import Queue
 
 from clustering import kmeans_process
 
@@ -45,16 +47,14 @@ def getCocMatrix(inpt,skipsize):
 					if queue[i] in vocabulary:
 						word1 = queue[1]
 					else:
-						word1 = "UNKNOWN"
+						word1 = "_UNKNOWN_"
 					if queue[i+1+skipsize] in vocabulary:
 						word2 = queue[1]
 					else:
-						word2 = "UNKNOWN"
+						word2 = "_UNKNOWN_"
 				
-				
-
-				wordToVec[mid][word1] += 1
-				wordToVec[mid][word2] += 1
+					wordToVec[mid][word1] += 1
+					wordToVec[mid][word2] += 1
 
 	normalized_wordToVec = dict()
 	for word in wordToVec.keys():
@@ -80,29 +80,42 @@ def anotate(inpt, skipsize):
 	for i in xrange(len(vocabulary)):
 		wordToIndex[vocabulary[i]] = i 
 
-	print "Starting on determining word co-occurences and clustering."
-	clustered = dict()
-	for v in vocabulary:
-		wordVectorSet = []
-		queue = []
-		for word in inpt:
-			push(word, queue)
-			if queueIsReady(queue) and queue[queueMid] == v:
+	print "Starting on determining word co-occurences."
+
+	cocs = defaultdict(list)
+	queue = []
+	for word in inpt:
+		push(word, queue)
+		if queueIsReady(queue):
+			mid = queue[queueMid]
+			if mid in vocabulary:
 				coc = defaultdict(int)
 				for i in xrange(skipsize):
-					try:
-						index1 = wordToIndex[queue[i]]
-					except:
-						index1 = vocSize# The 'unknown' category
-					try:
-						index2 = wordToIndex[queue[i+1+skipsize]]
-					except:	
-						index2 = vocSize-1 # The 'unknown' category
+					if queue[i] in vocabulary:
+						word1 = queue[1]
+					else:
+						word1 = "_UNKNOWN_"
+					if queue[i+1+skipsize] in vocabulary:
+						word2 = queue[1]
+					else:
+						word2 = "_UNKNOWN_"
 
-					coc[index1] += 1
-					coc[index2] += 1
-				wordVectorSet.append(normalize_coc(coc))
-		clustered[v] = kmeans_process(wordVectorSet)
+					coc[word1] += 1
+					coc[word2] += 1
+				cocs[mid].append(normalize_coc(coc))
+
+	print "Now clustering..."
+
+	queue = Queue.Queue()
+	for key in cocs.keys():
+		t = threading.Thread(target = kmeans_process, args = (queue, cocs[key], key) )
+		t.daemon = True
+   		t.start()
+
+   	results = queue.get()
+   	print results
+   	clustered = dict(results)
+   	print clustered
 
 	print "Starting anotating corpus."
 	anotated = []
@@ -112,17 +125,17 @@ def anotate(inpt, skipsize):
 		if queueIsReady(queue) and word in clustered and len(clustered[word]) > 1:
 			coc = defaultdict(int)
 			for i in xrange(skipsize):
-				try:
-					index1 = wordToIndex[queue[i]]
-				except:
-					index1 = vocSize# The 'unknown' category
-				try:
-					index2 = wordToIndex[queue[i+1+skipsize]]
-				except:	
-					index2 = vocSize-1 # The 'unknown' category
+				if queue[i] in vocabulary:
+					word1 = queue[1]
+				else:
+					word1 = "_UNKNOWN_"
+				if queue[i+1+skipsize] in vocabulary:
+					word2 = queue[1]
+				else:
+					word2 = "_UNKNOWN_"
 
-				coc[index1] += 1
-				coc[index2] += 1
+				coc[word1] += 1
+				coc[word2] += 1
 
 			# Now get the best cluster
 			bestValue = 1
@@ -137,8 +150,6 @@ def anotate(inpt, skipsize):
 		anotated.append(word)
 
 	return anotated
-
-
 
 def read_args():
 	def read_file(filename):
@@ -180,8 +191,6 @@ def main_anouk_is_a_charm():
 
 	import pickle
 	pickle.dump(coc, open(output_file, 'wb'))
-
-
 	
 
 if __name__ == "__main__":
