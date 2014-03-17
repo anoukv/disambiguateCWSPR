@@ -82,7 +82,7 @@ def kmeans_process(queue, data, key):
 
 	# finally just get one single cluster.
 	if not done:
-		queue.put((key, kmeans(data, 1))
+		queue.put((key, kmeans(data, 1)))
 
 
 
