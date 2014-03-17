@@ -36,7 +36,7 @@ class cluster:
 		self.assigned_datapoints = []
 		self.elements_set = set(self.center.keys())
 
-def kmeans_process(queue, data, key):
+def kmeans_process(data):
 	k = 2
 	def kmeans(data, k, min_dist_change=0.01, max_iter=25):
 		clusters = dict()
@@ -71,18 +71,14 @@ def kmeans_process(queue, data, key):
 				clusters[i].set_new_cluster_center()
 		return clusters
 
-	done = False
 	for _ in xrange(5):
 		try:
-			queue.put((key, kmeans(data, k)))
-			done = True
-			break
+			return kmeans(data, k)
 		except:
 			pass
 
 	# finally just get one single cluster.
-	if not done:
-		queue.put((key, kmeans(data, 1)))
+	return kmeans(data, 1)
 
 
 

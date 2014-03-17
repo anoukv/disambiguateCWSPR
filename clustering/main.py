@@ -1,8 +1,8 @@
 import sys
 from collections import defaultdict
 from time import time
-import threading
-import Queue
+import pickle
+
 
 from clustering import kmeans_process
 
@@ -63,7 +63,6 @@ def getCocMatrix(inpt,skipsize):
 	return dict( {'voc': vocabulary, 'coc' : normalized_wordToVec} )
 
 def anotate(inpt, skipsize):
-	k = 2
 	queueSize = skipsize * 2 + 1
 	queueMid = skipsize + 1
 
@@ -75,10 +74,6 @@ def anotate(inpt, skipsize):
 	
 	vocabulary = get_document_vocabulary(inpt)
 	vocSize = len(vocabulary) + 1
-
-	wordToIndex = dict()
-	for i in xrange(len(vocabulary)):
-		wordToIndex[vocabulary[i]] = i 
 
 	print "Starting on determining word co-occurences."
 
@@ -106,16 +101,9 @@ def anotate(inpt, skipsize):
 
 	print "Now clustering..."
 
-	queue = Queue.Queue()
+	clustered = dict()
 	for key in cocs.keys():
-		t = threading.Thread(target = kmeans_process, args = (queue, cocs[key], key) )
-		t.daemon = True
-   		t.start()
-
-   	results = queue.get()
-   	print results
-   	clustered = dict(results)
-   	print clustered
+		clustered[key] = kmeans_process(cocs[key])
 
 	print "Starting anotating corpus."
 	anotated = []
@@ -149,7 +137,7 @@ def anotate(inpt, skipsize):
 
 		anotated.append(word)
 
-	return anotated
+	return (clustered, anotated)
 
 def read_args():
 	def read_file(filename):
@@ -160,7 +148,7 @@ def read_args():
 
 	if len(sys.argv) < 3:
  		print "Please call me as:"
- 		print "python cluster.py training.txt output.txt (skipsize = 5)"
+ 		print "python main.py training.txt output.txt (skipsize = 5)"
  		sys.exit()
 
 	train = sys.argv[1]
@@ -177,11 +165,12 @@ def main_cluster_remi():
 
  	print "Preparing data."
 
- 	anotated = anotate(inpt, skipsize)
+ 	(clustered, anotated) = anotate(inpt, skipsize)
 
  	f = open(output_file, 'w')
  	f.write("".join(anotated))
  	f.close()
+ 	pickle.dump(clustered, open("clusters.pickle", 'wb'))
 
 
 def main_anouk_is_a_charm():
@@ -189,13 +178,12 @@ def main_anouk_is_a_charm():
 
 	coc = getCocMatrix(inpt, skipsize)
 
-	import pickle
 	pickle.dump(coc, open(output_file, 'wb'))
 	
 
 if __name__ == "__main__":
 	start = time()
-	main_anouk_is_a_charm()
+	main_cluster_remi()
 	stop = time()
  	print "I spent", int(stop-start+0.5), "seconds."
 
