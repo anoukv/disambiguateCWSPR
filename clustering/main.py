@@ -2,7 +2,7 @@ import sys
 from collections import defaultdict
 from time import time
 import pickle
-
+from math import sqrt
 
 from clustering import kmeans_process
 
@@ -13,56 +13,14 @@ def get_document_vocabulary(inpt, minimumOccurence = 5):
 	return set([ key for key in total.keys() if total[key] > minimumOccurence ])
 
 def normalize_coc(coc):
-	total = float(sum(coc.values()))
+	total = sqrt( sum([v**2 for v in coc.values()]) )
 	new_coc = dict()
 	for key in coc.keys():
 		new_coc[key] = coc[key] / total
 	return new_coc
 
-def getCocMatrix(inpt,skipsize):
-	k = 2
-	queueSize = skipsize * 2 + 1
-	queueMid = skipsize + 1
-
-	queueIsReady = lambda x : len(x) == queueSize
-	def push(element, queue):
-		queue.append(element)
-		if len(queue) > queueSize:
-			queue.pop(0)
-	
-	vocabulary = get_document_vocabulary(inpt)
-	vocSize = len(vocabulary) + 1
-
-	wordToVec = dict()
-	for word in vocabulary:
-		wordToVec[word] = defaultdict(int)
-
-	queue = []
-	for word in inpt:
-		push(word, queue)
-		if queueIsReady(queue):
-			mid = queue[queueMid]
-			if mid in vocabulary:
-				for i in xrange(skipsize):
-					if queue[i] in vocabulary:
-						word1 = queue[1]
-					else:
-						word1 = "_UNKNOWN_"
-					if queue[i+1+skipsize] in vocabulary:
-						word2 = queue[1]
-					else:
-						word2 = "_UNKNOWN_"
-				
-					wordToVec[mid][word1] += 1
-					wordToVec[mid][word2] += 1
-
-	normalized_wordToVec = dict()
-	for word in wordToVec.keys():
-		normalized_wordToVec[word] = normalize_coc(wordToVec[word])
-
-	return dict( {'voc': vocabulary, 'coc' : normalized_wordToVec} )
-
 def anotate(inpt, skipsize):
+	k = 2
 	queueSize = skipsize * 2 + 1
 	queueMid = skipsize + 1
 
@@ -172,14 +130,6 @@ def main_cluster_remi():
  	f.close()
  	pickle.dump(clustered, open("clusters.pickle", 'wb'))
 
-
-def main_anouk_is_a_charm():
-	(inpt, output_file, skipsize) = read_args()
-
-	coc = getCocMatrix(inpt, skipsize)
-
-	pickle.dump(coc, open(output_file, 'wb'))
-	
 
 if __name__ == "__main__":
 	start = time()
