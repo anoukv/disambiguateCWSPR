@@ -3,25 +3,21 @@ from math import sqrt
 from kmeans import kmeans_process
 from collections import defaultdict
 import sys
+from copy import copy
 
-def makeCustomDic(keysToKeep, dic):
+def deleteSomeKeys(keysToKeep, dic):
 	keys = dic.keys()
 	for key in keys:
 		if key not in keysToKeep:
 			dic.pop(key)
 
-def prettyPrint(assignments):
-	for key in assignments:
-		print "Sense ", key
-		print assignments[key]
-		
 def test(cocvoc):
 	coc = cocvoc['rel']
-	voc = cocvoc['voc']
 
 	# get all words
 	allWords = coc.keys()
-	allWords = ['apple', 'jaguar', 'bank', 'computer', 'memory', 'process', 'water', 'river', 'rain', 'meaning', 'outside', 'nature', 'science', 'university']
+	allWords = ['apple']#, 'jaguar', 'bank', 'memory', 'process']
+	
 	# we will be evaluating the ambiguousness of every single word
 	for word in allWords:
 		print "\n\nMaking sense of: ", word
@@ -30,25 +26,25 @@ def test(cocvoc):
 			listOfDatapoints = []
 
 			# get co-occurences for the word
-			wordCOC = coc[word]
+			wordCOC = copy(coc[word])
 
 			# cut of half of this thing...
 			# is there a better heuristic available? 
 			tupleList = sorted(wordCOC.items(), key=lambda x: x[1], reverse = True)
-			tupleList = tupleList[:len(tupleList)/2]
-			cocWords = [elem[0] for elem in tupleList]
-
-			#cocWords = wordCOC.keys()
-
-			# for every co-occuring word, filter out terms that do not apply
-			# add the remaining vector to the list of datapoints
 			
+			relevantCocWords = tupleList[:len(tupleList)/2]
+			theRest = tupleList[len(tupleList)/2:]
+
+			
+			cocWords = [elem[0] for elem in relevantCocWords]
+			relevantToAll = [elem[0] for elem in theRest]
+
 			print "Found ", len(wordCOC.keys()), " co-occuring words, only ", len(cocWords), " remain"
 
 			for cocWord in cocWords:
-				vector = coc[cocWord]
-				makeCustomDic(cocWords, vector)
-				listOfDatapoints.append(coc[cocWord])
+				vector = copy(coc[cocWord])
+				deleteSomeKeys(cocWords, vector)
+				listOfDatapoints.append(vector)
 						
 			if len(listOfDatapoints) > 1:
 				# cluster all co-occurence vectors
@@ -66,7 +62,16 @@ def test(cocvoc):
 							bestClusterID = clusterID
 					wordAssignemnts[bestClusterID].append(cocWord)
 				
-				prettyPrint(wordAssignemnts)
+				senses = dict()
+
+				for key in wordAssignemnts:
+					sense = copy(coc[word])
+					deleteSomeKeys(wordAssignemnts[key]+relevantToAll, sense)
+					senses[key] = sense
+
+				print senses
+
+
 
 			# now this words needs to be splitted
 
