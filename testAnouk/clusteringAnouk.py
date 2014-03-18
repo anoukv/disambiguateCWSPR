@@ -69,13 +69,6 @@ def test(cocvoc):
 					deleteSomeKeys(wordAssignemnts[key]+relevantToAll, sense)
 					senses[key] = sense
 
-				print senses
-
-
-
-			# now this words needs to be splitted
-
-
 print "Welcome to the clustering method designed by Anouk. You'll enjoy your time here."
 file_name = sys.argv[1]
 co_occurences = pickle.load(open(file_name, 'rb'))
