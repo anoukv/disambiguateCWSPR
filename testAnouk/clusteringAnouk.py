@@ -12,34 +12,38 @@ def deleteSomeKeys(keysToKeep, dic):
 		if key not in keysToKeep:
 			dic.pop(key)
 
-def anotate(inpt, skipsize):
-	k = 2
-	queueSize = skipsize * 2 + 1
-	queueMid = skipsize + 1
+def read_file(filename):
+		f = open(train, 'r')
+	 	inpt = f.readline().replace("\n", "").split(" ")
+	 	f.close()
+	 	return inpt
 
+def annotate(inpt, clustered, vocabulary, skipsize):
+	
+	queueSize = skipsize * 2 + 1
+
+	# two functions
 	queueIsReady = lambda x : len(x) == queueSize
 	def push(element, queue):
 		queue.append(element)
 		if len(queue) > queueSize:
 			queue.pop(0)
 	
-	vocabulary = get_document_vocabulary(inpt)
-	vocSize = len(vocabulary) + 1
-
-	print "Starting anotating corpus."
+	print "Starting annotating corpus."
+	
 	anotated = []
 	queue = []
 	for word in inpt:
 		push(word, queue)
-		if queueIsReady(queue) and word in clustered and len(clustered[word]) > 1:
+		if queueIsReady(queue) and word in clustered:
 			coc = defaultdict(int)
 			for i in xrange(skipsize):
 				if queue[i] in vocabulary:
-					word1 = queue[1]
+					word1 = queue[i]
 				else:
 					word1 = "_UNKNOWN_"
 				if queue[i+1+skipsize] in vocabulary:
-					word2 = queue[1]
+					word2 = queue[i]
 				else:
 					word2 = "_UNKNOWN_"
 
@@ -48,18 +52,23 @@ def anotate(inpt, skipsize):
 
 			coc = normalize_coc(coc)
 			# Now get the best cluster
-			bestValue = 1
-			bestIndex = -1
-			for i in xrange(k):
-				distance = clustered[word][i].distance(coc)
-				if distance < bestValue:
-					bestValue = distance
-					bestIndex = i
+			
+			print coc.keys
+			
+			# bestValue = 1
+			# bestIndex = -1
+			# for i in xrange(k):
+			# 	distance = clustered[word][i].distance(coc)
+			# 	if distance < bestValue:
+			# 		bestValue = distance
+			# 		bestIndex = i
+			
+			bestIndex = 999
 			word = word + "_" + str(bestIndex) + " "
 
 		anotated.append(word)
 
-	return (clustered, anotated)
+	return annotated
 
 
 
@@ -150,10 +159,16 @@ def makeNewCOCS(cocvoc):
 	return newCOC
 
 print "Welcome to the clustering method designed by Anouk. You'll enjoy your time here."
+
 file_name = sys.argv[1]
 co_occurences = pickle.load(open(file_name, 'rb'))
-new = makeNewCOCS(co_occurences)
-pickle.dump(new, open('../../testingCOC.small', 'wb'))
+
+#new = makeNewCOCS(co_occurences)
+#pickle.dump(new, open('../../testingCOC.small', 'wb'))
+
+new = pickle.load(open('../../testingCOC.small', 'rb'))
+inpt = read_file('../../text.small')
+annotate(inpt, new, co_occurences['voc'], 5)
 
 
 
