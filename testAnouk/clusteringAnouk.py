@@ -16,7 +16,7 @@ def test(cocvoc):
 
 	# get all words
 	allWords = coc.keys()
-	allWords = ['apple']#, 'jaguar', 'bank', 'memory', 'process']
+	#allWords = ['apple']#, 'jaguar', 'bank', 'memory', 'process']
 	
 	# we will be evaluating the ambiguousness of every single word
 	for word in allWords:
@@ -35,11 +35,8 @@ def test(cocvoc):
 			relevantCocWords = tupleList[:len(tupleList)/2]
 			theRest = tupleList[len(tupleList)/2:]
 
-			
 			cocWords = [elem[0] for elem in relevantCocWords]
 			relevantToAll = [elem[0] for elem in theRest]
-
-			print "Found ", len(wordCOC.keys()), " co-occuring words, only ", len(cocWords), " remain"
 
 			for cocWord in cocWords:
 				vector = copy(coc[cocWord])
@@ -62,7 +59,11 @@ def test(cocvoc):
 							bestClusterID = clusterID
 					wordAssignemnts[bestClusterID].append(cocWord)
 				
+				clusterDistance = clusters[0].cluster_distance(clusters[1])
+				print clusterDistance
+				
 				senses = dict()
+				senses['clusterDistance'] = clusterDistance
 
 				for key in wordAssignemnts:
 					sense = copy(coc[word])
