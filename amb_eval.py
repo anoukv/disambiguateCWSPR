@@ -46,27 +46,18 @@ def vector_add(vec1, vec2):
 
 def answer((a,b,c), vecs):
 	for e in (a,b,c):
-		if e not in vecs or len(vecs[e[0]]) == 0:
-			return "NONE"
-
-	print 
-	print "Working..."
-	for e in (a,b,c):
-		print len(vecs[e]) == 0
+		if e not in vecs or len(vecs[e]) == 0:
+			return "NONE" 
 
 	def find_AB_match(a,b,vecs):
 		best_distance = 2
 		best_tuple = (None,None)
-		print len(vecs[a])
-		print len(vecs[b])
 		for va in vecs[a]:
 			for vb in vecs[b]:
 				distance = vector_distance(va[1],vb[1])
-				print distance
 				if distance < best_distance:
 					best_distance = distance
 					best_tuple = (va[1], vb[1])
-		print "Distance:", best_distance
 		return best_tuple
 
 	(av, bv) = find_AB_match(a,b,vecs)
@@ -78,26 +69,29 @@ def answer((a,b,c), vecs):
 	best_word = "NONE"
 	for reference_vec in cvs:
 		for key in vecs.keys():
-			for v in vecs[key]:
-				new_vec = vector_add(v[1], diff)
-				distance = vector_distance(reference_vec, new_vec)
-				if distance < best_distance:
-					best_distance = distance
-					best_word = key
+			if key not in (a,b,c):
+				for v in vecs[key]:
+					new_vec = vector_add(v[1], diff)
+					distance = vector_distance(reference_vec, new_vec)
+					if distance < best_distance:
+						best_distance = distance
+						best_word = key
+
+	print "Best word:", best_word
 	return best_word
 
 
 
 if __name__ == "__main__":
-	if not len(sys.argv) == 3:
+	if not len(sys.argv) == 2:
 		print "Call me as:"
-		print "python amb_eval.py wordvectors.txt outpusfile.txt"
+		print "python amb_eval.py wordvectors.txt"
 		sys.exit()
 
 	questions = load_questions()
 	vecs = load_vectors(sys.argv[1])
 	answers = map(lambda x : answer(x, vecs), questions)
-	save_answers(answers, sys.argv[2])
+	save_answers(answers, "precomputedAnswers/" + sys.argv[1].split("/")[-1] + ".answered")
 	
 
 

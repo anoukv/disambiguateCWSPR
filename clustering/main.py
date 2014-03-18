@@ -83,6 +83,7 @@ def anotate(inpt, skipsize):
 				coc[word1] += 1
 				coc[word2] += 1
 
+			coc = normalize_coc(coc)
 			# Now get the best cluster
 			bestValue = 1
 			bestIndex = -1
