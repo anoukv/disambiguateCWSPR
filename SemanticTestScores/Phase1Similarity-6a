@@ -1,89 +1,43 @@
-NOTHING
-NOTHING
-NOTHING
-NOTHING
-NOTHING
-NOTHING
-NOTHING
-NOTHING
-NOTHING
-NOTHING
-NOTHING
-NOTHING
-NOTHING
-NOTHING
-NOTHING
-NOTHING
-NOTHING
-NOTHING
-NOTHING
-NOTHING
-NOTHING
-NOTHING
-NOTHING
-NOTHING
-NOTHING
-NOTHING
-NOTHING
-NOTHING
-NOTHING
-NOTHING
-NOTHING
-NOTHING
-NOTHING
-NOTHING
-NOTHING
-NOTHING
-NOTHING
-NOTHING
-NOTHING
-NOTHING
-NOTHING
-NOTHING
-NOTHING
-NOTHING
-NOTHING
-NOTHING
-6023373098623875153920.000000 careful:reckless
-192.503922 coward:courageous
-0.386767 mute:talkative
-0.307151 voice:mute
-0.305354 integrity:dishonest
-0.299105 color:invisible
-0.293501 sight:invisible
-0.281118 beauty:unpleasant
-0.274287 tidy:messy
-0.268466 classic:trendy
-0.254919 intelligence:stupid
-0.241734 love:hating
-0.241569 ecstasy:sad
-0.238802 liquid:solid
-0.238137 alacrity:reluctant
-0.237253 best:inferior
-0.226341 sensitivity:boorish
-0.225595 object:intangible
-0.219904 zealot:disinclined
-0.205596 fire:cold
-0.203510 killer:empathetic
-0.202207 rainbow:monochromatic
-0.196139 dream:consciousness
-0.194631 speed:slow
-0.187661 inferior:best
-0.178419 heat:cold
-0.165628 darkness:light
-0.137257 baby:mature
-0.115609 height:low
-0.066935 bounty:scarce
-0.060046 cold:fire
--0.026783 diseased:health
--19265962.000000 forgiving:vengeful
--23231082.000000 hungry:satiety
--23376458.000000 solid:liquid
--23379904.000000 enthusiasm:apathetic
--23385382.000000 honest:liar
--29166762.000000 object:tangible
--29173504.000000 melancholy:jubilation
--29192086.000000 liar:honest
--29192086.000000 violence:love
--17413373952.000000 charisma:bland
--17413527552.000000 empty:full
+9035059647935812730880.000000 careful:reckless
+288.755890 coward:courageous
+0.580151 mute:talkative
+0.498625 charisma:bland
+0.460726 voice:mute
+0.458031 integrity:dishonest
+0.448658 color:invisible
+0.440251 sight:invisible
+0.421678 beauty:unpleasant
+0.402700 classic:trendy
+0.382379 intelligence:stupid
+0.362601 love:hating
+0.362353 ecstasy:sad
+0.358203 liquid:solid
+0.357205 alacrity:reluctant
+0.339512 sensitivity:boorish
+0.338393 object:intangible
+0.329856 zealot:disinclined
+0.308393 fire:cold
+0.305264 killer:empathetic
+0.303310 rainbow:monochromatic
+0.294209 dream:consciousness
+0.291946 speed:slow
+0.267628 heat:cold
+0.260400 empty:full
+0.248442 darkness:light
+0.205886 baby:mature
+0.173414 height:low
+0.100402 bounty:scarce
+0.090069 cold:fire
+-0.040175 diseased:health
+-75181403329462796288.000000 forgiving:vengeful
+-98498016343987585024.000000 hungry:satiety
+-118077063880259928064.000000 object:tangible
+-118099300403420069888.000000 melancholy:jubilation
+-118160591579598815232.000000 liar:honest
+-118160591579598815232.000000 violence:love
+-118178465240619941888.000000 tidy:messy
+-118186698383688728576.000000 best:inferior
+-118186698383688728576.000000 inferior:best
+-197818995151132950528.000000 honest:liar
+-216947506802807799808.000000 solid:liquid
+-217127897078507241472.000000 enthusiasm:apathetic

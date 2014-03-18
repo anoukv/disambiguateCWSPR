@@ -1,60 +1,30 @@
-NOTHING
-NOTHING
-NOTHING
-NOTHING
-NOTHING
-NOTHING
-NOTHING
-NOTHING
-NOTHING
-NOTHING
-NOTHING
-NOTHING
-NOTHING
-NOTHING
-NOTHING
-NOTHING
-NOTHING
-NOTHING
-NOTHING
-NOTHING
-NOTHING
-NOTHING
-NOTHING
-NOTHING
-NOTHING
-NOTHING
-NOTHING
-NOTHING
-NOTHING
-NOTHING
-6023373098623875153920.000000 drive:car
-0.407935 shovel:dig
-0.380491 bed:sleep
-0.378357 airplane:fly
-0.371314 sleep:bed
-0.370744 handle:turn
-0.362769 dollar:purchase
-0.351163 camera:photograph
-0.350775 hammer:pound
-0.342545 car:drive
-0.328863 pen:write
-0.326825 knife:cut
-0.326616 stove:cook
-0.319425 blender:puree
-0.313200 pencil:write
-0.312991 phone:call
-0.311767 needle:sew
-0.289840 telephone:call
-0.269933 oven:cook
-0.257581 broom:sweep
-0.227153 cook:stove
-0.224681 lotion:moisturize
-0.113768 stab:knife
--0.988532 cigarette:smoke
--0.991770 fork:eat
--83317646948666980696064.000000 eat:fork
--83329986811645975855104.000000 calculator:add
--96348497218489594937344.000000 sweep:broom
--96363674349233833508864.000000 photograph:camera
--96405521796971360157696.000000 call:phone
+9035059647935812730880.000000 drive:car
+0.611902 shovel:dig
+0.570736 bed:sleep
+0.567536 airplane:fly
+0.556971 sleep:bed
+0.554120 handle:turn
+0.544153 dollar:purchase
+0.526745 camera:photograph
+0.526163 hammer:pound
+0.513817 car:drive
+0.493295 pen:write
+0.490237 knife:cut
+0.489924 stove:cook
+0.479137 blender:puree
+0.469799 pencil:write
+0.469487 phone:call
+0.467651 needle:sew
+0.452451 photograph:camera
+0.445348 cigarette:smoke
+0.440504 fork:eat
+0.434760 telephone:call
+0.404899 oven:cook
+0.386371 broom:sweep
+0.373464 calculator:add
+0.370959 call:phone
+0.340729 cook:stove
+0.335026 lotion:moisturize
+0.275335 eat:fork
+0.190089 sweep:broom
+0.170652 stab:knife
