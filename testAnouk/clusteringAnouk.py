@@ -4,6 +4,7 @@ from kmeans import kmeans_process
 from collections import defaultdict
 import sys
 from copy import copy
+from random import choice
 
 # deletes all the keys from dic that are not in keysToKeep
 def deleteSomeKeys(keysToKeep, dic):
@@ -13,7 +14,7 @@ def deleteSomeKeys(keysToKeep, dic):
 			dic.pop(key)
 
 def read_file(filename):
-		f = open(train, 'r')
+		f = open(filename, 'r')
 	 	inpt = f.readline().replace("\n", "").split(" ")
 	 	f.close()
 	 	return inpt
@@ -31,42 +32,41 @@ def annotate(inpt, clustered, vocabulary, skipsize):
 	
 	print "Starting annotating corpus."
 	
-	anotated = []
+	annotated = []
 	queue = []
 	for word in inpt:
 		push(word, queue)
 		if queueIsReady(queue) and word in clustered:
-			coc = defaultdict(int)
+			coc = []
 			for i in xrange(skipsize):
 				if queue[i] in vocabulary:
 					word1 = queue[i]
 				else:
 					word1 = "_UNKNOWN_"
 				if queue[i+1+skipsize] in vocabulary:
-					word2 = queue[i]
+					word2 = queue[i+1+skipsize]
 				else:
 					word2 = "_UNKNOWN_"
 
-				coc[word1] += 1
-				coc[word2] += 1
+				coc.append(word1)
+				coc.append(word2)
 
-			coc = normalize_coc(coc)
 			# Now get the best cluster
+			coc = set(coc)
 			
-			print coc.keys
-			
-			# bestValue = 1
-			# bestIndex = -1
-			# for i in xrange(k):
-			# 	distance = clustered[word][i].distance(coc)
-			# 	if distance < bestValue:
-			# 		bestValue = distance
-			# 		bestIndex = i
-			
-			bestIndex = 999
-			word = word + "_" + str(bestIndex) + " "
+			sense0 = set(clustered[word][0].keys())
+			sense1 = set(clustered[word][1].keys())
+			intersectionSense0 = coc.intersection(sense0)
+			intersectionSense1 = coc.intersection(sense1)
+			if intersectionSense0 > intersectionSense1:
+				word = word + "_" + str(0)
+			elif intersectionSense1 > intersectionSense0:
+				word = word + "_" + str(1)
+			else:
+				word = word + "_" + str(choice([0,1]))
 
-		anotated.append(word)
+		annotated.append(word + " ")
+	#print set(annotated)
 
 	return annotated
 
@@ -166,9 +166,14 @@ co_occurences = pickle.load(open(file_name, 'rb'))
 #new = makeNewCOCS(co_occurences)
 #pickle.dump(new, open('../../testingCOC.small', 'wb'))
 
-new = pickle.load(open('../../testingCOC.small', 'rb'))
+new = pickle.load(open('../../newCOC.small', 'rb'))
 inpt = read_file('../../text.small')
-annotate(inpt, new, co_occurences['voc'], 5)
+
+annotated = annotate(inpt, new, co_occurences['voc'], 5)
+
+f = open('../../text.anouk.small', 'w')
+f.write("".join(annotated))
+f.close()
 
 
 
