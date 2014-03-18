@@ -1,5 +1,6 @@
 from random import choice
 from collections import defaultdict
+from math import sqrt
 
 class cluster:
 	def __init__(self, center = dict() ):
