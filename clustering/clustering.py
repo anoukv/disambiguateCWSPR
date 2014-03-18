@@ -1,4 +1,5 @@
 from random import choice
+from math import sqrt
 from collections import defaultdict
 
 class cluster:
@@ -26,13 +27,19 @@ class cluster:
 		return self.center
 
 	def set_new_cluster_center(self):
-		normalization = float(len(self.assigned_datapoints))
-		assert normalization > 0, "No data_points were assigned to this cluster..."
+		def normalize_coc(coc):
+			total = sqrt( sum([v**2 for v in coc.values()]) )
+			new_coc = dict()
+			for key in coc.keys():
+				new_coc[key] = coc[key] / total
+			return new_coc
+
+		assert len(self.assigned_datapoints) > 0, "No data_points were assigned to this cluster..."
 		new_center = defaultdict(float)
 		for data_point in self.assigned_datapoints:
-			for element in data_point:
-				new_center[element] += ( data_point[element] / normalization )
-		self.center = new_center
+			for element in data_point.keys():
+				new_center[element] += data_point[element]
+		self.center = normalize_coc(new_center)
 		self.assigned_datapoints = []
 		self.elements_set = set(self.center.keys())
 
