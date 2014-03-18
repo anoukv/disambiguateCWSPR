@@ -1,4 +1,5 @@
 from random import choice
+from math import sqrt
 from collections import defaultdict
 
 class cluster:

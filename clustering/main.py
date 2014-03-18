@@ -68,33 +68,35 @@ def anotate(inpt, skipsize):
 	queue = []
 	for word in inpt:
 		push(word, queue)
-		if queueIsReady(queue) and word in clustered and len(clustered[word]) > 1:
-			coc = defaultdict(int)
-			for i in xrange(skipsize):
-				if queue[i] in vocabulary:
-					word1 = queue[1]
-				else:
-					word1 = "_UNKNOWN_"
-				if queue[i+1+skipsize] in vocabulary:
-					word2 = queue[1]
-				else:
-					word2 = "_UNKNOWN_"
+		if queueIsReady(queue):
+			word = queue[queueMid]
+			if word in clustered and len(clustered[word]) > 1:
+				coc = defaultdict(int)
+				for i in xrange(skipsize):
+					if queue[i] in vocabulary:
+						word1 = queue[1]
+					else:
+						word1 = "_UNKNOWN_"
+					if queue[i+1+skipsize] in vocabulary:
+						word2 = queue[1]
+					else:
+						word2 = "_UNKNOWN_"
 
-				coc[word1] += 1
-				coc[word2] += 1
+					coc[word1] += 1
+					coc[word2] += 1
 
-			coc = normalize_coc(coc)
-			# Now get the best cluster
-			bestValue = 1
-			bestIndex = -1
-			for i in xrange(k):
-				distance = clustered[word][i].distance(coc)
-				if distance < bestValue:
-					bestValue = distance
-					bestIndex = i
-			word = word + "_" + str(bestIndex) + " "
+				coc = normalize_coc(coc)
 
-		anotated.append(word)
+				# Now get the best cluster
+				bestValue = 1
+				bestIndex = -1
+				for i in xrange(k):
+					distance = clustered[word][i].distance(coc)
+					if distance < bestValue:
+						bestValue = distance
+						bestIndex = i
+				word = word + "_" + str(bestIndex) + " "
+			anotated.append(word)
 
 	return (clustered, anotated)
 
