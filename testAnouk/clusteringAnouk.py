@@ -56,8 +56,8 @@ def annotate(inpt, clustered, vocabulary, skipsize):
 			
 			sense0 = set(clustered[word][0].keys())
 			sense1 = set(clustered[word][1].keys())
-			intersectionSense0 = coc.intersection(sense0)
-			intersectionSense1 = coc.intersection(sense1)
+			intersectionSense0 = len(coc.intersection(sense0))
+			intersectionSense1 = len(coc.intersection(sense1))
 			if intersectionSense0 > intersectionSense1:
 				word = word + "_" + str(0)
 			elif intersectionSense1 > intersectionSense0:
