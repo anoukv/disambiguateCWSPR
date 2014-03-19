@@ -108,7 +108,7 @@ def qa(wordvectors, questions):
 if __name__ == "__main__":
 	if not len(sys.argv) == 2:
 		print "Call me as:"
-		print "python amb_eval.py wordvectors.txt"
+		print "python qa_cristina.py wordvectors.txt"
 		sys.exit()
 
 	print "Loading questions..."

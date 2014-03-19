@@ -186,5 +186,5 @@ if __name__ == "__main__":
 	answers = qa_ambiguous(vecs, questions)
 	
 	print "Saving answers to file"
-	#save_answers(answers, "precomputedAnswers/" + sys.argv[1].split("/")[-1] + ".answered")
-	save_answers(answers, "precomputedAnswers/vectors80.anouk.small.answered")
+	save_answers(answers, "precomputedAnswers/" + sys.argv[1].split("/")[-1] + ".answered")
+	#save_answers(answers, "precomputedAnswers/vectors80.anouk.small.answered")
