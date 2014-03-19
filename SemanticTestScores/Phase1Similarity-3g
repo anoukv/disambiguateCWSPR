@@ -1,76 +1,38 @@
-NOTHING
-NOTHING
-NOTHING
-NOTHING
-NOTHING
-NOTHING
-NOTHING
-NOTHING
-NOTHING
-NOTHING
-NOTHING
-NOTHING
-NOTHING
-NOTHING
-NOTHING
-NOTHING
-NOTHING
-NOTHING
-NOTHING
-NOTHING
-NOTHING
-NOTHING
-NOTHING
-NOTHING
-NOTHING
-NOTHING
-NOTHING
-NOTHING
-NOTHING
-NOTHING
-NOTHING
-NOTHING
-NOTHING
-NOTHING
-NOTHING
-NOTHING
-NOTHING
-NOTHING
-0.509667 father:mother
-0.500621 nephew:niece
-0.499859 man:woman
-0.485679 boy:girl
-0.465320 male:female
-0.457914 violin:cello
-0.449115 female:male
-0.434698 cat:dog
-0.433410 mother:father
-0.432259 fiction:poetry
-0.426128 algebra:geometry
-0.416292 canoe:kayak
-0.412409 car:bus
-0.409532 pen:pencil
-0.408838 dog:cat
-0.401583 pencil:pen
-0.400183 jazz:blues
-0.398975 trout:salmon
-0.393759 sugar:flour
-0.388346 almond:pecan
-0.386046 puppy:kitten
-0.358587 kitten:puppy
-0.357200 couch:recliner
-0.352489 flour:sugar
-0.350064 shirt:blouse
-0.347853 book:magazine
-0.347089 rooster:hen
-0.342992 pillow:mattress
-0.340777 dog:bitch
-0.314733 dogwood:elm
-0.305392 duck:goose
-0.288083 stallion:mare
-0.256609 bolt:nut
-0.225605 record:cassette
-0.188388 salt:pepper
-0.187945 cassette:record
-0.185744 cup:lid
-0.092440 treble:bass
+0.764500 father:mother
+0.750932 nephew:niece
+0.749789 man:woman
+0.728518 boy:girl
+0.697979 male:female
+0.686871 violin:cello
+0.673673 female:male
+0.652047 cat:dog
+0.650116 mother:father
+0.648389 fiction:poetry
+0.639192 algebra:geometry
+0.624438 canoe:kayak
+0.618613 car:bus
+0.614298 pen:pencil
+0.613257 dog:cat
+0.602374 pencil:pen
+0.600275 jazz:blues
+0.598463 trout:salmon
+0.590639 sugar:flour
+0.582519 almond:pecan
+0.579069 puppy:kitten
+0.537881 kitten:puppy
+0.535800 couch:recliner
+0.528734 flour:sugar
+0.525097 shirt:blouse
+0.521780 book:magazine
+0.520633 rooster:hen
+0.514489 pillow:mattress
+0.511165 dog:bitch
+0.472100 dogwood:elm
+0.458088 duck:goose
+0.432124 stallion:mare
+0.384914 bolt:nut
+0.338408 record:cassette
+0.282583 salt:pepper
+0.281917 cassette:record
+0.278616 cup:lid
+0.138660 treble:bass
