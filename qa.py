@@ -124,7 +124,10 @@ def qa_ambiguous(wordvectors, questions):
 			b_projections = wordvectors[question[1]]
 			c_projections = wordvectors[question[2]]
 
-			# y_projections is a list of tuples 
+			# y_projections is a list of tuples
+			# NOTE: Remi does not want to have all combinations of b-a, but just the 
+			# b - a that are close to each other, this could lead to more efficiency
+			# but I think using all possible combinations is more sound, for now 
 			y_projections = []
 			for a in a_projections:
 				for b in b_projections:
@@ -141,12 +144,15 @@ def qa_ambiguous(wordvectors, questions):
 			for word in wordvectors:
 				if word not in question:
 					wordReps = wordvectors[word]
+					
+					# for every word_projection of word, we will compute the similarity 
+					# with every y_projection and save the best!
 					for wordRep in wordReps:
-
-						# similarity is defined as the cosine similarity
-						# cosine similarity normaly is (a (dot product) b) / (norm(a) * norm(b))
-						# we have normalized a and b, so the denominator is always one and can be discarded
 						for y in y_projections:
+							
+							# similarity is defined as the cosine similarity
+							# cosine similarity normaly is (a (dot product) b) / (norm(a) * norm(b))
+							# we have normalized a and b, so the denominator is always one and can be discarded
 							sim = sum([y[i] * wordRep[i] for i in xrange(len(y))])
 
 							# save result if it is better than the previous best result
@@ -172,26 +178,13 @@ if __name__ == "__main__":
 
 	print "Loading questions..."
 	questions = load_questions()
+	
 	print "Loading word projections"
 	vecs = load_vectors(sys.argv[1])
+	
 	print "Answering questions"
 	answers = qa_ambiguous(vecs, questions)
+	
 	print "Saving answers to file"
 	#save_answers(answers, "precomputedAnswers/" + sys.argv[1].split("/")[-1] + ".answered")
 	save_answers(answers, "precomputedAnswers/vectors80.anouk.small.answered")
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

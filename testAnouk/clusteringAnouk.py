@@ -161,21 +161,42 @@ def makeNewCOCS(cocvoc):
 print "Welcome to the clustering method designed by Anouk. You'll enjoy your time here."
 
 file_name = sys.argv[1]
+# this is the original co-occurence thing, with 'rel', 'coc' and 'voc' as keys
 co_occurences = pickle.load(open(file_name, 'rb'))
 
+# This thing actually makes a co occurence thing with multiple senses of the word
 #new = makeNewCOCS(co_occurences)
 #pickle.dump(new, open('../../testingCOC.small', 'wb'))
 
+# this thing opens an existing co occurence thing
 new = pickle.load(open('../../newCOC.small', 'rb'))
+
+# the input is the text file
 inpt = read_file('../../text.small')
 
+# annotate the corpus 
+# we might want to decrease new based on cluster distances
+# for example, we might only take 50% of the words in here, that have
+# the highest cluster distances
 annotated = annotate(inpt, new, co_occurences['voc'], 5)
 
 f = open('../../text.anouk.small', 'w')
 f.write("".join(annotated))
 f.close()
 
-
-
+# To run this script without intervention do something like: 
+# file_name = sys.argv[1]
+# co_occurences = pickle.load(open(file_name, 'rb'))
+# new = makeNewCOCS(co_occurences)
+# pickle.dump(new, open('../../testingCOC.small', 'wb'))
+# inpt = read_file('../../text.small')
+# # annotate the corpus 
+# # we might want to decrease new based on cluster distances
+# # for example, we might only take 50% of the words in here, that have
+# # the highest cluster distances
+# annotated = annotate(inpt, new, co_occurences['voc'], 5)
+# f = open('../../text.anouk.small', 'w')
+# f.write("".join(annotated))
+# f.close()
 
 
