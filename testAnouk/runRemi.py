@@ -161,22 +161,18 @@ def makeNewCOCS(cocvoc):
 
 print "Welcome to the clustering method designed by Anouk. You'll enjoy your time here."
 
-file_name = sys.argv[1]
 # this is the original co-occurence thing, with 'rel', 'coc' and 'voc' as keys
-print "Reading global co-occurences (relative frequencies, relatedness scores and vocabulary"
-co_occurences = pickle.load(open(file_name, 'rb'))
+print "Reading global co-occurences (relative frequencies, relatedness scores and vocabulary)"
+co_occurences = pickle.load(open('../../data/coc.large', 'rb'))
 
 # This thing actually makes a co occurence thing with multiple senses of the word
-#new = makeNewCOCS(co_occurences)
-#pickle.dump(new, open('../../testingCOC.small', 'wb'))
-
-# this thing opens an existing co occurence thing
-print "Reading new co-occurences file..."
-new = pickle.load(open('../../newCOC.small', 'rb'))
+print "Making new co-occurence dictionary, with multiple senses of all words... This might take a while."
+new = makeNewCOCS(co_occurences)
+pickle.dump(new, open('../../data/newCOC.large', 'wb'))
 
 # the input is the text file
 print "Reading corpus..."
-inpt = read_file('../../text.small')
+inpt = read_file('../../data/text.large')
 
 # annotate the corpus 
 # we might want to decrease new based on cluster distances
@@ -188,10 +184,10 @@ clustered = sorted(new.items(), key=lambda x: x[1]['clusterDistance'], reverse =
 clustered = clustered[:len(clustered)/2]
 clustered = dict(clustered)
 
-print len(clustered.keys()), " words will be split..."
+print len(clustered.keys()), " words will be split after cutting this thing in half..."
 annotated = annotate(inpt, clustered, co_occurences['voc'], 5)
 
-f = open('../../text.anoukHalf.small', 'w')
+f = open('../../data/text.anoukHalf.large', 'w')
 f.write("".join(annotated))
 f.close()
 

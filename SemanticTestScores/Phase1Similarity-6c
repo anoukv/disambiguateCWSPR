@@ -1,91 +1,41 @@
-NOTHING
-NOTHING
-NOTHING
-NOTHING
-NOTHING
-NOTHING
-NOTHING
-NOTHING
-NOTHING
-NOTHING
-NOTHING
-NOTHING
-NOTHING
-NOTHING
-NOTHING
-NOTHING
-NOTHING
-NOTHING
-NOTHING
-NOTHING
-NOTHING
-NOTHING
-NOTHING
-NOTHING
-NOTHING
-NOTHING
-NOTHING
-NOTHING
-NOTHING
-NOTHING
-NOTHING
-NOTHING
-NOTHING
-NOTHING
-NOTHING
-NOTHING
-NOTHING
-NOTHING
-NOTHING
-NOTHING
-NOTHING
-NOTHING
-NOTHING
-NOTHING
-NOTHING
-NOTHING
-NOTHING
-NOTHING
-NOTHING
-NOTHING
-411683329297117399815815168.000000 rain:dryness
-411680562285506343383072768.000000 prisoner:freedom
-6023373098623875153920.000000 depression:joy
-192.463120 famine:food
-0.344754 frugality:elaborateness
-0.339154 rivalry:serenity
-0.335811 liar:honesty
-0.331817 abundance:destitution
-0.313023 novice:experience
-0.311122 sorrow:happiness
-0.309210 cleanliness:dirt
-0.306021 drought:water
-0.302638 slavery:freedom
-0.301786 snow:warmth
-0.298230 dirt:cleanliness
-0.297696 dryness:rain
-0.290905 wedding:grief
-0.280810 day:darkness
-0.276311 acclaim:disgrace
-0.276226 worry:satisfaction
-0.274539 funeral:joy
-0.252273 wealth:debt
-0.247094 poor:money
-0.246544 tyranny:freedom
-0.242640 weakness:strength
-0.240152 anxiety:contentedness
-0.232758 conservative:humor
-0.231186 homework:fun
-0.222706 waste:plenteousness
-0.222367 silence:dance
-0.221801 dance:silence
-0.211907 joy:depression
-0.211600 ocean:land
-0.206136 lawyer:honesty
-0.198661 sun:cold
-0.193735 destitution:abundance
-0.186666 poor:wealth
-0.176199 slums:prosperity
-0.115414 night:light
-0.055029 sage:ignorance
-0.034802 tribulation:peace
+9035059647935812730880.000000 depression:joy
+288.694672 famine:food
+0.517131 frugality:elaborateness
+0.508730 rivalry:serenity
+0.503717 liar:honesty
+0.497726 abundance:destitution
+0.469534 novice:experience
+0.466683 sorrow:happiness
+0.463816 cleanliness:dirt
+0.459031 drought:water
+0.453956 slavery:freedom
+0.452679 snow:warmth
+0.447346 dirt:cleanliness
+0.446544 dryness:rain
+0.436357 wedding:grief
+0.421215 day:darkness
+0.414467 acclaim:disgrace
+0.414339 worry:satisfaction
+0.411808 funeral:joy
+0.378409 wealth:debt
+0.370641 poor:money
+0.369817 tyranny:freedom
+0.363960 weakness:strength
+0.360228 anxiety:contentedness
+0.349137 conservative:humor
+0.346779 homework:fun
+0.334059 waste:plenteousness
+0.333550 silence:dance
+0.332702 dance:silence
+0.317861 joy:depression
+0.309204 lawyer:honesty
+0.297991 sun:cold
+0.290603 destitution:abundance
+0.279999 poor:wealth
+0.264299 slums:prosperity
+0.173121 night:light
+0.082544 sage:ignorance
+0.052203 tribulation:peace
+-5062203607151395471360.000000 ocean:land
+-5062586413119721963520.000000 prisoner:freedom
+-5062649463514505150464.000000 rain:dryness
