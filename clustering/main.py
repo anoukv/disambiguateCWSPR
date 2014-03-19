@@ -45,11 +45,11 @@ def anotate(inpt, skipsize):
 				coc = defaultdict(int)
 				for i in xrange(skipsize):
 					if queue[i] in vocabulary:
-						word1 = queue[1]
+						word1 = queue[i]
 					else:
 						word1 = "_UNKNOWN_"
 					if queue[i+1+skipsize] in vocabulary:
-						word2 = queue[1]
+						word2 = queue[i+1+skipsize]
 					else:
 						word2 = "_UNKNOWN_"
 
@@ -74,11 +74,11 @@ def anotate(inpt, skipsize):
 				coc = defaultdict(int)
 				for i in xrange(skipsize):
 					if queue[i] in vocabulary:
-						word1 = queue[1]
+						word1 = queue[i]
 					else:
 						word1 = "_UNKNOWN_"
 					if queue[i+1+skipsize] in vocabulary:
-						word2 = queue[1]
+						word2 = queue[i+1+skipsize]
 					else:
 						word2 = "_UNKNOWN_"
 
@@ -102,7 +102,7 @@ def anotate(inpt, skipsize):
 
 def read_args():
 	def read_file(filename):
-		f = open(train, 'r')
+		f = open(filename, 'r')
 	 	inpt = f.readline().replace("\n", "").split(" ")
 	 	f.close()
 	 	return inpt
@@ -112,13 +112,11 @@ def read_args():
  		print "python main.py training.txt output.txt (skipsize = 5)"
  		sys.exit()
 
-	train = sys.argv[1]
- 	output_file = sys.argv[2]
  	skipsize = 5
  	if len(sys.argv) == 4:
  		skipsize = int(sys.argv[3])
 
- 	return (read_file(train), output_file, skipsize)
+ 	return (read_file(sys.argv[1]), sys.argv[2], skipsize)
 
 
 def main_cluster_remi():
