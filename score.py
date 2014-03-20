@@ -37,7 +37,7 @@ vecsname = "precomputedAnswers/" + vecs.split("/")[-1] + "." + quest.split("/")[
 
 if not os.path.isfile(vecsname):
 	print "Need to calculate answers for", vecs
-	os.system("./qa " + vecs + " " + quest + " " + vecsname)
+	os.system("pypy qa.py " + vecs + " " + quest)
 
 answers = open(answer, 'r')
 reference = open(vecsname, 'r')

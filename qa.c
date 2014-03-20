@@ -198,7 +198,7 @@ int main(int argc, char **argv)
     
     fclose(questions);
     fclose(output);
-    // printf("From %d questions, %d were not answered properly. Keep this in mind.\nDone!", counter, missing);
+    printf("From %d questions, %d were not answered properly. Keep this in mind.\nDone!", counter, missing);
     
     
     return 0;

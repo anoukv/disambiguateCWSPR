@@ -3,7 +3,6 @@ import pickle
 from collections import defaultdict
 from math import sqrt
 
-questions = "QuestionsAnswers/word_relationship.questions"
 
 # Written by Remi
 # Approved by Anouk
@@ -14,7 +13,7 @@ def save_answers(answers, filename):
 
 # Written by Remi
 # Approved and edited by Anouk (made all words lower case)
-def load_questions(filename=questions):
+def load_questions(filename):
 	f = open(filename, 'r')
 	c = [ tuple(l.lower().replace("\n","").split(" ")) for l in f.readlines()]
 	f.close()
@@ -161,7 +160,7 @@ def qa_ambiguous(wordvectors, questions):
 								bestWord = word
 		
 		# If we don't have a projection for a, b, or c, we won't be answering the question.
-			print question[0], ' ', question[1], ' ', question[2], ' ', bestWord
+			#print question[0], ' ', question[1], ' ', question[2], ' ', bestWord
 
 		else:
 			print "UNSEEN!"
@@ -171,13 +170,15 @@ def qa_ambiguous(wordvectors, questions):
 
 
 if __name__ == "__main__":
-	if not len(sys.argv) == 2:
+	if not len(sys.argv) == 3:
 		print "Call me as:"
-		print "python amb_eval.py wordvectors.txt"
+		print "python amb_eval.py wordvectors.txt questions"
 		sys.exit()
 
+	questions = sys.argv[2]
+
 	print "Loading questions..."
-	questions = load_questions()
+	questions = load_questions(questions)
 	
 	print "Loading word projections"
 	vecs = load_vectors(sys.argv[1])
@@ -186,5 +187,5 @@ if __name__ == "__main__":
 	answers = qa_ambiguous(vecs, questions)
 	
 	print "Saving answers to file"
-	save_answers(answers, "precomputedAnswers/" + sys.argv[1].split("/")[-1] + ".answered")
-	#save_answers(answers, "precomputedAnswers/vectors80.anouk.small.answered")
+	save_answers(answers, "precomputedAnswers/" + sys.argv[1].split("/")[-1] + "." + sys.argv[2].split("/")[-1].split(".")[0] + ".answered")
+	#save_answers(answers, "test")
