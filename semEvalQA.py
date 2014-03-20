@@ -85,7 +85,6 @@ def qa(wordvectors, questions, answers):
 			else:
 				sim = -10
 		sim = sim / float(len(questions))
-		print "Appending ", answer
 		ranking.append((sim, answer))
 	return sorted(ranking, key = lambda x: x[0], reverse = True)
 
