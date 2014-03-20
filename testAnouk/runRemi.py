@@ -37,7 +37,7 @@ def annotate(inpt, clustered, vocabulary, skipsize):
 	for word in inpt:
 		push(word, queue)
 		if queueIsReady(queue) and word in clustered:	
-			coc = []
+			coc = set()
 			for i in xrange(skipsize):
 				if queue[i] in vocabulary:
 					word1 = queue[i]
@@ -48,12 +48,10 @@ def annotate(inpt, clustered, vocabulary, skipsize):
 				else:
 					word2 = "_UNKNOWN_"
 
-				coc.append(word1)
-				coc.append(word2)
+				coc.add(word1)
+				coc.add(word2)
 
-			# Now get the best cluster
-			coc = set(coc)
-			
+			# Now get the best cluster			
 			sense0 = set(clustered[word][0].keys())
 			sense1 = set(clustered[word][1].keys())
 			intersectionSense0 = len(coc.intersection(sense0))
