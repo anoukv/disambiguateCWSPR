@@ -9,7 +9,6 @@ if(len(questionList) == len(answerList)):
     for j in range(len(answerList)):
       if(questionList[i][questionList[i].rfind('/') + 1:] == answerList[j][answerList[j].rfind('/') + 1:].replace('Answers','Questions')):
         print questionList[i], answerList[j]
-        os.system("./SemanticRelations ../wordvectors/vectors80.broadcast " + questionList[i] + " " + answerList[j] + " SemanticTestScores/" + questionList[i][questionList[i].rfind('/') + 1:].replace('Questions', 'Similarity').replace(".txt", ""))
-
+        os.system("pypy semEvalQA.py ../wordvectors/vectors80.broadcast " + questionList[i] + " " + answerList[j])
 
 
