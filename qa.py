@@ -112,6 +112,7 @@ def qa_ambiguous(wordvectors, questions):
 	answers = []
 	
 	# iterate over all questions
+	unseenCount = 0
 	for question in questions:
 
 		# get representations for a, b and c, only if they actually exist
@@ -163,9 +164,10 @@ def qa_ambiguous(wordvectors, questions):
 			#print question[0], ' ', question[1], ' ', question[2], ' ', bestWord
 
 		else:
-			print "UNSEEN!"
 			bestWord = 'nothing'
+			unseenCount +=1
 		answers.append(bestWord)
+	print unseenCount, " questions were not answered properly (out of ", len(answers), ")"
 	return answers
 
 
