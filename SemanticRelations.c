@@ -4,7 +4,7 @@
 
 #include <math.h>
 
-#include <malloc.h>
+#include <stdlib.h>
 #include <dirent.h>
 
 
@@ -32,16 +32,11 @@ int main(int argc, char **argv)
 
     float *M, *y;
 
-    char *vocab, *notFoundMessage;
+    char *vocab;
 
     float len, dist, temp;
 
-    
-
-    notFoundMessage = "NOTHING";
-
-
-
+  
     // argument handling
 
     if (argc<4) {
@@ -54,13 +49,9 @@ int main(int argc, char **argv)
     
     strcpy(file_name, argv[1]);
 
-    strcpy(questions_file_name, argv[2]); printf("questions file name %s\n", questions_file_name);
-    strcpy(answers_file_name, argv[3]); printf("answers file name %s\n", answers_file_name);
-
-    strcpy(output_file_name, argv[4]); printf("output file name %s\n", output_file_name);
-
-    //FILE *output = fopen (output_file_name, "wb");
-
+    strcpy(questions_file_name, argv[2]); 
+    strcpy(answers_file_name, argv[3]); 
+    strcpy(output_file_name, argv[4]); 
     
 
     wordProjections=fopen(file_name, "rb");
@@ -207,28 +198,12 @@ int main(int argc, char **argv)
     while ( fgets (line, sizeof line, questions) != NULL ) /* read a line */
     {
 	counterQuestions++;
-	//printf("%d\n", counterQuestions);
 	if (counterQuestions >= 5 && (counterQuestions <= 6 || (counterQuestions <= 8 && line != "")))
 	{
 		if(counterQuestions == 5) { strcpy(FirstQuestion, line); } 
 		if(counterQuestions == 6) { strcpy(SecondQuestion, line); } 
 		if(counterQuestions == 7) { strcpy(ThirdQuestion, line); } 
 		if(counterQuestions == 8) { strcpy(FourthQuestion, line); } 
-		/*switch(counterQuestions):
-		{
-			case 4:
-				strcpy(FirstQuestion, line);
-				break;
-			case 5:
-				strcpy(SecondQuestion, line);
-				break;
-			case 6:
-				strcpy(ThirdQuestion, line);
-				break;
-			default:
-				strcpy(FourthQuestion, line;
-				break;
-		}*/
 	}
 	
 	if(counterQuestions >= 7) { break; }
@@ -240,25 +215,7 @@ int main(int argc, char **argv)
     strcpy (str, FirstQuestion);
     strtok_r (str, ":", &ptr);
     ptr[strlen(ptr)-1]='\0';
-    //printf ("'%s'  '%s'\n", str, ptr);
-
-    /*char *firstToken, *secondToken;
-    firstToken = strtok(FirstQuestion, ":");
-    secondToken = strtok(FirstQuestion, ":");
-    secondToken = strtok(NULL, ":");
-    printf("First question is %s with A %s and B %s\n", FirstQuestion, firstToken, secondToken);*/
-    //printf("First question is %s\n", FirstQuestion);
-    //printf("Second question is %s\n", SecondQuestion);
-    //printf("Third question is %s\n", ThirdQuestion);
-    //printf("Fourth question is %s\n", FourthQuestion);
-    //if(strlen(FourthQuestion) == 0) { printf("is empty");} else {printf("is not empty");}
-
-    /*int NoOfLines = 0;
-    // get number of entries inside the answer file
-    while (EOF != (scanf("%*[^\n]"), scanf("%*c"))) { ++NoOfLines; }
-    printf("length is %d", NoOfLines); */  
-
-    // as long as we have not reached the answer file EOF, look at each answer
+    
     float resultsFirstQuestion[100], resultsSecondQuestion[100], resultsThirdQuestion[100], resultsFourthQuestion[100], resultsAverage[100];
     char resultsC[100][max_size], resultsD[100][max_size];
     int NoOfAddedResults = 0, NoOfAddedResultsSecondQuestion = 0, NoOfAddedResultsThirdQuestion = 0, NoOfAddedResultsFourthQuestion = 0,
@@ -268,11 +225,7 @@ int main(int argc, char **argv)
     {
  	counterAnswers++;
 	
-	//printf("Answer count is currently %d\n", counterAnswers);
-	//printf("%s\n", stC);
-	// for each answer compute the similary score with each word relation pair for the current relation inside the questions file
-	//char mystr[] = "Nmy stringP";
-	//char *p = mystr;
+
         char *res = stC;
 	res++[strlen(res)-1] = 0;
 	
@@ -281,14 +234,12 @@ int main(int argc, char **argv)
     	strcpy (ans, res);
     	strtok_r (ans, ":", &ans2);
     	ptr[strlen(ans2)-1]='\0';
-    	//printf ("Answer tokens are %s and %s \n", ans, ans2);
 	strcpy(stC, ans);
 	strcpy(stD, ans2);
-	//printf ("Final answer tokens are %s and %s \n", stC, stD);
 
-	strcpy(resultsC[NoOfResultsC], stC); //resultsC[NoOfResultsC] = stC;
+	strcpy(resultsC[NoOfResultsC], stC); 
 	NoOfResultsC++;
-	strcpy(resultsD[NoOfResultsD], stD); // resultsD[NoOfResultsD] = stD;
+	strcpy(resultsD[NoOfResultsD], stD); 
 	NoOfResultsD++;
 
 	for (a=0; a<strlen(stC); a++)
@@ -344,7 +295,6 @@ int main(int argc, char **argv)
     		strcpy (str, FirstQuestion);
     		strtok_r (str, ":", &ptr);
     		ptr[strlen(ptr)-1]='\0';
-    		//printf ("|%s| |%s|", str, ptr);
 		strcpy(stA, str);
 		strcpy(stB, ptr);
 
@@ -391,17 +341,13 @@ int main(int argc, char **argv)
 
 		}
 
-		//printf ("A is %s B is %s C is %s D is %s\n", stA, stB, stC, stD);
-		//printf("vA:%d vB:%d vC:%d and vD:%d", vA, vB, vC, vD);
+
 		if (vA == numberOfWords || vB == numberOfWords || vC == numberOfWords || vD == numberOfWords)
 
 		{
 		    MissingAB++;
-		    printf("Word was not found in dictionary %d vA:%d and A is %s vB:%d and B is %s vC:%d and C is %s vD:%d and D is %s\n", numberOfWords, vA, stA, vB, stB, vC, stC, vD, stD);
 
-		    fwrite(notFoundMessage, sizeof(char), strlen(notFoundMessage), output);
 
-		    fwrite("\n", sizeof(char), 1, output);
 
 		    missing++;
 
@@ -453,20 +399,9 @@ int main(int argc, char **argv)
 		    
 		    resultsFirstQuestion[NoOfAddedResults] = dist;
                     NoOfAddedResults = NoOfAddedResults + 1;
-		    //printf(" NoOfResults: %d ", NoOfAddedResults);
-                    //printf("distance is: %d", dist);
-		    /*fprintf(output, "%f", &dist);
-		    fprintf(output, "%s", " ");
-		    fprintf(output, "%s", stC);
-		    fprintf(output, "%s", ":");
-                    fprintf(output, "%s", stD);
-		    fprintf(output, "%s", "\n");*/
-	     }
+		  	     }
 	}
-         //printf("First Question - total results %d\n", NoOfAddedResults);
-	 //for(a = 0; a < NoOfAddedResults; a++)
-         //   {printf("First Question - added item is %f \n",resultsFirstQuestion[a]);}
-
+         
 	//SecondQuestion
 	if(strlen(SecondQuestion) != 0)
 	{
@@ -475,7 +410,6 @@ int main(int argc, char **argv)
     		strcpy (str, SecondQuestion);
     		strtok_r (str, ":", &ptr);
     		ptr[strlen(ptr)-1]='\0';
-    		printf ("|%s| |%s|\n", str, ptr);
 		strcpy(stA, str);
 		strcpy(stB, ptr);
 
@@ -522,17 +456,13 @@ int main(int argc, char **argv)
 
 		}
 
-		//printf ("A is %s B is %s C is %s D is %s\n", stA, stB, stC, stD);
-		//printf("vA:%d vB:%d vC:%d and vD:%d", vA, vB, vC, vD);
+		
 		if (vA == numberOfWords || vB == numberOfWords || vC == numberOfWords || vD == numberOfWords)
 
 		{
 		    MissingAB++;
-		    printf("Word was not found in dictionary %d vA:%d and A is %s vB:%d and B is %s vC:%d and C is %s vD:%d and D is %s\n", numberOfWords, vA, stA, vB, stB, vC, stC, vD, stD);
 
-		    fwrite(notFoundMessage, sizeof(char), strlen(notFoundMessage), output);
 
-		    fwrite("\n", sizeof(char), 1, output);
 
 		    missing++;
 
@@ -584,19 +514,9 @@ int main(int argc, char **argv)
 		    
 		    resultsSecondQuestion[NoOfAddedResultsSecondQuestion] = dist;
                     NoOfAddedResultsSecondQuestion = NoOfAddedResultsSecondQuestion + 1;
-		    //printf(" NoOfResults Second Question: %d ", NoOfAddedResultsSecondQuestion);
-                    //printf("distance is: %d", dist);
-		    //fprintf(output, "%f", &dist);
-		    //fprintf(output, "%s", " ");
-		    //fprintf(output, "%s", stC);
-		    //fprintf(output, "%s", ":");
-                    //fprintf(output, "%s", stD);
-		    //fprintf(output, "%s", "\n");
+		    
 	     }
 	
-	//printf("Second Question - total results %d\n", NoOfAddedResultsSecondQuestion);
-	//for(a = 0; a < NoOfAddedResultsSecondQuestion; a++)
-        //    {printf("Second Question - added item is %f \n",resultsSecondQuestion[a]);}
 
 	}
 
@@ -608,11 +528,9 @@ int main(int argc, char **argv)
     		strcpy (str, ThirdQuestion);
     		strtok_r (str, ":", &ptr);
     		ptr[strlen(ptr)-1]='\0';
-    		//printf ("|%s| |%s|", str, ptr);
 		strcpy(stA, str);
 		strcpy(stB, ptr);
 
-		// uppercase the words
 
 		for (a=0; a<strlen(stA); a++)
 
@@ -655,17 +573,12 @@ int main(int argc, char **argv)
 
 		}
 
-		//printf ("A is %s B is %s C is %s D is %s\n", stA, stB, stC, stD);
-		//printf("vA:%d vB:%d vC:%d and vD:%d", vA, vB, vC, vD);
 		if (vA == numberOfWords || vB == numberOfWords || vC == numberOfWords || vD == numberOfWords)
 
 		{
 		    MissingAB++;
-		    printf("Word was not found in dictionary %d vA:%d and A is %s vB:%d and B is %s vC:%d and C is %s vD:%d and D is %s\n", numberOfWords, vA, stA, vB, stB, vC, stC, vD, stD);
 
-		    fwrite(notFoundMessage, sizeof(char), strlen(notFoundMessage), output);
-
-		    fwrite("\n", sizeof(char), 1, output);
+		
 
 		    missing++;
 
@@ -717,19 +630,10 @@ int main(int argc, char **argv)
 		    
 		    resultsThirdQuestion[NoOfAddedResultsThirdQuestion] = dist;
                     NoOfAddedResultsThirdQuestion = NoOfAddedResultsThirdQuestion + 1;
-		    //printf(" NoOfResults Third Question: %d ", NoOfAddedResultsThirdQuestion);
-                    //printf("distance is: %d", dist);
-		    //fprintf(output, "%f", &dist);
-		    //fprintf(output, "%s", " ");
-		    //fprintf(output, "%s", stC);
-		    //fprintf(output, "%s", ":");
-                    //fprintf(output, "%s", stD);
-		    //fprintf(output, "%s", "\n");
+		    
 	     }
 	
-	//printf(" Third question - total results %d\n", NoOfAddedResultsThirdQuestion);
-	//for(a = 0; a < NoOfAddedResultsThirdQuestion; a++)
-        //    {printf("Third question - added item is %f \n",resultsThirdQuestion[a]);}
+
 	}
 
 	// Fourth Question
@@ -740,7 +644,6 @@ int main(int argc, char **argv)
     		strcpy (str, ThirdQuestion);
     		strtok_r (str, ":", &ptr);
     		ptr[strlen(ptr)-1]='\0';
-    		//printf ("|%s| |%s|", str, ptr);
 		strcpy(stA, str);
 		strcpy(stB, ptr);
 
@@ -787,17 +690,12 @@ int main(int argc, char **argv)
 
 		}
 
-		//printf ("A is %s B is %s C is %s D is %s\n", stA, stB, stC, stD);
-		//printf("vA:%d vB:%d vC:%d and vD:%d", vA, vB, vC, vD);
 		if (vA == numberOfWords || vB == numberOfWords || vC == numberOfWords || vD == numberOfWords)
 
 		{
 		    MissingAB++;
-		    printf("Word was not found in dictionary %d vA:%d and A is %s vB:%d and B is %s vC:%d and C is %s vD:%d and D is %s\n", numberOfWords, vA, stA, vB, stB, vC, stC, vD, stD);
 
-		    fwrite(notFoundMessage, sizeof(char), strlen(notFoundMessage), output);
-
-		    fwrite("\n", sizeof(char), 1, output);
+		
 
 		    missing++;
 
@@ -849,40 +747,19 @@ int main(int argc, char **argv)
 		    
 		    resultsFourthQuestion[NoOfAddedResultsFourthQuestion] = dist;
                     NoOfAddedResultsFourthQuestion = NoOfAddedResultsFourthQuestion + 1;
-		    //printf(" NoOfResults Fourth Question: %d ", NoOfAddedResultsFourthQuestion);
-                    //printf("distance is: %d", dist);
-		    //fprintf(output, "%f", &dist);
-		    //fprintf(output, "%s", " ");
-		    //fprintf(output, "%s", stC);
-		    //fprintf(output, "%s", ":");
-                    //fprintf(output, "%s", stD);
-		    //fprintf(output, "%s", "\n");
+		  
 	     }
 
-	//printf("Fourth question is %d\n", NoOfAddedResultsFourthQuestion);
-	//for(a = 0; a < NoOfAddedResultsFourthQuestion; a++)
-        //    {printf("Fourth question - added item is %f \n",resultsFourthQuestion[a]);}
 	}
 
 	int totalQuestions = 3 - MissingAB;
 	if(NoOfAddedResultsFourthQuestion > 0) { totalQuestions = 4 - MissingAB; }
 	
-	//printf("total questions: %d\n", totalQuestions);
 	for(a = 0; a < NoOfAddedResults; a++){
-                //printf ("First no %f Second no %f Third no %f divide by %d\n", resultsFirstQuestion[a], resultsSecondQuestion[a], resultsThirdQuestion[a], totalQuestions);
 		if (totalQuestions == 3) { resultsAverage[a] = (resultsFirstQuestion[a] + resultsSecondQuestion[a] + resultsThirdQuestion[a])/totalQuestions; }
 		else { resultsAverage[a] = (resultsFirstQuestion[a] + resultsSecondQuestion[a] + resultsThirdQuestion[a] + resultsFourthQuestion[a])/totalQuestions; }
-                //printf("Average is %f\n", resultsAverage[a]);
 	}
 
-	/*printf("Added results number is %d", NoOfAddedResults);
-	for(a = 0; a < NoOfAddedResults; a++){
-		printf("S-iteration %d\n", NoOfAddedResults);
-		printf("S-First result is %f \n", resultsFirstQuestion[a]);
-		printf("S-Second result is %f \n", resultsSecondQuestion[a]);
-		printf("S-Third result is %f \n", resultsThirdQuestion[a]);
-		printf("S-Average Value is %f \n", resultsAverage[a]);
-	}*/
 
     } 
 
@@ -918,7 +795,6 @@ int main(int argc, char **argv)
     fclose(output);
 
     
-    //printf("From %d questions, %d were not answered properly. Keep this in mind.\nDone!", counter, missing);
 
     
 
