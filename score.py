@@ -1,8 +1,8 @@
 import os, sys
 
-if not len(sys.argv) > 1:
+if not len(sys.argv) > 3:
 	print "Call me as:"
-	print "python score.py ../wordvectors/vectors80.small"
+	print "python score.py ../wordvectors/vectors80.small QuestionsAnswers/questions QuestionsAnswers/answers"
 	sys.exit()
 
 def compare(together):
@@ -26,21 +26,24 @@ def compare(together):
 	return correct / float(len(together)) * 100
 
 
-quest = "QuestionsAnswers/word_relationship.questions"
-anser = "QuestionsAnswers/word_relationship.answers"
+# quest = "QuestionsAnswers/word_relationship.questions"
+# answer = "QuestionsAnswers/word_relationship.answers"
 
 vecs = sys.argv[1]
-vecsname = "precomputedAnswers/" + vecs.split("/")[-1] + ".answered"
+quest = sys.argv[2]
+answer = sys.argv[3]
+
+vecsname = "precomputedAnswers/" + vecs.split("/")[-1] + "." + quest.split("/")[-1].split(".")[0] + ".answered"
 
 if not os.path.isfile(vecsname):
 	print "Need to calculate answers for", vecs
 	os.system("./qa " + vecs + " " + quest + " " + vecsname)
 
-answers = open(anser, 'r')
+answers = open(answer, 'r')
 reference = open(vecsname, 'r')
 
-ans = answers.readlines()
-ref = [ l.lower() for l in reference.readlines() ]
+ans = [ l.lower().replace("\n","") for l in answers.readlines() ]
+ref = [ l.lower().replace("\n","") for l in reference.readlines() ]
 
 answers.close()
 reference.close()

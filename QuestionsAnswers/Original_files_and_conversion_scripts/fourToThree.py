@@ -18,8 +18,8 @@ for line in file:
 			questions.close()
 			answers.close()
 		
-		questions = open(words[1].replace("\n", "") + "_questions", 'w')
-		answers = open(words[1].replace("\n", "")  + "_answers", 'w')
+		questions = open(words[1].replace("\n", "") + ".questions", 'w')
+		answers = open(words[1].replace("\n", "")  + ".answers", 'w')
 		
 		print words
 
