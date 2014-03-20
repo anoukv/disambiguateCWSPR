@@ -8,7 +8,7 @@ from math import sqrt
 # Approved by Anouk
 def save_answers(answers, filename):
 	f = open(filename, 'w')
-	f.write( "".join([ str(answer[0])+" "+answer[1][0]+":"+answer[1][1]+"\n" for answer in answers]) )
+	f.write( "".join([ str(answer[0])+ ' "' + answer[1][0] + ":" + answer[1][1] + '"\n' for answer in answers]) )
 	f.close()
 
 def load_questions(filename):
