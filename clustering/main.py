@@ -55,6 +55,7 @@ def anotate(inpt, skipsize):
 
 					coc[word1] += 1
 					coc[word2] += 1
+
 				cocs[mid].append(normalize_coc(coc))
 
 	print "Now clustering..."

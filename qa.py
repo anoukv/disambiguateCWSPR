@@ -14,6 +14,7 @@ def save_answers(answers, filename):
 # Written by Remi
 # Approved and edited by Anouk (made all words lower case)
 def load_questions(filename):
+	print "Loading questions..."
 	f = open(filename, 'r')
 	c = [ tuple(l.lower().replace("\n","").split(" ")) for l in f.readlines()]
 	f.close()
@@ -39,6 +40,7 @@ def normalize(vec):
 # written by Remi
 # Approved and edited by Anouk (made all words lower case and took out internal normalize function)
 def load_vectors(filename):
+	print "Loading word projections"
 	f = open(filename,'r')
 	f.readline()
 	content = [ filter( lambda x : not x in ["\n",""], l.replace("\n", "").split(" ")) for l in f.readlines() ]
@@ -107,6 +109,7 @@ def qa(wordvectors, questions):
 
 # Written by Anouk based on qa.c
 def qa_ambiguous(wordvectors, questions):
+	print "Answering questions"
 	
 	# initialize empty answers list
 	answers = []
@@ -174,19 +177,10 @@ def qa_ambiguous(wordvectors, questions):
 if __name__ == "__main__":
 	if not len(sys.argv) == 3:
 		print "Call me as:"
-		print "python amb_eval.py wordvectors.txt questions"
+		print "python qa.py wordvectors.txt questions"
 		sys.exit()
 
-	questions = sys.argv[2]
-
-	print "Loading questions..."
-	questions = load_questions(questions)
-	
-	print "Loading word projections"
-	vecs = load_vectors(sys.argv[1])
-	
-	print "Answering questions"
-	answers = qa_ambiguous(vecs, questions)
+	answers = qa_ambiguous(load_vectors(sys.argv[1]), load_questions(sys.argv[2]))
 	
 	print "Saving answers to file"
 	save_answers(answers, "precomputedAnswers/" + sys.argv[1].split("/")[-1] + "." + sys.argv[2].split("/")[-1].split(".")[0] + ".answered")
