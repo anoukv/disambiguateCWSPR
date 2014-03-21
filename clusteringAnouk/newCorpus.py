@@ -195,6 +195,7 @@ halfCOC.update(dict(clustered[:len(clustered)/2]))
 # we can close the new one and the original one now.
 new.close()
 co_occurences.close()
+clustered = None
 
 # the input is the text file
 print "Reading corpus..."
