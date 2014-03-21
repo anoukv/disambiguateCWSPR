@@ -72,7 +72,7 @@ def annotate(inpt, clustered, vocabulary, skipsize):
 # gives us a new dictionary with multiple senses of the words
 # not all words will be in this dictionary, only the words for which 
 # multiple senses were actually found
-def makeNewCOCS(coc, outputfile):	
+def makeNewCOCS(coc, outputfile, voc):	
 	# inititate return object
 	#newCOC = dict()
 	newCOC = shelve.open(outputfile)
@@ -84,13 +84,55 @@ def makeNewCOCS(coc, outputfile):
 	numberOfWords = len(allWords)
 	print allWords
 
+	print "Running some statistics on the vocabulary to find which words won't be clustered!"
+	
+	# We won't be using words that have a unique frequency
+	# this is pretty memory intensive... 
+
+	# use a dict #frequency -> int(count)
+	# and a dict #frequency -> [wordsWithFrequency]
+	frequencyCounts = defaultdict(int)
+	frequencyWord = defaultdict(list)
+
+	for word in voc:
+		frequencyCounts[voc[word]] += 1
+		frequencyWord[voc[word]].append(word)
+
+	wordsToCut = set()
+
+	remove = 0
+	
+	for freq in frequencyCounts:
+		if frequencyCounts[freq] == 1:
+			# we can say 0 here, because we know that there is only one...
+			wordsToCut.add(frequencyWord[freq][0])
+			remove += freq
+	
+	# now we also want to ensure we delete the 25 words with the highest frequency
+
+	# make a sorted list of frequencies high - low
+	frequencies = sorted(frequencyCounts.keys(), reverse=True)
+
+	# add all words that belong to the 25 highest frequencies
+	for i in range(25):
+		wordsWithHighestFrequency = frequencyWord[frequencies[i]]
+		for w in wordsWithFrequency:
+			wordsToCut.add(w)
+	
+	# clear for memory
+	frequencyCounts = None
+	frequencyWord = None
+	frequencies = None
+	
 	# we will be evaluating the ambiguousness of every single word excpet for ''
 	for counter, word in enumerate(allWords):
 		
 		print counter,  "/", numberOfWords
 		print "\n\nMaking sense of: ", word
 
-		if word != '':
+		# we don't want nothing
+		# we don't want words that occur less than 20 times
+		if word != '' and voc[word] > 20 and word not in wordsToCut:
 			listOfDatapoints = []
 
 			# get co-occurences for the word
@@ -149,6 +191,8 @@ def makeNewCOCS(coc, outputfile):
 
 				# save the different sences of the word
 				newCOC[word] = senses
+		else:
+			print "Not clustering word: ", word
 
 	return newCOC
 
@@ -177,10 +221,11 @@ output_annotated_corpus = sys.argv[5]
 print "Reading global co-occurences (relative frequencies, relatedness scores and vocabulary)"
 print input_file_coc + "_rel"
 co_occurences = shelve.open(input_file_coc + "_rel")
+voc = shelve.open(input_file_coc + "_voc")
 
 # This thing actually makes a co occurence thing with multiple senses of the word
 print "Making new co-occurence dictionary, with multiple senses of all words... This might take a while."
-new = makeNewCOCS(co_occurences, output_file_new_coc)
+new = makeNewCOCS(co_occurences, voc, output_file_new_coc)
 
 
 # annotate the corpus 
@@ -202,7 +247,9 @@ print "Reading corpus..."
 inpt = read_file(training_text)
 
 print "Annotating corpus."
-annotated = annotate(inpt, halfCOC, shelve.open(input_file_coc + "_voc"), 5)
+annotated = annotate(inpt, halfCOC, voc, 5)
+
+voc.close()
 
 f = open(output_annotated_corpus, 'w')
 f.write("".join(annotated))
