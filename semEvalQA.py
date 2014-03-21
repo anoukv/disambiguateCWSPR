@@ -115,4 +115,3 @@ if __name__ == "__main__":
 	
 	print "Saving answers to file"
 	save_answers(ranking, "SemEvalRankings/" + projections.split("/")[-1] + "." + questionsFile.split("/")[-1].split(".")[0] + ".answered")
-	#save_answers(ranking, "test")
