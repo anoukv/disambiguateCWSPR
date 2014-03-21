@@ -1,8 +1,8 @@
 import os, sys
 
-if not len(sys.argv) > 3:
+if not len(sys.argv) > 2:
 	print "Call me as:"
-	print "python score.py <projections> <questions> <answers>"
+	print "python score.py <projections> <answers>"
 	sys.exit()
 
 def compare(together):
@@ -26,14 +26,13 @@ def compare(together):
 	return correct / float(len(together)) * 100
 
 vecs = sys.argv[1]
-quest = sys.argv[2]
-answer = sys.argv[3]
+answer = sys.argv[2]
 
-vecsname = "precomputedAnswers/" + vecs.split("/")[-1] + "." + quest.split("/")[-1].split(".")[0] + ".answered"
+vecsname = "precomputedAnswers/" + vecs.split("/")[-1] + "." + answer.split("/")[-1].split(".")[0] + ".answered"
 
 if not os.path.isfile(vecsname):
 	print "Need to calculate answers for", vecs
-	os.system("pypy qa.py " + vecs + " " + quest)
+	os.system("pypy qa.py " + vecs + " " + answer)
 
 answers = open(answer, 'r')
 reference = open(vecsname, 'r')
