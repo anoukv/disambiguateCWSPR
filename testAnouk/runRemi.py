@@ -1,10 +1,10 @@
-import pickle
 from math import sqrt
 from kmeans import kmeans_process
 from collections import defaultdict
 import sys
 from copy import copy
 from random import choice
+import shelve
 
 # deletes all the keys from dic that are not in keysToKeep
 def deleteSomeKeys(keysToKeep, dic):
@@ -29,9 +29,7 @@ def annotate(inpt, clustered, vocabulary, skipsize):
 		queue.append(element)
 		if len(queue) > queueSize:
 			queue.pop(0)
-	
-	print "Starting annotating corpus."
-	
+
 	annotated = []
 	queue = []
 	for word in inpt:
@@ -74,13 +72,10 @@ def annotate(inpt, clustered, vocabulary, skipsize):
 # gives us a new dictionary with multiple senses of the words
 # not all words will be in this dictionary, only the words for which 
 # multiple senses were actually found
-def makeNewCOCS(cocvoc):
-	
-	# get the coc (actually 'rel')
-	coc = cocvoc['rel']
-	
+def makeNewCOCS(coc, outputfile):	
 	# inititate return object
-	newCOC = dict()
+	#newCOC = dict()
+	newCOC = shelve.open(outputfile)
 
 	# get all words
 	allWords = coc.keys()
@@ -159,50 +154,57 @@ def makeNewCOCS(cocvoc):
 
 print "Welcome to the clustering method designed by Anouk. You'll enjoy your time here."
 
+# ARGUMENTS: 
+# input COC !
+# output new COC !
+# input corpus !
+# output new COC / 2 !
+# new annotated coprus
+
+
+if len(sys.argv) < 6:
+ 		print "Please call me as:"
+ 		print "python runRemi.py <original coc> <new coc (output)> <training text> <new coc half (output)> <annotated corpus>"
+ 		sys.exit()
+
+input_file_coc = sys.argv[1]
+output_file_new_coc = sys.argv[2]
+training_text = sys.argv[3]
+output_file_new_coc_half = sys.argv[4]
+output_annotated_corpus = sys.argv[5]
+
 # this is the original co-occurence thing, with 'rel', 'coc' and 'voc' as keys
 print "Reading global co-occurences (relative frequencies, relatedness scores and vocabulary)"
-co_occurences = pickle.load(open('../../data/coc.large', 'rb'))
+print input_file_coc + "_rel"
+co_occurences = shelve.open(input_file_coc + "_rel")
 
 # This thing actually makes a co occurence thing with multiple senses of the word
 print "Making new co-occurence dictionary, with multiple senses of all words... This might take a while."
-new = makeNewCOCS(co_occurences)
-pickle.dump(new, open('../../data/newCOC.large', 'wb'))
+new = makeNewCOCS(co_occurences, output_file_new_coc)
 
-# the input is the text file
-print "Reading corpus..."
-inpt = read_file('../../data/text.large')
 
 # annotate the corpus 
 # we might want to decrease new based on cluster distances
 # for example, we might only take 50% of the words in here, that have
 # the highest cluster distances
-print "Originally ", len(new.keys()), " words would have been split."
-
+print "Throwing away half of the words... "
 clustered = sorted(new.items(), key=lambda x: x[1]['clusterDistance'], reverse = True)
-clustered = clustered[:len(clustered)/2]
-clustered = dict(clustered)
+halfCOC = shelve.open(output_file_new_coc_half)
+halfCOC.update(dict(clustered[:len(clustered)/2]))
 
-print len(clustered.keys()), " words will be split after cutting this thing in half..."
-annotated = annotate(inpt, clustered, co_occurences['voc'], 5)
+# we can close the new one and the original one now.
+new.close()
+co_occurences.close()
 
-f = open('../../data/text.anoukHalf.large', 'w')
+# the input is the text file
+print "Reading corpus..."
+inpt = read_file(training_text)
+
+print "Annotating corpus."
+annotated = annotate(inpt, halfCOC, shelve.open(input_file_coc + "_voc"), 5)
+
+f = open(output_annotated_corpus, 'w')
 f.write("".join(annotated))
 f.close()
-
-# To run this script without intervention do something like: 
-# file_name should probably be coc.small
-# file_name = sys.argv[1]
-# co_occurences = pickle.load(open(file_name, 'rb'))
-# new = makeNewCOCS(co_occurences)
-# pickle.dump(new, open('../../testingCOC.small', 'wb'))
-# inpt = read_file('../../text.small')
-# # annotate the corpus 
-# # we might want to decrease new based on cluster distances
-# # for example, we might only take 50% of the words in here, that have
-# # the highest cluster distances
-# annotated = annotate(inpt, new, co_occurences['voc'], 5)
-# f = open('../../text.anouk.small', 'w')
-# f.write("".join(annotated))
-# f.close()
 
 

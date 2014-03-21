@@ -1,7 +1,7 @@
 import sys
 from collections import defaultdict
 from time import time
-import pickle
+import shelve
 from math import sqrt
 
 def get_document_vocabulary(inpt, minimumOccurence = 5):
@@ -101,8 +101,10 @@ def main_anouk_is_a_charm():
 	(inpt, output_file, skipsize) = read_args()
 
 	coc = getCocMatrix(inpt, skipsize)
-
-	pickle.dump(coc, open(output_file, 'wb'))
+	for key in coc:
+		myShelve = shelve.open(output_file + "_" + key)
+		myShelve.update(coc[key])
+		myShelve.close()
 	
 
 if __name__ == "__main__":
