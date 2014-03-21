@@ -95,8 +95,8 @@ def qa(wordvectors, questions):
                                         #sim = EuclideanDistance(y, wordRep)
 					#sim = JaccardDistance(y, wordRep)
                                         #sim = PearsonCorrelation(y, wordRep)
-					#sim = SpearmanCorrelation(y, wordRep)
-                                        sim = MahalanobisDist(y, wordRep)
+                                        #sim = SpearmanCorrelation(y, wordRep)
+					sim = MahalanobisDist(y, wordRep)
 					                                        
 					# save result if it is better than the previous best result
 					if sim > bestSim:
@@ -150,7 +150,7 @@ def PearsonCorrelation(x, y):
         return diffprod / math.sqrt(xdiff2 * ydiff2)
 
 def SpearmanCorrelation(x,y):
-        return stats.stats.spearmanr(x, y)[0]
+    return stats.stats.spearmanr(x, y)[0]
 
 def MahalanobisDist(x, y):
         covariance_xy = np.cov(x,y, rowvar=0)
@@ -165,8 +165,7 @@ def MahalanobisDist(x, y):
                 md.append(np.sqrt(np.dot(np.dot(np.transpose(diff_xy[i]),inv_covariance_xy),diff_xy[i])))
                 dist += md[i]
         return dist/len(md)
-
-
+        
 if __name__ == "__main__":
 	if not len(sys.argv) == 2:
 		print "Call me as:"

@@ -93,10 +93,10 @@ def qa(wordvectors, questions):
 					#Compute similary between the two vectors
                                         #sim = CosineSimilarity(y, wordRep)  
                                         #sim = EuclideanDistance(y, wordRep)
-					#sim = JaccardDistance(y, wordRep)
+					sim = JaccardDistance(y, wordRep)
                                         #sim = PearsonCorrelation(y, wordRep)
-					#sim = SpearmanCorrelation(y, wordRep)
-                                        sim = MahalanobisDist(y, wordRep)
+                                        #sim = SpearmanCorrelation(y, wordRep)
+					#sim = MahalanobisDist(y, wordRep)
 					                                        
 					# save result if it is better than the previous best result
 					if sim > bestSim:
@@ -117,7 +117,7 @@ def CosineSimilarity(vec1, vec2):
         return sum([vec1[i] * vec2[i] for i in xrange(len(vec1))])
 
 def EuclideanDistance(vec1, vec2):
-        return math.sqrt(sum([(vec1[i] - vec2[i])**2 for i in xrange(len(vec1))]))
+        return 1/(1 + math.sqrt(sum([(vec1[i] - vec2[i])**2 for i in xrange(len(vec1))])))
 
 def JaccardDistance(vec1, vec2):
         #Jaccard / Tanimoto Coefficient
@@ -125,7 +125,7 @@ def JaccardDistance(vec1, vec2):
         #return float(len(vec3)) / (len(vec1) + len(vec2) - len(vec3))
         
         n = len(set(vec1).intersection(set(vec2)))
-        return n / float(len(vec1) + len(vec2) - n)
+        return 1+ (1 + n / float(len(vec1) + len(vec2) - n))
 
 def average(x):
         assert len(x) > 0
@@ -150,7 +150,7 @@ def PearsonCorrelation(x, y):
         return diffprod / math.sqrt(xdiff2 * ydiff2)
 
 def SpearmanCorrelation(x,y):
-        return stats.stats.spearmanr(x, y)[0]
+    return stats.stats.spearmanr(x, y)[0]
 
 def MahalanobisDist(x, y):
         covariance_xy = np.cov(x,y, rowvar=0)
@@ -160,13 +160,13 @@ def MahalanobisDist(x, y):
         y_diff = np.array([y_i - xy_mean[1] for y_i in y])
         diff_xy = np.transpose([x_diff, y_diff])
 
-        md = [], dist = 0
+        md = []
+        dist = 0
         for i in range(len(diff_xy)):
                 md.append(np.sqrt(np.dot(np.dot(np.transpose(diff_xy[i]),inv_covariance_xy),diff_xy[i])))
                 dist += md[i]
         return dist/len(md)
-
-
+        
 if __name__ == "__main__":
 	if not len(sys.argv) == 2:
 		print "Call me as:"
@@ -183,7 +183,7 @@ if __name__ == "__main__":
 	answers = qa(vecs, questions)
 	
 	print "Saving answers to file"
-	save_answers(answers, "precomputedAnswers/testCristinaSpearmanCorrelation.answered")
+	save_answers(answers, "precomputedAnswers/testCristinaJaccardDistance.answered")
 
 
 
