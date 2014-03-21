@@ -1,9 +1,9 @@
 from __future__ import division
 import sys
-import pickle, math
-import numpy as np
+import pickle
 from collections import defaultdict
 from scipy import stats
+import math
 
 questions = "QuestionsAnswers/word_relationship.questions"
 
@@ -94,9 +94,8 @@ def qa(wordvectors, questions):
                                         #sim = CosineSimilarity(y, wordRep)  
                                         #sim = EuclideanDistance(y, wordRep)
 					#sim = JaccardDistance(y, wordRep)
-                                        #sim = PearsonCorrelation(y, wordRep)
-					#sim = SpearmanCorrelation(y, wordRep)
-                                        sim = MahalanobisDist(y, wordRep)
+                                        sim = PearsonCorrelation(y, wordRep)
+                                        sim = SpearmanCorrelation(y, wordRep)
 					                                        
 					# save result if it is better than the previous best result
 					if sim > bestSim:
@@ -120,7 +119,6 @@ def EuclideanDistance(vec1, vec2):
         return math.sqrt(sum([(vec1[i] - vec2[i])**2 for i in xrange(len(vec1))]))
 
 def JaccardDistance(vec1, vec2):
-        #Jaccard / Tanimoto Coefficient
         #vec3 = list(set(vec1).intersection(set(vec2)))
         #return float(len(vec3)) / (len(vec1) + len(vec2) - len(vec3))
         
@@ -150,23 +148,8 @@ def PearsonCorrelation(x, y):
         return diffprod / math.sqrt(xdiff2 * ydiff2)
 
 def SpearmanCorrelation(x,y):
-        return stats.stats.spearmanr(x, y)[0]
-
-def MahalanobisDist(x, y):
-        covariance_xy = np.cov(x,y, rowvar=0)
-        inv_covariance_xy = np.linalg.inv(covariance_xy)
-        xy_mean = np.mean(x),np.mean(y)
-        x_diff = np.array([x_i - xy_mean[0] for x_i in x])
-        y_diff = np.array([y_i - xy_mean[1] for y_i in y])
-        diff_xy = np.transpose([x_diff, y_diff])
-
-        md = [], dist = 0
-        for i in range(len(diff_xy)):
-                md.append(np.sqrt(np.dot(np.dot(np.transpose(diff_xy[i]),inv_covariance_xy),diff_xy[i])))
-                dist += md[i]
-        return dist/len(md)
-
-
+    return stats.stats.spearmanr(x, y)[0]
+        
 if __name__ == "__main__":
 	if not len(sys.argv) == 2:
 		print "Call me as:"
@@ -183,7 +166,7 @@ if __name__ == "__main__":
 	answers = qa(vecs, questions)
 	
 	print "Saving answers to file"
-	save_answers(answers, "precomputedAnswers/testCristinaSpearmanCorrelation.answered")
+	save_answers(answers, "precomputedAnswers/testCristinaPearsonCorrelation.answered")
 
 
 
