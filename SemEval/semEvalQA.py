@@ -116,4 +116,3 @@ if __name__ == "__main__":
 	
 	print "Saving answers to file"
 	save_answers(ranking, outFile)
-	#save_answers(ranking, "test")
