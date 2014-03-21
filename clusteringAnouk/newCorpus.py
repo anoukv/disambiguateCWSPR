@@ -73,16 +73,15 @@ def annotate(inpt, clustered, vocabulary, skipsize):
 # not all words will be in this dictionary, only the words for which 
 # multiple senses were actually found
 def makeNewCOCS(coc, outputfile, voc):	
+	
 	# inititate return object
-	#newCOC = dict()
+	print "Writing results to: ", outputfile
 	newCOC = shelve.open(outputfile)
 
 	# get all words
 	allWords = coc.keys()
-	#allWords = ['apple', 'microsoft', 'jaguar', 'road', 'walk', 'bank', 'to', 'and', 'it', 'firm']
 	
 	numberOfWords = len(allWords)
-	print allWords
 
 	print "Running some statistics on the vocabulary to find which words won't be clustered!"
 	
@@ -116,13 +115,15 @@ def makeNewCOCS(coc, outputfile, voc):
 	# add all words that belong to the 25 highest frequencies
 	for i in range(25):
 		wordsWithHighestFrequency = frequencyWord[frequencies[i]]
-		for w in wordsWithFrequency:
+		for w in wordsWithHighestFrequency:
 			wordsToCut.add(w)
 	
 	# clear for memory
 	frequencyCounts = None
 	frequencyWord = None
 	frequencies = None
+
+	print "Not clustering ", len(wordsToCut) * 100 / float(numberOfWords), "% of words..."
 	
 	# we will be evaluating the ambiguousness of every single word excpet for ''
 	for counter, word in enumerate(allWords):
@@ -192,7 +193,12 @@ def makeNewCOCS(coc, outputfile, voc):
 				# save the different sences of the word
 				newCOC[word] = senses
 		else:
+			print 
+			print " ===================== "
 			print "Not clustering word: ", word
+			print " ===================== "
+			print
+
 
 	return newCOC
 
@@ -219,13 +225,12 @@ output_annotated_corpus = sys.argv[5]
 
 # this is the original co-occurence thing, with 'rel', 'coc' and 'voc' as keys
 print "Reading global co-occurences (relative frequencies, relatedness scores and vocabulary)"
-print input_file_coc + "_rel"
 co_occurences = shelve.open(input_file_coc + "_rel")
 voc = shelve.open(input_file_coc + "_voc")
 
 # This thing actually makes a co occurence thing with multiple senses of the word
 print "Making new co-occurence dictionary, with multiple senses of all words... This might take a while."
-new = makeNewCOCS(co_occurences, voc, output_file_new_coc)
+new = makeNewCOCS(co_occurences, output_file_new_coc, voc)
 
 
 # annotate the corpus 
