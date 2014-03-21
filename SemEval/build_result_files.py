@@ -1,6 +1,15 @@
 import sys, os, glob
 
-
+def add_hyphens(filename):
+	f = open(filename, 'r')
+	content = filter(lambda x : ":" in x, f.readlines())
+	f.close()
+	c = []
+	for line in content:
+		if '"' not in line:
+			c.append( '"' + line + '"')
+		else:
+			c.append(line)
 
 if __name__ == "__main__":
 	if not len(sys.argv) == 2:
