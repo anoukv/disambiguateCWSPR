@@ -92,18 +92,18 @@ def qa(wordvectors, questions, distanceMeasure):
                                         
 					#Compute similary between the two word vectors
 					if (distanceMeasure == "euclidean"):
-                                                sim = EuclideanSimilarity(y, wordRep)
-                                        elif (distanceMeasure == "jaccard"):
-                                                sim = JaccardDistance(y, wordRep)
-                                        elif (distanceMeasure == "pearson"):
-                                                sim = PearsonCorrelation(y, wordRep)
-                                        elif (distanceMeasure == "spearman"):
-                                                sim = SpearmanCorrelation(y, wordRep)
-                                        elif (distanceMeasure == "mahalanobis"):
-                                                sim = MahalanobisDist(y, wordRep)
-                                        else: #default cosine similarity
-                                                sim = CosineSimilarity(y, wordRep)
-					                                        
+                        sim = EuclideanSimilarity(y, wordRep)
+	                elif (distanceMeasure == "jaccard"):
+                        sim = JaccardDistance(y, wordRep)
+	                elif (distanceMeasure == "pearson"):
+                        sim = PearsonCorrelation(y, wordRep)
+	                elif (distanceMeasure == "spearman"):
+                        sim = SpearmanCorrelation(y, wordRep)
+	                elif (distanceMeasure == "mahalanobis"):
+                        sim = MahalanobisDist(y, wordRep)
+	                else: #default cosine similarity
+                        sim = CosineSimilarity(y, wordRep)
+                                    
 					# save result if it is better than the previous best result
 					if sim > bestSim:
 						bestSim = sim
@@ -117,61 +117,61 @@ def qa(wordvectors, questions, distanceMeasure):
 	return answers
 
 def CosineSimilarity(vec1, vec2):
-        # similarity is defined as the cosine similarity
+    # similarity is defined as the cosine similarity
 	# cosine similarity normaly is (a (dot product) b) / (norm(a) * norm(b))
 	# we have normalized a and b, so the denominator is always one and can be discarded
-        return sum([vec1[i] * vec2[i] for i in xrange(len(vec1))])
+    return sum([vec1[i] * vec2[i] for i in xrange(len(vec1))])
 
 def EuclideanSimilarity(vec1, vec2):
-        return 1/(1 + math.sqrt(sum([(vec1[i] - vec2[i])**2 for i in xrange(len(vec1))])))
+	return 1/(1 + math.sqrt(sum([(vec1[i] - vec2[i])**2 for i in xrange(len(vec1))])))
 
 def JaccardDistance(vec1, vec2):
-        #Jaccard / Tanimoto Coefficient
-        #vec3 = list(set(vec1).intersection(set(vec2)))
-        #return float(len(vec3)) / (len(vec1) + len(vec2) - len(vec3))
-        
-        n = len(set(vec1).intersection(set(vec2)))
-        return n / float(len(vec1) + len(vec2) - n)
+    #Jaccard / Tanimoto Coefficient
+    #vec3 = list(set(vec1).intersection(set(vec2)))
+    #return float(len(vec3)) / (len(vec1) + len(vec2) - len(vec3))
+    
+    n = len(set(vec1).intersection(set(vec2)))
+    return n / float(len(vec1) + len(vec2) - n)
 
 def average(x):
-        assert len(x) > 0
-        return float(sum(x)) / len(x)
+    assert len(x) > 0
+    return float(sum(x)) / len(x)
 
 def PearsonCorrelation(x, y):
-        assert len(x) == len(y)
-        n = len(x)
-        assert n > 0
-        avg_x = average(x)
-        avg_y = average(y)
-        diffprod = 0
-        xdiff2 = 0
-        ydiff2 = 0
-        for i in range(n):
-                xdiff = x[i] - avg_x
-                ydiff = y[i] - avg_y
-                diffprod += xdiff * ydiff
-                xdiff2 += xdiff * xdiff
-                ydiff2 += ydiff * ydiff
+    assert len(x) == len(y)
+    n = len(x)
+    assert n > 0
+    avg_x = average(x)
+    avg_y = average(y)
+    diffprod = 0
+    xdiff2 = 0
+    ydiff2 = 0
+    for i in range(n):
+        xdiff = x[i] - avg_x
+        ydiff = y[i] - avg_y
+        diffprod += xdiff * ydiff
+        xdiff2 += xdiff * xdiff
+        ydiff2 += ydiff * ydiff
 
-        return diffprod / math.sqrt(xdiff2 * ydiff2)
+    return diffprod / math.sqrt(xdiff2 * ydiff2)
 
 def SpearmanCorrelation(x,y):
     return stats.stats.spearmanr(x, y)[0]
 
 def MahalanobisDist(x, y):
-        covariance_xy = np.cov(x,y, rowvar=0)
-        inv_covariance_xy = np.linalg.inv(covariance_xy)
-        xy_mean = np.mean(x),np.mean(y)
-        x_diff = np.array([x_i - xy_mean[0] for x_i in x])
-        y_diff = np.array([y_i - xy_mean[1] for y_i in y])
-        diff_xy = np.transpose([x_diff, y_diff])
+    covariance_xy = np.cov(x,y, rowvar=0)
+    inv_covariance_xy = np.linalg.inv(covariance_xy)
+    xy_mean = np.mean(x),np.mean(y)
+    x_diff = np.array([x_i - xy_mean[0] for x_i in x])
+    y_diff = np.array([y_i - xy_mean[1] for y_i in y])
+    diff_xy = np.transpose([x_diff, y_diff])
 
-        md = []
-        dist = 0
-        for i in range(len(diff_xy)):
-                md.append(np.sqrt(np.dot(np.dot(np.transpose(diff_xy[i]),inv_covariance_xy),diff_xy[i])))
-                dist += md[i]
-        return dist/len(md)
+    md = []
+    dist = 0
+    for i in range(len(diff_xy)):
+        md.append(np.sqrt(np.dot(np.dot(np.transpose(diff_xy[i]),inv_covariance_xy),diff_xy[i])))
+        dist += md[i]
+    return dist/len(md)
         
 if __name__ == "__main__":
 	if not len(sys.argv) == 3:

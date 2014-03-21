@@ -5,11 +5,19 @@ def add_hyphens(filename):
 	content = filter(lambda x : ":" in x, f.readlines())
 	f.close()
 	c = []
+	change = False
 	for line in content:
 		if '"' not in line:
-			c.append( '"' + line + '"')
+			change = True
+			c.append( '"' + line.replace("\n","") + '"\n')
 		else:
 			c.append(line)
+	if change:
+		f = open(filename, 'w')
+		f.write("".join(c))
+		f.close()
+
+
 
 if __name__ == "__main__":
 	if not len(sys.argv) == 2:
