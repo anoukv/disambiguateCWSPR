@@ -56,7 +56,7 @@ def load_vectors(filename):
 	return words
 
 # Written by Anouk based on qa.c
-def qa(wordvectors, questions):
+def qa(wordvectors, questions, distanceMeasure):
 	
 	# initialize empty answers list
 	answers = []
@@ -90,13 +90,19 @@ def qa(wordvectors, questions):
 					# again assume that there is only one projection for the word
 					wordRep = wordvectors[word][0]
                                         
-					#Compute similary between the two vectors
-                                        #sim = CosineSimilarity(y, wordRep)  
-                                        #sim = EuclideanDistance(y, wordRep)
-					#sim = JaccardDistance(y, wordRep)
-                                        #sim = PearsonCorrelation(y, wordRep)
-					#sim = SpearmanCorrelation(y, wordRep)
-                                        sim = MahalanobisDist(y, wordRep)
+					#Compute similary between the two word vectors
+					if (distanceMeasure == "euclidean"):
+                                                sim = EuclideanSimilarity(y, wordRep)
+                                        elif (distanceMeasure == "jaccard"):
+                                                sim = JaccardDistance(y, wordRep)
+                                        elif (distanceMeasure == "pearson"):
+                                                sim = PearsonCorrelation(y, wordRep)
+                                        elif (distanceMeasure == "spearman"):
+                                                sim = SpearmanCorrelation(y, wordRep)
+                                        elif (distanceMeasure == "mahalanobis"):
+                                                sim = MahalanobisDist(y, wordRep)
+                                        else: #default cosine similarity
+                                                sim = CosineSimilarity(y, wordRep)
 					                                        
 					# save result if it is better than the previous best result
 					if sim > bestSim:
@@ -116,8 +122,8 @@ def CosineSimilarity(vec1, vec2):
 	# we have normalized a and b, so the denominator is always one and can be discarded
         return sum([vec1[i] * vec2[i] for i in xrange(len(vec1))])
 
-def EuclideanDistance(vec1, vec2):
-        return math.sqrt(sum([(vec1[i] - vec2[i])**2 for i in xrange(len(vec1))]))
+def EuclideanSimilarity(vec1, vec2):
+        return 1/(1 + math.sqrt(sum([(vec1[i] - vec2[i])**2 for i in xrange(len(vec1))])))
 
 def JaccardDistance(vec1, vec2):
         #Jaccard / Tanimoto Coefficient
@@ -150,7 +156,7 @@ def PearsonCorrelation(x, y):
         return diffprod / math.sqrt(xdiff2 * ydiff2)
 
 def SpearmanCorrelation(x,y):
-        return stats.stats.spearmanr(x, y)[0]
+    return stats.stats.spearmanr(x, y)[0]
 
 def MahalanobisDist(x, y):
         covariance_xy = np.cov(x,y, rowvar=0)
@@ -160,19 +166,19 @@ def MahalanobisDist(x, y):
         y_diff = np.array([y_i - xy_mean[1] for y_i in y])
         diff_xy = np.transpose([x_diff, y_diff])
 
-        md = [], dist = 0
+        md = []
+        dist = 0
         for i in range(len(diff_xy)):
                 md.append(np.sqrt(np.dot(np.dot(np.transpose(diff_xy[i]),inv_covariance_xy),diff_xy[i])))
                 dist += md[i]
         return dist/len(md)
-
-
+        
 if __name__ == "__main__":
-	if not len(sys.argv) == 2:
+	if not len(sys.argv) == 3:
 		print "Call me as:"
-		print "python qa_cristina.py wordvectors.txt"
+		print "python qa_cristina.py wordvectors.txt distancemeasurename"
 		sys.exit()
-
+        
 	print "Loading questions..."
 	questions = load_questions()
 	
@@ -180,10 +186,11 @@ if __name__ == "__main__":
 	vecs = load_vectors(sys.argv[1])
 	
 	print "Answering questions"
-	answers = qa(vecs, questions)
+	distanceMeasure = sys.argv[2]
+	answers = qa(vecs, questions, distanceMeasure)
 	
 	print "Saving answers to file"
-	save_answers(answers, "precomputedAnswers/testCristinaSpearmanCorrelation.answered")
+	save_answers(answers, "precomputedAnswers/testCristina" + distanceMeasure + "Similarity.answered")
 
 
 
