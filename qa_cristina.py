@@ -92,7 +92,7 @@ def qa(wordvectors, questions, distanceMeasure):
                                         
 					#Compute similary between the two word vectors
 					if (distanceMeasure == "euclidean"):
-                                                sim = EuclideanDistance(y, wordRep)
+                                                sim = EuclideanSimilarity(y, wordRep)
                                         elif (distanceMeasure == "jaccard"):
                                                 sim = JaccardDistance(y, wordRep)
                                         elif (distanceMeasure == "pearson"):
@@ -101,7 +101,7 @@ def qa(wordvectors, questions, distanceMeasure):
                                                 sim = SpearmanCorrelation(y, wordRep)
                                         elif (distanceMeasure == "mahalanobis"):
                                                 sim = MahalanobisDist(y, wordRep)
-                                        else: #default cosine distance
+                                        else: #default cosine similarity
                                                 sim = CosineSimilarity(y, wordRep)
 					                                        
 					# save result if it is better than the previous best result
@@ -122,7 +122,7 @@ def CosineSimilarity(vec1, vec2):
 	# we have normalized a and b, so the denominator is always one and can be discarded
         return sum([vec1[i] * vec2[i] for i in xrange(len(vec1))])
 
-def EuclideanDistance(vec1, vec2):
+def EuclideanSimilarity(vec1, vec2):
         return 1/(1 + math.sqrt(sum([(vec1[i] - vec2[i])**2 for i in xrange(len(vec1))])))
 
 def JaccardDistance(vec1, vec2):
@@ -190,7 +190,7 @@ if __name__ == "__main__":
 	answers = qa(vecs, questions, distanceMeasure)
 	
 	print "Saving answers to file"
-	save_answers(answers, "precomputedAnswers/testCristina" + distanceMeasure + "Distance.answered")
+	save_answers(answers, "precomputedAnswers/testCristina" + distanceMeasure + "Similarity.answered")
 
 
 
