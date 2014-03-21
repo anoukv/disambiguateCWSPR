@@ -13,14 +13,14 @@ def save_answers(answers, filename):
 
 def load_questions(filename):
 	f = open(filename, 'r')
+	start = False
 	questions = []
-	for _ in xrange(4):
-		f.readline()
 	while True:
 		l = f.readline()
-		if l not in ["", "\n", "\r\n"]:
-			questions.append(tuple(l.lower().replace("\n", "").split(":")))
-		else:
+		if l not in ["", "\n", "\r\n"] and ":" in l and " " not in l:
+			start = True
+			questions.append(tuple(l.lower().replace("\n", "").replace('"', "").split(":")))
+		elif start:
 			break
 	f.close()
 	return questions
