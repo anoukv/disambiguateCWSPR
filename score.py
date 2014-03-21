@@ -2,7 +2,7 @@ import os, sys
 
 if not len(sys.argv) > 3:
 	print "Call me as:"
-	print "python score.py ../wordvectors/vectors80.small QuestionsAnswers/questions QuestionsAnswers/answers"
+	print "python score.py <projections> <questions> <answers>"
 	sys.exit()
 
 def compare(together):
@@ -24,10 +24,6 @@ def compare(together):
 
 	# compute accuracy
 	return correct / float(len(together)) * 100
-
-
-# quest = "QuestionsAnswers/word_relationship.questions"
-# answer = "QuestionsAnswers/word_relationship.answers"
 
 vecs = sys.argv[1]
 quest = sys.argv[2]

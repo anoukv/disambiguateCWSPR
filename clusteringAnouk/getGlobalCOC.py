@@ -96,7 +96,6 @@ def read_args():
 
  	return (read_file(train), output_file, skipsize)
 
-
 def main_anouk_is_a_charm():
 	(inpt, output_file, skipsize) = read_args()
 
