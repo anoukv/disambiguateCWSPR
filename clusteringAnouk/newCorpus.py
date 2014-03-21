@@ -5,6 +5,7 @@ import sys
 from copy import copy
 from random import choice
 import shelve
+from multiprocessing import *
 
 # deletes all the keys from dic that are not in keysToKeep
 def deleteSomeKeys(keysToKeep, dic):
@@ -13,14 +14,15 @@ def deleteSomeKeys(keysToKeep, dic):
 		if key not in keysToKeep:
 			dic.pop(key)
 
+# reads the corpus file
 def read_file(filename):
 		f = open(filename, 'r')
 	 	inpt = f.readline().replace("\n", "").split(" ")
 	 	f.close()
 	 	return inpt
 
+# annotates the corpus using the multiple senses of a word
 def annotate(inpt, clustered, vocabulary, skipsize):
-	
 	queueSize = skipsize * 2 + 1
 
 	# two functions
@@ -63,26 +65,76 @@ def annotate(inpt, clustered, vocabulary, skipsize):
 					word = word + "_" + str(choice([0,1]))
 
 		annotated.append(word + " ")
-	#print set(annotated)
-
 	return annotated
 
+# prepares the data for a word, that is necessary to create the two senses
+def prepareExtraction(word, coc):
+	listOfDatapoints = []
 
+	# get co-occurences for the word
+	wordCOC = copy(coc[word])
 
-# gives us a new dictionary with multiple senses of the words
-# not all words will be in this dictionary, only the words for which 
-# multiple senses were actually found
-def makeNewCOCS(coc, outputfile, voc):	
+	# sort from high relatedness to low relatedness
+	# cut off half, top half will be used, other half will be things that are relevant to all sensess
+	tupleList = sorted(wordCOC.items(), key=lambda x: x[1], reverse = True)
 	
-	# inititate return object
-	print "Writing results to: ", outputfile
-	newCOC = shelve.open(outputfile)
+	relevantCocWords = tupleList[:len(tupleList)/2]
+	theRest = tupleList[len(tupleList)/2:]
 
-	# get all words
-	allWords = coc.keys()
-	
-	numberOfWords = len(allWords)
+	cocWords = [elem[0] for elem in relevantCocWords]
+	relevantToAll = [elem[0] for elem in theRest]
 
+	# for every co-occuring word with the word
+	# we save the vector with co-occuring words (only containing words from cocWords)
+	# this collection will be datapoints
+	for cocWord in cocWords:
+		vector = copy(coc[cocWord])
+		deleteSomeKeys(cocWords, vector)
+		listOfDatapoints.append(vector)
+
+	return (listOfDatapoints, cocWords, copy(coc[word]), relevantToAll)
+
+# extracts the two senses of a word
+def extractSenses((word, preparation)):
+	(listOfDatapoints, cocWords, originalCoc, relevantToAll) = preparation
+	# only if more than one datapoint was found, the word will be called ambiguous
+	if len(listOfDatapoints) > 1:
+
+		# cluster all co-occurence vectors
+		clusters = kmeans_process(listOfDatapoints)
+		
+		# find out which term belongs to which cluster
+		wordAssignemnts = defaultdict(list)
+		for i, cocWord in enumerate(cocWords):
+			bestClusterID = "NONE"
+			bestDistance = 2
+			for clusterID in clusters:
+				dist = clusters[clusterID].distance(listOfDatapoints[i])
+				if dist < bestDistance:
+					bestDistance = dist
+					bestClusterID = clusterID
+			wordAssignemnts[bestClusterID].append(cocWord)
+		
+		# get the cluster distance
+		clusterDistance = clusters[0].cluster_distance(clusters[1])
+		
+		# make a new representations for the different senses of the words
+		# save also the cluster distance for future reference
+		senses = dict()
+		senses['clusterDistance'] = clusterDistance
+
+		# for all clusters, we will now make a new sense of the word
+		# the sense will contain the relevantToAll words and the words assigned to the specific cluster
+		for key in wordAssignemnts:
+			sense = copy(originalCoc)
+			deleteSomeKeys(wordAssignemnts[key]+relevantToAll, sense)
+			senses[key] = sense
+
+		# save the different sences of the word
+		return (word, senses)
+
+# returns a list of words that have a unique frequency or are in the top 25 of most frequent words
+def pruneVocabulary(voc):
 	print "Running some statistics on the vocabulary to find which words won't be clustered!"
 	
 	# We won't be using words that have a unique frequency
@@ -98,7 +150,6 @@ def makeNewCOCS(coc, outputfile, voc):
 		frequencyWord[voc[word]].append(word)
 
 	wordsToCut = set()
-
 	remove = 0
 	
 	for freq in frequencyCounts:
@@ -123,94 +174,51 @@ def makeNewCOCS(coc, outputfile, voc):
 	frequencyWord = None
 	frequencies = None
 
-	print "Not clustering ", len(wordsToCut) * 100 / float(numberOfWords), "% of words..."
+	return wordsToCut
+
+# gives us a new dictionary with multiple senses of the words
+# not all words will be in this dictionary, only the words for which 
+# multiple senses were actually found
+def makeNewCOCS(coc, outputfile, voc):	
+
+	# inititate return object
+	print "Writing results to: ", outputfile
+	newCOC = shelve.open(outputfile)
+
+	# get all words
+	allWords = coc.keys()
 	
+	numberOfWords = len(allWords)
+
+	wordsToCut = pruneVocabulary(voc)
+	print "Not clustering ", len(wordsToCut) * 100 / float(numberOfWords), "% of words..."
+
 	# we will be evaluating the ambiguousness of every single word excpet for ''
+	p = Pool(processes=3)
+
+	instructions = []
 	for counter, word in enumerate(allWords):
-		
-		print counter,  "/", numberOfWords
-		print "\n\nMaking sense of: ", word
 
 		# we don't want nothing
 		# we don't want words that occur less than 20 times
 		if word != '' and voc[word] > 20 and word not in wordsToCut:
-			listOfDatapoints = []
+		 	print word, counter,  "/", numberOfWords
+			# here we cluster! 
+			instructions.append((word, prepareExtraction(word,coc)))
+			if len(instructions) == 16:
+				print "Agregated instructions, executing..."
+				results = p.map(extractSenses, instructions)
+				for (w,s) in results:
+					newCOC[w] = s
+				instructions = []
 
-			# get co-occurences for the word
-			wordCOC = copy(coc[word])
-
-			# sort from high relatedness to low relatedness
-			# cut off half, top half will be used, other half will be things that are relevant to all sensess
-			tupleList = sorted(wordCOC.items(), key=lambda x: x[1], reverse = True)
-			
-			relevantCocWords = tupleList[:len(tupleList)/2]
-			theRest = tupleList[len(tupleList)/2:]
-
-			cocWords = [elem[0] for elem in relevantCocWords]
-			relevantToAll = [elem[0] for elem in theRest]
-
-			# for every co-occuring word with the word
-			# we save the vector with co-occuring words (only containing words from cocWords)
-			# this collection will be datapoints
-			for cocWord in cocWords:
-				vector = copy(coc[cocWord])
-				deleteSomeKeys(cocWords, vector)
-				listOfDatapoints.append(vector)
-						
-			# only if more than one datapoint was found, the word will be called ambiguous
-			if len(listOfDatapoints) > 1:
-
-				# cluster all co-occurence vectors
-				clusters = kmeans_process(listOfDatapoints)
-				
-				# find out which term belongs to which cluster
-				wordAssignemnts = defaultdict(list)
-				for i, cocWord in enumerate(cocWords):
-					bestClusterID = "NONE"
-					bestDistance = 2
-					for clusterID in clusters:
-						dist = clusters[clusterID].distance(listOfDatapoints[i])
-						if dist < bestDistance:
-							bestDistance = dist
-							bestClusterID = clusterID
-					wordAssignemnts[bestClusterID].append(cocWord)
-				
-				# get the cluster distance
-				clusterDistance = clusters[0].cluster_distance(clusters[1])
-				
-				# make a new representations for the different senses of the words
-				# save also the cluster distance for future reference
-				senses = dict()
-				senses['clusterDistance'] = clusterDistance
-
-				# for all clusters, we will now make a new sense of the word
-				# the sense will contain the relevantToAll words and the words assigned to the specific cluster
-				for key in wordAssignemnts:
-					sense = copy(coc[word])
-					deleteSomeKeys(wordAssignemnts[key]+relevantToAll, sense)
-					senses[key] = sense
-
-				# save the different sences of the word
-				newCOC[word] = senses
-		else:
-			print 
-			print " ===================== "
-			print "Not clustering word: ", word
-			print " ===================== "
-			print
-
-
+	print "Executing rest of length", len(instructions)
+	results = p.map(extractSenses, instructions)
+	for (w,s) in results:
+		newCOC[w] = s
 	return newCOC
 
 print "Welcome to the clustering method designed by Anouk. You'll enjoy your time here."
-
-# ARGUMENTS: 
-# input COC !
-# output new COC !
-# input corpus !
-# output new COC / 2 !
-# new annotated coprus
-
 
 if len(sys.argv) < 6:
  		print "Please call me as:"
