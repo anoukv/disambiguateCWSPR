@@ -7,7 +7,8 @@ import math
 
 goodAnswers = "QuestionsAnswers/word_relationship.answers"
 #givenAnswers = "precomputedAnswers/testCristinaPearsonCorrelation.answered"
-givenAnswers = "precomputedAnswers/testCristinaEuclideanDistance.answered"
+#givenAnswers = "precomputedAnswers/testCristinaEuclideanDistance.answered"
+givenAnswers = "precomputedAnswers/testCristinamanhattanSimilarity.answered"
 
 # Written by Remi
 # Approved and edited by Anouk (made all words lower case)
