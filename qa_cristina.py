@@ -93,7 +93,6 @@ def qa(wordvectors, questions, distanceMeasure):
                                         
 					#Compute similary between the two word vectors
 					if (distanceMeasure == "euclidean"):
-                                                
                                                 sim = EuclideanSimilarity(y, wordRep)
                                         elif (distanceMeasure == "jaccard"):
                                                 sim = JaccardSimilarity(y, wordRep)
@@ -107,7 +106,6 @@ def qa(wordvectors, questions, distanceMeasure):
                                                 sim = ManhattanSimilarity(y, wordRep)
                                         else: #default cosine similarity
                                                 sim = CosineSimilarity(y, wordRep)
-					                                        
 					# save result if it is better than the previous best result
 					if sim > bestSim:
 						bestSim = sim
@@ -122,24 +120,21 @@ def qa(wordvectors, questions, distanceMeasure):
 
 def CosineSimilarity(vec1, vec2):
         # similarity is defined as the cosine similarity
-	# cosine similarity normaly is (a (dot product) b) / (norm(a) * norm(b))
-	# we have normalized a and b, so the denominator is always one and can be discarded
+        # cosine similarity normaly is (a (dot product) b) / (norm(a) * norm(b))
+        # we have normalized a and b, so the denominator is always one and can be discarded
         return sum([vec1[i] * vec2[i] for i in xrange(len(vec1))])
 
 def EuclideanSimilarity(vec1, vec2):
-        return 1/(1 + math.sqrt(sum([(vec1[i] - vec2[i])**2 for i in xrange(len(vec1))])))
+	return 1/(1 + math.sqrt(sum([(vec1[i] - vec2[i])**2 for i in xrange(len(vec1))])))
 
 def JaccardSimilarity(vec1, vec2):
         #Jaccard / Tanimoto Coefficient
-        #vec3 = list(set(vec1).intersection(set(vec2)))
-        #return float(len(vec3)) / (len(vec1) + len(vec2) - len(vec3))
+        #n = len(set(vec1).intersection(set(vec2)))
+        #return 1/(1 + n / float(len(vec1) + len(vec2) - n))
 
         #similarity belongs to [0,1], with 1 meaning its exact replica
         similarity = float(len(list(set(vec1).intersection(set(vec2))))*1.0/len(list(set(vec1).union(set(vec2))))) 
         return 1 + similarity
-        
-        #n = len(set(vec1).intersection(set(vec2)))
-        #return 1/(1 + n / float(len(vec1) + len(vec2) - n))
 
 def average(x):
         assert len(x) > 0
@@ -155,11 +150,11 @@ def PearsonCorrelation(x, y):
         xdiff2 = 0
         ydiff2 = 0
         for i in range(n):
-                xdiff = x[i] - avg_x
-                ydiff = y[i] - avg_y
-                diffprod += xdiff * ydiff
-                xdiff2 += xdiff * xdiff
-                ydiff2 += ydiff * ydiff
+        xdiff = x[i] - avg_x
+        ydiff = y[i] - avg_y
+        diffprod += xdiff * ydiff
+        xdiff2 += xdiff * xdiff
+        ydiff2 += ydiff * ydiff
 
         return diffprod / math.sqrt(xdiff2 * ydiff2)
 
