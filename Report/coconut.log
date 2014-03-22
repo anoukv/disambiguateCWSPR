@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-1.40.11 (TeX Live 2010) (format=pdflatex 2010.12.3)  22 MAR 2014 18:02
+This is pdfTeX, Version 3.1415926-1.40.11 (TeX Live 2010) (format=pdflatex 2010.12.3)  22 MAR 2014 18:04
 entering extended mode
  \write18 enabled.
  file:line:error style messages enabled.
@@ -86,7 +86,7 @@ LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <10.95> not available
 LaTeX Font Info:    External font `cmex10' loaded for size
 (Font)              <10.95> on input line 65.
 
-Underfull \hbox (badness 2799) in paragraph at lines 74--76
+Underfull \hbox (badness 2799) in paragraph at lines 74--75
 \OT1/ptm/m/n/10.95 We have eval-u-ated the per-for-mance of CO-
  []
 
@@ -113,7 +113,7 @@ fb></usr/local/texlive/2010/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb
 /usr/local/texlive/2010/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></
 usr/local/texlive/2010/texmf-dist/fonts/type1/urw/times/utmb8a.pfb></usr/local/
 texlive/2010/texmf-dist/fonts/type1/urw/times/utmr8a.pfb>
-Output written on coconut.pdf (2 pages, 68107 bytes).
+Output written on coconut.pdf (2 pages, 68561 bytes).
 PDF statistics:
  36 PDF objects out of 1000 (max. 8388607)
  25 compressed objects within 1 object stream
