@@ -9,17 +9,18 @@ from multiprocessing import *
 
 # deletes all the keys from dic that are not in keysToKeep
 def deleteSomeKeys(keysToKeep, dic):
-	keys = dic.keys()
-	for key in keys:
-		if key not in keysToKeep:
-			dic.pop(key)
+	intersection = keysToKeep.intersection(set(dic.keys()))
+	new_dic = dict()
+	for key in intersection:
+		new_dic[key] = dic[key]
+	return new_dic
 
 # reads the corpus file
 def read_file(filename):
-		f = open(filename, 'r')
-	 	inpt = f.readline().replace("\n", "").split(" ")
-	 	f.close()
-	 	return inpt
+	f = open(filename, 'r')
+ 	inpt = f.readline().replace("\n", "").split(" ")
+ 	f.close()
+ 	return inpt
 
 # annotates the corpus using the multiple senses of a word
 def annotate(inpt, clustered, vocabulary, skipsize):
@@ -69,10 +70,24 @@ def annotate(inpt, clustered, vocabulary, skipsize):
 
 # prepares the data for a word, that is necessary to create the two senses
 def prepareExtraction(word, coc):
-	listOfDatapoints = []
 
 	# get co-occurences for the word
 	wordCOC = copy(coc[word])
+	coOccuringWords = set(wordCOC.keys())
+
+	cococ = dict()
+	for bla in wordCOC:
+		vector = copy(coc[bla])
+		vector = deleteSomeKeys(coOccuringWords, vector)
+		cococ[bla] =  vector
+
+	return (wordCOC, cococ)
+
+# extracts the two senses of a word
+def extractSenses((word, preparation)):
+	(wordCOC, cococ) = preparation
+	# only if more than one datapoint was found, the word will be called ambiguous
+
 
 	# sort from high relatedness to low relatedness
 	# cut off half, top half will be used, other half will be things that are relevant to all sensess
@@ -81,98 +96,62 @@ def prepareExtraction(word, coc):
 	relevantCocWords = tupleList[:len(tupleList)/2]
 	theRest = tupleList[len(tupleList)/2:]
 
-	cocWords = [elem[0] for elem in relevantCocWords]
+	cocWords = [ elem[0] for elem in relevantCocWords ]
 	relevantToAll = [elem[0] for elem in theRest]
 
 	# for every co-occuring word with the word
 	# we save the vector with co-occuring words (only containing words from cocWords)
 	# this collection will be datapoints
-	for cocWord in cocWords:
-		vector = copy(coc[cocWord])
-		deleteSomeKeys(cocWords, vector)
-		listOfDatapoints.append(vector)
+	listOfDatapoints = [ cococ[elem] for elem in cocWords ]
 
-	return (listOfDatapoints, cocWords, copy(coc[word]), relevantToAll)
+	# Garbage collection
+	cococ = None
 
-# extracts the two senses of a word
-def extractSenses((word, preparation)):
-	(listOfDatapoints, cocWords, originalCoc, relevantToAll) = preparation
-	# only if more than one datapoint was found, the word will be called ambiguous
-	if len(listOfDatapoints) > 1:
+	# cluster all co-occurence vectors
+	clusters = kmeans_process(listOfDatapoints)
+	
+	# find out which term belongs to which cluster
+	wordAssignemnts = defaultdict(list)
+	for i, cocWord in enumerate(cocWords):
+		bestClusterID = "NONE"
+		bestDistance = 2
+		for clusterID in clusters:
+			dist = clusters[clusterID].distance(listOfDatapoints[i])
+			if dist < bestDistance:
+				bestDistance = dist
+				bestClusterID = clusterID
+		wordAssignemnts[bestClusterID].append(cocWord)
+	
+	# get the cluster distance
+	clusterDistance = clusters[0].cluster_distance(clusters[1])
+	
+	# make a new representations for the different senses of the words
+	# save also the cluster distance for future reference
+	senses = dict()
+	senses['clusterDistance'] = clusterDistance
 
-		# cluster all co-occurence vectors
-		clusters = kmeans_process(listOfDatapoints)
-		
-		# find out which term belongs to which cluster
-		wordAssignemnts = defaultdict(list)
-		for i, cocWord in enumerate(cocWords):
-			bestClusterID = "NONE"
-			bestDistance = 2
-			for clusterID in clusters:
-				dist = clusters[clusterID].distance(listOfDatapoints[i])
-				if dist < bestDistance:
-					bestDistance = dist
-					bestClusterID = clusterID
-			wordAssignemnts[bestClusterID].append(cocWord)
-		
-		# get the cluster distance
-		clusterDistance = clusters[0].cluster_distance(clusters[1])
-		
-		# make a new representations for the different senses of the words
-		# save also the cluster distance for future reference
-		senses = dict()
-		senses['clusterDistance'] = clusterDistance
+	# for all clusters, we will now make a new sense of the word
+	# the sense will contain the relevantToAll words and the words assigned to the specific cluster
+	for key in wordAssignemnts:
+		sense = copy(wordCOC)
+		sense = deleteSomeKeys(set(wordAssignemnts[key]+relevantToAll), sense)
+		senses[key] = sense
 
-		# for all clusters, we will now make a new sense of the word
-		# the sense will contain the relevantToAll words and the words assigned to the specific cluster
-		for key in wordAssignemnts:
-			sense = copy(originalCoc)
-			deleteSomeKeys(wordAssignemnts[key]+relevantToAll, sense)
-			senses[key] = sense
-
-		# save the different sences of the word
-		return (word, senses)
+	# save the different sences of the word
+	return (word, senses)
 
 # returns a list of words that have a unique frequency or are in the top 25 of most frequent words
 def pruneVocabulary(voc):
 	print "Running some statistics on the vocabulary to find which words won't be clustered!"
-	
-	# We won't be using words that have a unique frequency
-	# this is pretty memory intensive... 
+	wordsToCut = set()	
+	vocTups = voc.items()
+	sortedVocTups = sorted(vocTups, key = lambda x: x[1], reverse = True)
 
-	# use a dict #frequency -> int(count)
-	# and a dict #frequency -> [wordsWithFrequency]
-	frequencyCounts = defaultdict(int)
-	frequencyWord = defaultdict(list)
+	for i in range(100):
+		print sortedVocTups[i]
+		wordsToCut.add(sortedVocTups[i][0])
+	print
 
-	for word in voc:
-		frequencyCounts[voc[word]] += 1
-		frequencyWord[voc[word]].append(word)
-
-	wordsToCut = set()
-	remove = 0
-	
-	for freq in frequencyCounts:
-		if frequencyCounts[freq] == 1:
-			# we can say 0 here, because we know that there is only one...
-			wordsToCut.add(frequencyWord[freq][0])
-			remove += freq
-	
-	# now we also want to ensure we delete the 25 words with the highest frequency
-
-	# make a sorted list of frequencies high - low
-	frequencies = sorted(frequencyCounts.keys(), reverse=True)
-
-	# add all words that belong to the 25 highest frequencies
-	for i in range(25):
-		wordsWithHighestFrequency = frequencyWord[frequencies[i]]
-		for w in wordsWithHighestFrequency:
-			wordsToCut.add(w)
-	
-	# clear for memory
-	frequencyCounts = None
-	frequencyWord = None
-	frequencies = None
 
 	return wordsToCut
 
@@ -184,28 +163,24 @@ def makeNewCOCS(coc, outputfile, voc):
 	# inititate return object
 	print "Writing results to: ", outputfile
 	newCOC = shelve.open(outputfile)
-
-	# get all words
-	allWords = coc.keys()
 	
-	numberOfWords = len(allWords)
-
 	wordsToCut = pruneVocabulary(voc)
-	print "Not clustering ", len(wordsToCut) * 100 / float(numberOfWords), "% of words..."
 
 	# we will be evaluating the ambiguousness of every single word excpet for ''
-	p = Pool(processes=3)
+	p = Pool(processes=8)
 
+	counter = 0
 	instructions = []
-	for counter, word in enumerate(allWords):
+	for word in coc:
+		counter += 1
 
 		# we don't want nothing
 		# we don't want words that occur less than 20 times
-		if word != '' and voc[word] > 20 and word not in wordsToCut:
-		 	print word, counter,  "/", numberOfWords
+		if word != '' and voc[word] > 20 and  word not in wordsToCut:
+		 	print word, counter,  "/ ~200.000"
 			# here we cluster! 
 			instructions.append((word, prepareExtraction(word,coc)))
-			if len(instructions) == 16:
+			if len(instructions) == 8:
 				print "Agregated instructions, executing..."
 				results = p.map(extractSenses, instructions)
 				for (w,s) in results:
@@ -262,10 +237,12 @@ inpt = read_file(training_text)
 print "Annotating corpus."
 annotated = annotate(inpt, halfCOC, voc, 5)
 
-voc.close()
-
 f = open(output_annotated_corpus, 'w')
 f.write("".join(annotated))
 f.close()
+
+
+voc.close()
+halfCOC.close()
 
 

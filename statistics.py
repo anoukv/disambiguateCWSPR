@@ -3,7 +3,7 @@
 import shelve
 from collections import defaultdict
 
-voc = shelve.open('../coc.small_voc')
+voc = shelve.open('../data/coc.medium_voc')
 
 # We want to know: 
 print
@@ -20,7 +20,7 @@ print
 vocTups = voc.items()
 sortedVocTups = sorted(vocTups, key = lambda x: x[1], reverse = True)
 
-for i in range(25):
+for i in range(100):
 	print i+1, sortedVocTups[i]
 print
 
