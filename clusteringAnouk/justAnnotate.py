@@ -74,7 +74,10 @@ vocabulary = sys.argv[4]
 print "Reading corpus..."
 inpt = read_file(training_text)
 
+print input_file
+print vocabulary
 coc = shelve.open(input_file)
+print "opened coc"
 voc = shelve.open(vocabulary)
 
 print "Annotating corpus."
