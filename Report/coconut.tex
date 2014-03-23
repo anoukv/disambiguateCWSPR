@@ -44,7 +44,7 @@
 \begin{document}
 \maketitle
 \begin{abstract}
-  Vector space models for word representation have shown to be useful in capturing the relationships between words' functions and meanings. Similarities between words are encoded under the form of distance or angle in a high dimensional space. Neural language models, although less used than the traditional n-gram models because of their notoriously long training times, present superior performance on the task of word prediction. Leaving from the work of \cite{Mikolov:13}, we propose three new methods for word sense disambiguation based on the co-occurence frequency of the context words near a given target word. We show that these are valid approaches in an unsupervised setting which can increase the accuracy of capturing syntactic and semantic regularities in the English language.
+  Vector space models for word representation have shown to be useful in capturing the relationships between words' functions and meanings. Similarities between words are encoded under the form of distance or angle in a high dimensional space. Neural language models, although less used than the traditional \textit{n}-gram models because of their notoriously long training times, present superior performance on the task of word prediction. Leaving from the work of \cite{Mikolov:13}, we propose three new methods for word sense disambiguation based on the co-occurence frequency of the context words near a given target word. We show that these are valid approaches in an unsupervised setting and can increase the accuracy of capturing syntactic and semantic regularities for the English language.
 \end{abstract}
 
 \section{Introduction}
@@ -53,7 +53,7 @@ The introduction will be here.
 % Why are we doing this? (Ambiguous words must get different projections).
 
 \section{Related Work}
-Recently \cite{Mikolov:13} have shown that linguistic regularities in continuous space word representations can be identified by a vector offset method...
+Recently \cite{Mikolov:13} have shown that linguistic regularities in continuous space word representations can be identified by a vector offset method based on cosine distance. Pairs of words that share the same relationship are observed to present a constant vector offset, which enables the measurement of syntactic linguistic regularity inside a set of analogy questions of the form "A is to B as C is to \underline{\hspace{4mm}}", and semantic linguistic regularity by determining the extent to which given two pairs of words A:B and C:D, the semantic relations between A and B are similar to those between C and D. The recursive neural network model they employed for this task was trained with backpropagation to maximize data likelihood and consists of one input layer that accepts one word at a time encoded using 1-of-N encoding scheme, one ouput layer which outputs a probability distribution over possible words and one hidden layer with recurrent connections that keeps track of the sentence history. 
 % Talk about RNNs
 % Talk about Linguistic Regularities (as that is pretty related), vector offset model
 % also talk about that MT paper...
