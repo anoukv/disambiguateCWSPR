@@ -1,0 +1,103 @@
+%
+% File acl2014.tex
+%
+% Contact: koller@ling.uni-potsdam.de, yusuke@nii.ac.jp
+%%
+%% Based on the style files for ACL-2013, which were, in turn,
+%% Based on the style files for ACL-2012, which were, in turn,
+%% based on the style files for ACL-2011, which were, in turn, 
+%% based on the style files for ACL-2010, which were, in turn, 
+%% based on the style files for ACL-IJCNLP-2009, which were, in turn,
+%% based on the style files for EACL-2009 and IJCNLP-2008...
+
+%% Based on the style files for EACL 2006 by 
+%%e.agirre@ehu.es or Sergi.Balari@uab.es
+%% and that of ACL 08 by Joakim Nivre and Noah Smith
+
+\documentclass[11pt]{article}
+\usepackage{acl2014}
+\usepackage{times}
+\usepackage{url}
+\usepackage{latexsym}
+
+%\setlength\titlebox{5cm}
+
+% You can expand the titlebox if you need extra space
+% to show all the authors. Please do not make the titlebox
+% smaller than 5cm (the original size); we will check this
+% in the camera-ready version and ask you to change it back.
+
+
+\title{COCONUT: Clustering of Co-Occurring Neighboring Unambiguous Terms}
+
+\author{Anouk Visser \\
+{\tt anouk.visser@student.uva.nl}\\
+  \\\And
+  R\'emi de Zoeten \\
+   \\\And
+  Cristina Garbaccea
+  \\}
+
+\date{}
+
+\begin{document}
+\maketitle
+\begin{abstract}
+  The Abstract will be here.
+\end{abstract}
+
+\section{Introduction}
+The introduction will be here.
+% What will we be doing? 
+% Why are we doing this? (Ambiguous words must get different projections).
+
+\section{Related Work}
+Recently \cite{Mikolov:13} have shown that linguistic regularities in continuous space word representations can be identified by a vector offset method...
+% Talk about RNNs
+% Talk about Linguistic Regularities (as that is pretty related), vector offset model
+% also talk about that MT paper...
+
+\section{COCONUT}
+% Describe intuition
+For learning the word representations \cite{Mikolov:13} train an RNN with co-occurrence vectors of words. Instead of representing words by just one co-occurrence vector, we propose to train the model with multiple co-occurrence vectors for ambiguous words. The meaning of the word 'apple' can be determined by looking at its surrounding words, which could be: technology, iPhone, company for `Apple', the company or: fruit, orchard, pie for `apple' the fruit. COCONUT assumes that the meaning of a word is highly dependent on the words that accompany it and that the co-occurring words that define one meaning of `apple' are more likely to co-occur with each other than two words that define two different meanings of apple (`iPhone' and `technology' are more likely to occur together than `iPhone' and `orchard'). COCONUT will attempt to split the co-occurrence vector for `apple' into two co-occurrence vectors, one containing `iPhone', `technology' and `company', the other containing `fruit', `orchard' and `pie'.
+% Let A denote the word we want to disambiguate
+
+\subsection{Co-Occurrence Vectors}
+We construct the co-occurrence vector for word $A$ by computing the relatedness of word $A$ with every other word in the vocabulary. We use the same function for relatedness as \cite{Guthrie:92}:
+$$r(x, y) = \frac{f_xy}{f_x+f_y - f_xy}$$
+where $f_xy$ denotes the frequency of $x$ and $y$ occurring together and $f_x$ and $f_y$ denote the frequency of $x$, respectively $y$. % something about how we get f_xy (RŽmi?)
+
+\subsection{Clustering}
+To find the two senses of a word, we apply k-means clustering to the co-occurrence vectors of the co-occurring words. COCONUT assumes that the words assigned to each cluster represent a different meaning of a word. Words that are not closely related to $A$ do not contribute to either one of the meanings. Therefore, we will not use the co-occurrence vectors of all co-occurring words, but only those from the words that are closely related. Building a good decision process for defining when a word is closely related to another word is beyond the scope of this project and will most likely not necessarily lead to significant performance improvements. Therefore, we have decided to discard the words that have a relatedness score with $A$ that falls in the bottom $50\%$ of all relatedness-scores. Let the set of words that remains be called $C$. We can use the co-occurrence vectors of the words in $C$ to find clusters, but these vectors will contain a lot of words that are not in $C$, do not occur together with $A$ or do occur with $A$ but not in $C$. We are only interested in finding clusters representing the different meanings of word $A$, therefore we will only use the co-occurring words in the vectors of $C$ that are present in $C$.
+% some tweaks
+
+\section{Evaluation}
+We have evaluated the performance of COCONUT on a dataset containing X unique words, and has size X. Initially, we decided not to disambiguated the top X words, after extracting the two senses of the words and their distance, we discarded half of the disambiguated words, leaving us with X words that were disambiguated. 
+% Description of the questions and answers?
+
+\subsection{Empirical Evaluation}
+%Maybe we need some sort of empirical evaluation in which we show how the clustering really works (and how it fails). 
+\subsection{Quantitative Evaluation}
+% Which test sets are we using? What are we comparing against? Some (but not many) statistics of our dataset.
+
+\section{Conclusion}
+\begin{thebibliography}{}
+
+\bibitem[\protect\citename{Mikolov \bgroup et al.\egroup }2013]{Mikolov:13}
+Tomas Mikolov, Wen-tau Yih, and Geoffrey Zweig.
+\newblock 2013.
+\newblock Linguistic regularities in continuous space word representations.
+\newblock Proceedings of NAACL-HLT, 
+746--751
+
+\bibitem[\protect\citename{Guthrie \bgroup et al.\egroup }1991]{Guthrie:92}
+Joe A. Guthrie, Louise Guthrie, Yorick Wilks and Homa Aidinejad.
+\newblock 1991.
+\newblock Subject-dependent co-occurrence and word sense disambiguation.
+\newblock Proceedings of the 29th annual meeting on Association for Computational Linguistics, 
+146--152
+\newblock
+Association for Computational Linguistics
+\end{thebibliography}
+
+\end{document}
