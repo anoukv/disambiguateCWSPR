@@ -1,10 +1,10 @@
 from __future__ import division
 import sys
 import pickle, math
-import numpy as np
+
 from collections import defaultdict
-from scipy import stats
-from pattern.vector import distance
+from time import time
+
 
 questions = "QuestionsAnswers/word_relationship.questions"
 
@@ -58,6 +58,25 @@ def load_vectors(filename):
 
 # Written by Anouk based on qa.c
 def qa(wordvectors, questions, distanceMeasure):
+	#select distance measure function
+	if (distanceMeasure == "euclidean"):
+		sim_measure_function = EuclideanSimilarity
+	elif (distanceMeasure == "jaccard"):
+		sim_measure_function = JaccardSimilarity
+	elif (distanceMeasure == "pearson"):
+		sim_measure_function = PearsonCorrelation
+	elif (distanceMeasure == "spearman"):
+		sim_measure_function = SpearmanCorrelation
+	elif (distanceMeasure == "mahalanobis"):
+		sim_measure_function = MahalanobisDist
+	elif (distanceMeasure == "manhattan"):
+		sim_measure_function = ManhattanSimilarity
+	elif (distanceMeasure == "manhattan_sqrt"):
+		sim_measure_function = ManhattanSimilaritySqrt
+	elif (distanceMeasure == "manhattan_squared"):
+		sim_measure_function = ManhattanSimilaritySquared
+	else: #default cosine similarity
+		sim_measure_function = CosineSimilarity
 	
 	# initialize empty answers list
 	answers = []
@@ -76,36 +95,24 @@ def qa(wordvectors, questions, distanceMeasure):
 			c = wordvectors[question[2]][0]
 
 			# compute v, normalize it. Result is a tuple
-			y = normalize([b[i] - a[i] + c[i] for i in xrange(len(a))])
+			y = normalize( [b[i] - a[i] + c[i] for i in xrange(len(a))] )
 
 			# initialize bestSim and bestWord
 			# sim ranges between -1 and 1, where 1 is most similar
-			bestSim = 0
+			bestSim = -9999999999
 			bestWord = "nothing"
 			
 			# look at all word representations to find the answer to a:b c:bestWord
 			# except for a, b and c
+			question_set = set(question)
 			for word in wordvectors:
-				if word not in question:
+				if word not in question_set:
 
 					# again assume that there is only one projection for the word
 					wordRep = wordvectors[word][0]
-                                        
-					#Compute similary between the two word vectors
-					if (distanceMeasure == "euclidean"):
-                                                sim = EuclideanSimilarity(y, wordRep)
-                                        elif (distanceMeasure == "jaccard"):
-                                                sim = JaccardSimilarity(y, wordRep)
-                                        elif (distanceMeasure == "pearson"):
-                                                sim = PearsonCorrelation(y, wordRep)
-                                        elif (distanceMeasure == "spearman"):
-                                                sim = SpearmanCorrelation(y, wordRep)
-                                        elif (distanceMeasure == "mahalanobis"):
-                                                sim = MahalanobisDist(y, wordRep)
-                                        elif (distanceMeasure == "manhattan"):
-                                                sim = ManhattanSimilarity(y, wordRep)
-                                        else: #default cosine similarity
-                                                sim = CosineSimilarity(y, wordRep)
+
+					sim = sim_measure_function(y, wordRep)
+					
 					# save result if it is better than the previous best result
 					if sim > bestSim:
 						bestSim = sim
@@ -150,25 +157,31 @@ def PearsonCorrelation(x, y):
         xdiff2 = 0
         ydiff2 = 0
         for i in range(n):
-        xdiff = x[i] - avg_x
-        ydiff = y[i] - avg_y
-        diffprod += xdiff * ydiff
-        xdiff2 += xdiff * xdiff
-        ydiff2 += ydiff * ydiff
+                xdiff = x[i] - avg_x
+                ydiff = y[i] - avg_y
+                diffprod += xdiff * ydiff
+                xdiff2 += xdiff * xdiff
+                ydiff2 += ydiff * ydiff
 
         return diffprod / math.sqrt(xdiff2 * ydiff2)
 
 def SpearmanCorrelation(x,y):
+	from scipy import stats
         return stats.stats.spearmanr(x, y)[0]
 
 def ManhattanSimilarity(vec1, vec2):
-        if(len(vec1) != len(vec2)):
-                return -1
-        return 1 / (1 + sum([math.fabs(vec1[i] - vec2[i]) for i in range(len(vec1))]))
-        #return 1/(1 + math.fabs(sum([(vec1[i] - vec2[i]) for i in xrange(len(vec1))])))
+    return - sum([math.fabs(vec1[i] - vec2[i]) for i in xrange(len(vec1))])
+    # return 1/(1 + math.fabs(sum([(vec1[i] - vec2[i]) for i in xrange(len(vec1))])))
+
+def ManhattanSimilaritySqrt(vec1, vec2):
+    return - sum([ math.sqrt(math.fabs(vec1[i] - vec2[i])) for i in xrange(len(vec1)) ])
+
+def ManhattanSimilaritySquared(vec1, vec2):
+    return - sum([ (vec1[i] - vec2[i]) ** 2 for i in xrange(len(vec1)) ]) 
 
 """
 def hamming_distance(s1, s2):
+	from pattern.vector import distance
         #Return the Hamming distance between equal-length sequences
         if len(s1) != len(s2):
                 raise ValueError("Undefined for sequences of unequal length")
@@ -187,6 +200,7 @@ def estimate(self, xDest, yDest):
         return(d)
 
 def MahalanobisDist(x, y):
+	import numpy as np
         covariance_xy = np.cov(x,y, rowvar=0)
         inv_covariance_xy = np.linalg.inv(covariance_xy)
         xy_mean = np.mean(x),np.mean(y)
@@ -207,19 +221,24 @@ if __name__ == "__main__":
 		print "python qa_cristina.py wordvectors.txt distancemeasurename"
 		sys.exit()
         
+	start = time()
 	print "Loading questions..."
 	questions = load_questions()
-	
+
 	print "Loading word projections"
 	vecs = load_vectors(sys.argv[1])
-	
+
 	print "Answering questions"
 	distanceMeasure = sys.argv[2]
 	answers = qa(vecs, questions, distanceMeasure)
-	
-	print "Saving answers to file"
-	save_answers(answers, "precomputedAnswers/testCristina" + distanceMeasure + "Similarity.answered")
 
+	print "Saving answers to file"
+
+	save_answers(answers, "precomputedAnswers/testCristina" + distanceMeasure + "640Similarity.answered")
+	#save_answers(answers, "precomputedAnswers/testRemi" + distanceMeasure + "Similarity.word_relationship.answered")
+	stop = time()
+	print "Spent", int(stop - start + 0.5), "seconds."
+	
 
 
 

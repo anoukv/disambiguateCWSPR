@@ -147,11 +147,9 @@ def pruneVocabulary(voc):
 	vocTups = voc.items()
 	sortedVocTups = sorted(vocTups, key = lambda x: x[1], reverse = True)
 
-	for i in range(100):
-		print sortedVocTups[i]
+	for i in range(75):
 		wordsToCut.add(sortedVocTups[i][0])
 	print
-
 
 	return wordsToCut
 
@@ -166,8 +164,9 @@ def makeNewCOCS(coc, outputfile, voc):
 	
 	wordsToCut = pruneVocabulary(voc)
 
+	print "Not disambiguating: ", len(wordsToCut), " words"
 	# we will be evaluating the ambiguousness of every single word excpet for ''
-	p = Pool(processes=8)
+	p = Pool(processes=6)
 
 	counter = 0
 	instructions = []
@@ -177,7 +176,7 @@ def makeNewCOCS(coc, outputfile, voc):
 		# we don't want nothing
 		# we don't want words that occur less than 20 times
 		if word != '' and voc[word] > 20 and  word not in wordsToCut:
-		 	print word, counter,  "/ ~200.000"
+		 	print word, counter,  "/ ~50.000"
 			# here we cluster! 
 			instructions.append((word, prepareExtraction(word,coc)))
 			if len(instructions) == 8:
