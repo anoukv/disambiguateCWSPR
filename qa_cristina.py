@@ -150,11 +150,11 @@ def PearsonCorrelation(x, y):
         xdiff2 = 0
         ydiff2 = 0
         for i in range(n):
-        xdiff = x[i] - avg_x
-        ydiff = y[i] - avg_y
-        diffprod += xdiff * ydiff
-        xdiff2 += xdiff * xdiff
-        ydiff2 += ydiff * ydiff
+                xdiff = x[i] - avg_x
+                ydiff = y[i] - avg_y
+                diffprod += xdiff * ydiff
+                xdiff2 += xdiff * xdiff
+                ydiff2 += ydiff * ydiff
 
         return diffprod / math.sqrt(xdiff2 * ydiff2)
 
@@ -218,7 +218,7 @@ if __name__ == "__main__":
 	answers = qa(vecs, questions, distanceMeasure)
 	
 	print "Saving answers to file"
-	save_answers(answers, "precomputedAnswers/testCristina" + distanceMeasure + "Similarity.answered")
+	save_answers(answers, "precomputedAnswers/testCristina" + distanceMeasure + "640Similarity.answered")
 
 
 
