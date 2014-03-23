@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.5-1.40.14 (MiKTeX 2.9) (preloaded format=pdflatex 2014.2.13)  23 MAR 2014 17:29
+This is pdfTeX, Version 3.1415926-2.5-1.40.14 (MiKTeX 2.9) (preloaded format=pdflatex 2014.2.13)  23 MAR 2014 19:04
 entering extended mode
 **coconut.tex
 (E:\UvA\ULL\Project\Code\disambiguateCWSPR\Report\coconut.tex
@@ -88,6 +88,9 @@ LaTeX Font Info:    External font `cmex10' loaded for size
 (Font)              <10.95> on input line 56.
 LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <10.95> not available
 (Font)              Font shape `OT1/ptm/b/n' tried instead on input line 66.
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
  [1{C:/ProgramData/MiKTeX/2.9/pdftex/config/pdftex.map}
 
 
@@ -101,11 +104,11 @@ Underfull \hbox (badness 2799) in paragraph at lines 76--78
 Here is how much of TeX's memory you used:
  452 strings out of 493921
  6022 string characters out of 3144873
- 56936 words of memory out of 3000000
+ 57936 words of memory out of 3000000
  3786 multiletter control sequences out of 15000+200000
  18977 words of font info for 46 fonts, out of 3000000 for 9000
  841 hyphenation exceptions out of 8191
- 22i,10n,19p,1262b,256s stack positions out of 5000i,500n,10000p,200000b,50000s
+ 22i,10n,19p,1508b,256s stack positions out of 5000i,500n,10000p,200000b,50000s
 {C:/Program
  Files (x86)/MiKTeX 2.9/fonts/enc/dvips/fontname/8r.enc}<C:/Program Files (x86)
 /MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmmi10.pfb><C:/Program Files (x86)/M
@@ -116,7 +119,7 @@ eX 2.9/fonts/type1/public/amsfonts/cm/cmr10.pfb><C:/Program Files (x86)/MiKTeX
 ype1/urw/times/utmb8a.pfb><C:/Program Files (x86)/MiKTeX 2.9/fonts/type1/urw/ti
 mes/utmr8a.pfb><C:/Program Files (x86)/MiKTeX 2.9/fonts/type1/urw/times/utmri8a
 .pfb>
-Output written on coconut.pdf (2 pages, 90072 bytes).
+Output written on coconut.pdf (2 pages, 92978 bytes).
 PDF statistics:
  42 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)
