@@ -53,7 +53,7 @@ The introduction will be here.
 % Why are we doing this? (Ambiguous words must get different projections).
 
 \section{Related Work}
-Recently \cite{Mikolov:13} have shown that linguistic regularities in continuous space word representations can be identified by a vector offset method based on cosine distance. Pairs of words that share the same relationship are observed to present a constant vector offset, which enables the measurement of syntactic linguistic regularity inside a set of analogy questions of the form "A is to B as C is to \underline{\hspace{4mm}}", and semantic linguistic regularity by determining the extent to which given two pairs of words A:B and C:D, the semantic relations between A and B are similar to those between C and D. The recursive neural network model they employ for this task is trained with backpropagation to maximize data likelihood and consists of one input layer that accepts one word at a time encoded using \textit{1}-of-\textit{N} encoding scheme, one ouput layer which outputs a probability distribution over possible words and one hidden layer with recurrent connections that keeps track of the sentence history. The embedding vectors $x_A, x_B, x_C$ are used to determine the word which is assumed to be the best answer to a question, $y = x_B - x_A + x_C$, or in case there is no word in space at this position, the word having the greatest cosine similarity with $y$. In the case of semantic evaluation where $D$ is given, computing $cos(x_B - x_A + x_C, x_D)$ determines the measure of relational similarity between the prototypical and target word pairs.
+Recently \cite{Mikolov:13} have shown that linguistic regularities in continuous space word representations can be identified by a vector offset method based on cosine distance. Pairs of words that share the same relationship are observed to present a constant vector offset, which enables the measurement of syntactic linguistic regularity inside a set of analogy questions of the form "$A$ is to $B$ as $C$ is to \underline{\hspace{4mm}}", and semantic linguistic regularity by determining the extent to which given two pairs of words $A:B$ and $C:D$, the semantic relations between $A$ and $B$ are similar to those between $C$ and $D$. The recursive neural network model they employ for this task is trained with backpropagation to maximize data likelihood and consists of one input layer that accepts one word at a time encoded using \textit{1}-of-\textit{N} encoding scheme, one ouput layer which outputs a probability distribution over possible words and one hidden layer with recurrent connections that keeps track of the sentence history. The embedding vectors $x_A, x_B, x_C$ are used to determine the word which is assumed to be the best answer to a question, $y = x_B - x_A + x_C$, or in case there is no word in space at this position, the word having the greatest cosine similarity with $y$. In the case of semantic evaluation where $D$ is given, computing $cos(x_B - x_A + x_C, x_D)$ determines the measure of relational similarity between the prototypical and target word pairs.
 % Talk about RNNs
 % Talk about Linguistic Regularities (as that is pretty related), vector offset model
 % also talk about that MT paper...
@@ -67,6 +67,15 @@ For learning the word representations \cite{Mikolov:13} train an RNN with co-occ
 We construct the co-occurrence vector for word $A$ by computing the relatedness of word $A$ with every other word in the vocabulary. We use the same function for relatedness as \cite{Guthrie:92}:
 $$r(x, y) = \frac{f_xy}{f_x+f_y - f_xy}$$
 where $f_xy$ denotes the frequency of $x$ and $y$ occurring together and $f_x$ and $f_y$ denote the frequency of $x$, respectively $y$. % something about how we get f_xy (RŽmi?)
+
+\subsection{Latent Semantic Analysis}
+
+\subsection{Similarity Measures}
+Measuring the similarity between two vectors can be seen as an equivalent to measuring their distance. Inversion or subtraction can be easily applied to transform a measure of distance between vectors into a measure of similarity. 
+
+The most common way to measure similarity between two vectors is to compute the \textit{cosine} of the angle between them as the inner product of the two vectors, after they have been normalized to unit length: $cos(x,y) = \frac{x \cdot y}{||x||\cdot||y||}$. Hence the length of the vectors is irrelevant. \cite{Bullinaria:97} show that the cosine is highly reliable and performs the best in their task, after having compared it with distance measures like Hellinger, Bhattacharya, and Kullback-Leibler. Other common geometric metrics frequently used in the vector space are represented by the Euclidean, Manhattan and Mahalanobis distance, Dice, Jaccard, Pearson and Spearman correlation coefficients.
+
+The \textit{Euclidean} distance between two points is defined as the length of the line connecting them. In the vector space, it is defined as $d(p,q) = d(q,p) = \sqrt{\sum_{i=1}^{n}(q_i-p_i)^2} $. The smaller this distance the more similar the objects are. The \textit{Mahalanobis} distance generalizes the standard Euclidean distance by modelling the relations of elements in different dimensions. Given two vectors $x$ and $y$, their squared Mahalanobis distance is $d_A = (x-y)^T A (x-y)$, where $A$ is a positive semidefinite matrix. 
 
 \subsection{Clustering}
 To find the two senses of a word, we apply k-means clustering to the co-occurrence vectors of the co-occurring words. COCONUT assumes that the words assigned to each cluster represent a different meaning of a word. Words that are not closely related to $A$ do not contribute to either one of the meanings. Therefore, we will not use the co-occurrence vectors of all co-occurring words, but only those from the words that are closely related. Building a good decision process for defining when a word is closely related to another word is beyond the scope of this project and will most likely not necessarily lead to significant performance improvements. Therefore, we have decided to discard the words that have a relatedness score with $A$ that falls in the bottom $50\%$ of all relatedness-scores. Let the set of words that remains be called $C$. We can use the co-occurrence vectors of the words in $C$ to find clusters, but these vectors will contain a lot of words that are not in $C$, do not occur together with $A$ or do occur with $A$ but not in $C$. We are only interested in finding clusters representing the different meanings of word $A$, therefore we will only use the co-occurring words in the vectors of $C$ that are present in $C$.
@@ -97,6 +106,15 @@ Joe A. Guthrie, Louise Guthrie, Yorick Wilks and Homa Aidinejad.
 \newblock Subject-dependent co-occurrence and word sense disambiguation.
 \newblock Proceedings of the 29th annual meeting on Association for Computational Linguistics, 
 146--152
+\newblock
+Association for Computational Linguistics
+
+\bibitem[\protect\citename{Bullinaria \bgroup et al.\egroup }1997]{Bullinaria:97}
+John Bullinaria and John Levy.
+\newblock 1997.
+\newblock Extracting semantic representations from word co-occurrence statistics: A computational study.
+\newblock Behaviour Research Methods, 
+510--526
 \newblock
 Association for Computational Linguistics
 \end{thebibliography}
