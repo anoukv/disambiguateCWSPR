@@ -162,7 +162,8 @@ def makeNewCOCS(coc, outputfile, voc):
 	print "Writing results to: ", outputfile
 	newCOC = shelve.open(outputfile)
 	
-	wordsToCut = pruneVocabulary(voc)
+	#wordsToCut = pruneVocabulary(voc)
+	wordsToCut = set()
 
 	print "Not disambiguating: ", len(wordsToCut), " words"
 	# we will be evaluating the ambiguousness of every single word excpet for ''
@@ -170,12 +171,13 @@ def makeNewCOCS(coc, outputfile, voc):
 
 	counter = 0
 	instructions = []
-	for word in coc:
+	wordsToDisambiguate = ['apple', 'queen', 'jaguar']
+	for word in wordsToDisambiguate:
 		counter += 1
 
 		# we don't want nothing
 		# we don't want words that occur less than 20 times
-		if word != '' and voc[word] > 0 and  word not in wordsToCut:
+		if (word != '' and voc[word] > 0 and  word not in wordsToCut) or True:
 		 	print word, counter,  "/ ~50.000"
 			# here we cluster! 
 			if len(coc[word].keys()) > 5: 
