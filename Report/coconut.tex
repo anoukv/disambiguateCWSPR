@@ -69,13 +69,16 @@ $$r(x, y) = \frac{f_xy}{f_x+f_y - f_xy}$$
 where $f_xy$ denotes the frequency of $x$ and $y$ occurring together and $f_x$ and $f_y$ denote the frequency of $x$, respectively $y$. % something about how we get f_xy (RŽmi?)
 
 \subsection{Latent Semantic Analysis}
+Unsupervised word sense disambiguation approaches exploit the idea that similar senses of a word have similar neighboring words. They try to induce word senses from input text by clustering word co-occurences, aiming to divide "the occurrences of a word into a number of classes by determining for any two occurrences whether they belong to the same sense or not" \cite{Schutze:98}.
 
 \subsection{Similarity Measures}
 Measuring the similarity between two vectors can be seen as an equivalent to measuring their distance. Inversion or subtraction can be easily applied to transform a measure of distance between vectors into a measure of similarity. 
 
-The most common way to measure similarity between two vectors is to compute the \textit{cosine} of the angle between them as the inner product of the two vectors, after they have been normalized to unit length: $cos(x,y) = \frac{x \cdot y}{||x||\cdot||y||}$. Hence the length of the vectors is irrelevant. \cite{Bullinaria:97} show that the cosine is highly reliable and performs the best in their task, after having compared it with distance measures like Hellinger, Bhattacharya, and Kullback-Leibler. Other common geometric metrics frequently used in the vector space are represented by the Euclidean, Manhattan and Mahalanobis distance, Dice, Jaccard, Pearson and Spearman correlation coefficients.
+The most common way to measure similarity between two vectors is to compute the \textit{cosine} of the angle between them as the inner product of the two vectors, after they have been normalized to unit length: $cos(x,y) = \frac{x \cdot y}{||x||\cdot||y||}$. Hence the length of the vectors is irrelevant. \cite{Bullinaria:97} show that the cosine is highly reliable and performs the best, after having compared it with distance measures like Hellinger, Bhattacharya, and Kullback-Leibler. Other common geometric metrics frequently used in the vector space are represented by the Euclidean, Manhattan and Mahalanobis distance, Dice, Jaccard, Pearson and Spearman correlation coefficients.
 
-The \textit{Euclidean} distance between two points is defined as the length of the line connecting them. In the vector space, it is defined as $d(p,q) = d(q,p) = \sqrt{\sum_{i=1}^{n}(q_i-p_i)^2} $. The smaller this distance the more similar the objects are. The \textit{Mahalanobis} distance generalizes the standard Euclidean distance by modelling the relations of elements in different dimensions. Given two vectors $x$ and $y$, their squared Mahalanobis distance is $d_A = (x-y)^T A (x-y)$, where $A$ is a positive semidefinite matrix. 
+The \textit{Euclidean} distance between two points is defined as the length of the line connecting them. In the vector space, it is defined as $d(p,q) = d(q,p) = \sqrt{\sum_{i=1}^{n}(q_i-p_i)^2} $. The smaller this distance the more similar the objects are.  In a similar manner, the \textit{Manhattan} distance is defined as the sum of the absolute differences of the coordinates of two given points as $d(p,q) = |\sum_{i=1}^{n}(p_i - q_i)|$. The \textit{Mahalanobis} distance generalizes the standard Euclidean distance by modelling the relations of elements in different dimensions. Given two vectors $x$ and $y$, their squared Mahalanobis distance is $d_A = (x-y)^T A (x-y)$, where $A$ is a positive semidefinite matrix.
+
+The \textit{Pearson} correlation coefficient is defined in a similar manner with the Spearman correlation coefficient, with the mention that the last one is between the ranked variables: $\rho=\frac{\sum_i(x_i - \bar{x})(y_i - \bar{y})}{\sqrt{\sum_i(x_i - \bar{x})^2 (y_i - \bar{y})^2 }}$, where $\bar{x} = \frac{\sum_{i=1}^{n}x_i}{n}$ and $\bar{y} = \frac{\sum_{i=1}^{n}y_i}{n}$. A value of 1 indicates total positive correlation, i.e. that a "best fit" line with a positive slope is generated which runs through all the datapoints, a value of 0 means no correlation and a value of -1 represents negative correlation between the two variables. The main advantage of this method over the Euclidean distance is that it is more robust against data which is not normalized.
 
 \subsection{Clustering}
 To find the two senses of a word, we apply k-means clustering to the co-occurrence vectors of the co-occurring words. COCONUT assumes that the words assigned to each cluster represent a different meaning of a word. Words that are not closely related to $A$ do not contribute to either one of the meanings. Therefore, we will not use the co-occurrence vectors of all co-occurring words, but only those from the words that are closely related. Building a good decision process for defining when a word is closely related to another word is beyond the scope of this project and will most likely not necessarily lead to significant performance improvements. Therefore, we have decided to discard the words that have a relatedness score with $A$ that falls in the bottom $50\%$ of all relatedness-scores. Let the set of words that remains be called $C$. We can use the co-occurrence vectors of the words in $C$ to find clusters, but these vectors will contain a lot of words that are not in $C$, do not occur together with $A$ or do occur with $A$ but not in $C$. We are only interested in finding clusters representing the different meanings of word $A$, therefore we will only use the co-occurring words in the vectors of $C$ that are present in $C$.
@@ -115,8 +118,13 @@ John Bullinaria and John Levy.
 \newblock Extracting semantic representations from word co-occurrence statistics: A computational study.
 \newblock Behaviour Research Methods, 
 510--526
-\newblock
-Association for Computational Linguistics
+
+\bibitem[\protect\citename{Schutze \bgroup et al.\egroup }1997]{Schutze:98}
+Schutze H.
+\newblock 1998.
+\newblock Automatic Word Sense Discrimination.
+\newblock Computational Linguistic, 
+97
 \end{thebibliography}
 
 \end{document}
