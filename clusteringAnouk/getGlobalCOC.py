@@ -4,7 +4,7 @@ from time import time
 import shelve
 from math import sqrt
 
-def get_document_vocabulary(inpt, minimumOccurence = 5):
+def get_document_vocabulary(inpt, minimumOccurence = 0):
 	total = defaultdict(int)
 	for word in inpt:
 		total[word] += 1

@@ -1,0 +1,3 @@
+Min Occrences in getGloba... is set to 0, for larger datasets should be bigger (was: 5)
+
+Added line "if len(coc[word].keys()) > 5:" (181) to ensure that no empty clusters exist
