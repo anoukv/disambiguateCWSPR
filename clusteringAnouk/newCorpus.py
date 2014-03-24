@@ -147,7 +147,7 @@ def pruneVocabulary(voc):
 	vocTups = voc.items()
 	sortedVocTups = sorted(vocTups, key = lambda x: x[1], reverse = True)
 
-	for i in range(75):
+	for i in range(10):
 		wordsToCut.add(sortedVocTups[i][0])
 	print
 
@@ -175,16 +175,17 @@ def makeNewCOCS(coc, outputfile, voc):
 
 		# we don't want nothing
 		# we don't want words that occur less than 20 times
-		if word != '' and voc[word] > 20 and  word not in wordsToCut:
+		if word != '' and voc[word] > 0 and  word not in wordsToCut:
 		 	print word, counter,  "/ ~50.000"
 			# here we cluster! 
-			instructions.append((word, prepareExtraction(word,coc)))
-			if len(instructions) == 8:
-				print "Agregated instructions, executing..."
-				results = p.map(extractSenses, instructions)
-				for (w,s) in results:
-					newCOC[w] = s
-				instructions = []
+			if len(coc[word].keys()) > 5: 
+				instructions.append((word, prepareExtraction(word,coc)))
+				if len(instructions) == 8:
+					print "Agregated instructions, executing..."
+					results = p.map(extractSenses, instructions)
+					for (w,s) in results:
+						newCOC[w] = s
+					instructions = []
 
 	print "Executing rest of length", len(instructions)
 	results = p.map(extractSenses, instructions)
@@ -195,8 +196,7 @@ def makeNewCOCS(coc, outputfile, voc):
 print "Welcome to the clustering method designed by Anouk. You'll enjoy your time here."
 
 if len(sys.argv) < 6:
- 		print "Please call me as:"
- 		print "python runRemi.py <original coc> <new coc (output)> <training text> <new coc half (output)> <annotated corpus>"
+ 		print "Usage: python newCorpus.py <original coc> <new coc (output)> <training text> <new coc half (output)> <annotated corpus>"
  		sys.exit()
 
 input_file_coc = sys.argv[1]
