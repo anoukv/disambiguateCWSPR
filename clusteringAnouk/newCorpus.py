@@ -171,8 +171,7 @@ def makeNewCOCS(coc, outputfile, voc):
 
 	counter = 0
 	instructions = []
-	wordsToDisambiguate = ['apple', 'queen', 'jaguar']
-	for word in wordsToDisambiguate:
+	for word in coc:
 		counter += 1
 
 		# we don't want nothing

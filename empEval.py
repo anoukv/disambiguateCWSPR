@@ -21,7 +21,6 @@ while True:
 		wordRep = coc[word]
 		sense0 = sorted(wordRep[0].items(), key = lambda x: x[1], reverse=True)
 		sense1 = sorted(wordRep[1].items(), key = lambda x: x[1], reverse=True)
-		print sense0
 		commonTerms = set(sense0).intersection(set(sense1))
 		print
 		print "Sense 1: "
