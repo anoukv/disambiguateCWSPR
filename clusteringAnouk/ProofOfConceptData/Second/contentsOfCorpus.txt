@@ -1,0 +1,5 @@
+'apple' (company, fruit) superclasses: fruit, technology
+'jaguar' (animal, car) superclasses: panthera automotive
+'queen' (regent, band) superclasses: monarch, rock music
+
+for extra noise: literature, art, university, mathematics, earth

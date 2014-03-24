@@ -20,7 +20,8 @@ for elem in inpt:
 		for punct in exclude:
 			if punct in em:
 				em = em.replace(punct, "")
-		txt.append(em + " ")
+		if em != "":
+			txt.append(em + " ")
 
 inpt.close()
 
