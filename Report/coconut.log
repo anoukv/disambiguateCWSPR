@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-1.40.11 (TeX Live 2010) (format=pdflatex 2010.12.3)  25 MAR 2014 09:19
+This is pdfTeX, Version 3.1415926-1.40.11 (TeX Live 2010) (format=pdflatex 2010.12.3)  25 MAR 2014 09:42
 entering extended mode
  \write18 enabled.
  file:line:error style messages enabled.
@@ -89,23 +89,23 @@ File: ot1pcr.fd 2001/06/04 font definitions for OT1/pcr.
 LaTeX Font Info:    External font `cmex10' loaded for size
 (Font)              <10.95> on input line 57.
 LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <10.95> not available
-(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 69.
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 71.
  [1{/usr/local/texlive/2010/texmf-var/fonts/map/pdftex/updmap/pdftex.map}
 
 
 
 ]
-Underfull \hbox (badness 2941) in paragraph at lines 80--81
+Underfull \hbox (badness 2941) in paragraph at lines 82--83
 \OT1/ptm/m/n/10.95 Unsupervised word sense dis-am-bigua-tion ap-
  []
 
 
-Underfull \hbox (badness 1642) in paragraph at lines 89--90
+Underfull \hbox (badness 1642) in paragraph at lines 91--92
 \OT1/ptm/m/n/10.95 in a sim-i-lar man-ner with the Spear-man cor-
  []
 
 
-Underfull \hbox (badness 2799) in paragraph at lines 92--94
+Underfull \hbox (badness 2799) in paragraph at lines 94--96
 \OT1/ptm/m/n/10.95 We have eval-u-ated the per-for-mance of CO-
  []
 
@@ -113,10 +113,10 @@ Underfull \hbox (badness 2799) in paragraph at lines 92--94
 
 ] (./coconut.aux) ) 
 Here is how much of TeX's memory you used:
- 454 strings out of 493747
- 5697 string characters out of 3143546
- 59808 words of memory out of 3000000
- 3787 multiletter control sequences out of 15000+200000
+ 455 strings out of 493747
+ 5711 string characters out of 3143546
+ 58808 words of memory out of 3000000
+ 3788 multiletter control sequences out of 15000+200000
  18977 words of font info for 46 fonts, out of 3000000 for 9000
  714 hyphenation exceptions out of 8191
  22i,10n,19p,1261b,256s stack positions out of 5000i,500n,10000p,200000b,50000s
@@ -134,7 +134,7 @@ exlive/2010/texmf-dist/fonts/type1/urw/courier/ucrr8a.pfb></usr/local/texlive/2
 010/texmf-dist/fonts/type1/urw/times/utmb8a.pfb></usr/local/texlive/2010/texmf-
 dist/fonts/type1/urw/times/utmr8a.pfb></usr/local/texlive/2010/texmf-dist/fonts
 /type1/urw/times/utmri8a.pfb>
-Output written on coconut.pdf (3 pages, 136778 bytes).
+Output written on coconut.pdf (3 pages, 137706 bytes).
 PDF statistics:
  67 PDF objects out of 1000 (max. 8388607)
  48 compressed objects within 1 object stream
