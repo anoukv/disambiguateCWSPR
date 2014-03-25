@@ -147,6 +147,7 @@ def average(x):
         assert len(x) > 0
         return float(sum(x)) / len(x)
 
+<<<<<<< HEAD
 # def PearsonCorrelation(x, y):
 #         assert len(x) == len(y)
 #         n = len(x)
@@ -172,6 +173,25 @@ def average(x):
 # >>>>>>> af23aedc41d92947901841e99425af906cd5f0e4
 
 #         return diffprod / math.sqrt(xdiff2 * ydiff2)
+=======
+def PearsonCorrelation(x, y):
+        assert len(x) == len(y)
+        n = len(x)
+        assert n > 0
+        avg_x = average(x)
+        avg_y = average(y)
+        diffprod = 0
+        xdiff2 = 0
+        ydiff2 = 0
+        for i in range(n):
+                xdiff = x[i] - avg_x
+                ydiff = y[i] - avg_y
+                diffprod += xdiff * ydiff
+                xdiff2 += xdiff * xdiff
+                ydiff2 += ydiff * ydiff
+
+        return diffprod / math.sqrt(xdiff2 * ydiff2)
+>>>>>>> e885d9a794f29961a54dabb8454bbe74b2d77271
 
 def SpearmanCorrelation(x,y):
 	from scipy import stats
@@ -241,11 +261,12 @@ if __name__ == "__main__":
 	answers = qa(vecs, questions, distanceMeasure)
 
 	print "Saving answers to file"
-	save_answers(answers, "precomputedAnswers/vectors640.broadcast.word_relationship.answered")
+
+	save_answers(answers, "precomputedAnswers/testCristina" + distanceMeasure + "640Similarity.answered")
+	#save_answers(answers, "precomputedAnswers/testRemi" + distanceMeasure + "Similarity.word_relationship.answered")
 	stop = time()
 	print "Spent", int(stop - start + 0.5), "seconds."
-	# save_answers(answers, "precomputedAnswers/testCristina" + distanceMeasure + "640Similarity.answered")
-
+	
 
 
 

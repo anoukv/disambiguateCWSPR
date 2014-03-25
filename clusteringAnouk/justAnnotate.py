@@ -13,6 +13,7 @@ def read_file(filename):
 # annotates the corpus using the multiple senses of a word
 def annotate(inpt, clustered, vocabulary, skipsize):
 	queueSize = skipsize * 2 + 1
+	clusteredKeys = set(clustered.keys())
 
 	# two functions
 	queueIsReady = lambda x : len(x) == queueSize
@@ -23,9 +24,11 @@ def annotate(inpt, clustered, vocabulary, skipsize):
 
 	annotated = []
 	queue = []
-	for word in inpt:
+	total = len(inpt)
+	for i, word in enumerate(inpt):
+		print i, "/", total, word
 		push(word, queue)
-		if queueIsReady(queue) and word in clustered:	
+		if queueIsReady(queue) and word in clusteredKeys:	
 			coc = set()
 			for i in xrange(skipsize):
 				if queue[i] in vocabulary:
@@ -74,7 +77,10 @@ vocabulary = sys.argv[4]
 print "Reading corpus..."
 inpt = read_file(training_text)
 
+print input_file
+print vocabulary
 coc = shelve.open(input_file)
+print "opened coc"
 voc = shelve.open(vocabulary)
 
 print "Annotating corpus."
@@ -86,6 +92,6 @@ f.close()
 
 
 voc.close()
-halfCOC.close()
+coc.close()
 
 
