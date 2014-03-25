@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-1.40.11 (TeX Live 2010) (format=pdflatex 2010.12.3)  25 MAR 2014 09:42
+This is pdfTeX, Version 3.1415926-1.40.11 (TeX Live 2010) (format=pdflatex 2010.12.3)  25 MAR 2014 09:47
 entering extended mode
  \write18 enabled.
  file:line:error style messages enabled.
@@ -115,7 +115,7 @@ Underfull \hbox (badness 2799) in paragraph at lines 94--96
 Here is how much of TeX's memory you used:
  455 strings out of 493747
  5711 string characters out of 3143546
- 58808 words of memory out of 3000000
+ 59808 words of memory out of 3000000
  3788 multiletter control sequences out of 15000+200000
  18977 words of font info for 46 fonts, out of 3000000 for 9000
  714 hyphenation exceptions out of 8191
@@ -134,7 +134,7 @@ exlive/2010/texmf-dist/fonts/type1/urw/courier/ucrr8a.pfb></usr/local/texlive/2
 010/texmf-dist/fonts/type1/urw/times/utmb8a.pfb></usr/local/texlive/2010/texmf-
 dist/fonts/type1/urw/times/utmr8a.pfb></usr/local/texlive/2010/texmf-dist/fonts
 /type1/urw/times/utmri8a.pfb>
-Output written on coconut.pdf (3 pages, 137706 bytes).
+Output written on coconut.pdf (3 pages, 137713 bytes).
 PDF statistics:
  67 PDF objects out of 1000 (max. 8388607)
  48 compressed objects within 1 object stream
