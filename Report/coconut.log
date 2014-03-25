@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-1.40.11 (TeX Live 2010) (format=pdflatex 2010.12.3)  25 MAR 2014 08:57
+This is pdfTeX, Version 3.1415926-1.40.11 (TeX Live 2010) (format=pdflatex 2010.12.3)  25 MAR 2014 09:19
 entering extended mode
  \write18 enabled.
  file:line:error style messages enabled.
@@ -47,8 +47,7 @@ Package: latexsym 1998/08/17 v2.2e Standard LaTeX package (lasy symbols)
 \symlasy=\mathgroup4
 LaTeX Font Info:    Overwriting symbol font `lasy' in version `bold'
 (Font)                  U/lasy/m/n --> U/lasy/b/n on input line 47.
-)
-No file coconut.aux.
+) (./coconut.aux)
 \openout1 = `coconut.aux'.
 
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 44.
@@ -64,7 +63,7 @@ LaTeX Font Info:    ... okay on input line 44.
 LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 44.
 LaTeX Font Info:    ... okay on input line 44.
 LaTeX Font Info:    Try loading font information for OT1+ptm on input line 44.
-(/usr/local/texlive/2010/texmf-dist/tex/latex/psnfss/ot1ptm.fd
+ (/usr/local/texlive/2010/texmf-dist/tex/latex/psnfss/ot1ptm.fd
 File: ot1ptm.fd 2001/06/04 font definitions for OT1/ptm.
 )
 LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <14.4> not available
@@ -87,82 +86,55 @@ LaTeX Font Info:    Try loading font information for OT1+pcr on input line 45.
 (/usr/local/texlive/2010/texmf-dist/tex/latex/psnfss/ot1pcr.fd
 File: ot1pcr.fd 2001/06/04 font definitions for OT1/pcr.
 )
-LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <10.95> not available
-(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 47.
-
-
-LaTeX Warning: Citation `Mikolov:13' on page 1 undefined on input line 47.
-
-
-LaTeX Warning: Citation `Mikolov:13' on page 1 undefined on input line 56.
-
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <10.95> on input line 56.
-
-LaTeX Warning: Citation `Mikolov:13' on page 1 undefined on input line 63.
-
-
-LaTeX Warning: Citation `Guthrie:92' on page 1 undefined on input line 67.
-
-
-Underfull \vbox (badness 1629) has occurred while \output is active []
-
+(Font)              <10.95> on input line 57.
+LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <10.95> not available
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 69.
  [1{/usr/local/texlive/2010/texmf-var/fonts/map/pdftex/updmap/pdftex.map}
 
 
 
 ]
-
-LaTeX Warning: Citation `Schutze:98' on page 2 undefined on input line 72.
-
-
-Underfull \hbox (badness 2941) in paragraph at lines 72--73
+Underfull \hbox (badness 2941) in paragraph at lines 80--81
 \OT1/ptm/m/n/10.95 Unsupervised word sense dis-am-bigua-tion ap-
  []
 
 
-LaTeX Warning: Citation `Bullinaria:97' on page 2 undefined on input line 77.
-
-
-Underfull \hbox (badness 1642) in paragraph at lines 81--82
+Underfull \hbox (badness 1642) in paragraph at lines 89--90
 \OT1/ptm/m/n/10.95 in a sim-i-lar man-ner with the Spear-man cor-
  []
 
 
-Underfull \hbox (badness 2799) in paragraph at lines 88--90
+Underfull \hbox (badness 2799) in paragraph at lines 92--94
 \OT1/ptm/m/n/10.95 We have eval-u-ated the per-for-mance of CO-
  []
 
 [2] [3
 
-] (./coconut.aux)
-
-LaTeX Warning: Label(s) may have changed. Rerun to get cross-references right.
-
- ) 
+] (./coconut.aux) ) 
 Here is how much of TeX's memory you used:
- 451 strings out of 493747
- 5657 string characters out of 3143546
+ 454 strings out of 493747
+ 5697 string characters out of 3143546
  59808 words of memory out of 3000000
- 3786 multiletter control sequences out of 15000+200000
+ 3787 multiletter control sequences out of 15000+200000
  18977 words of font info for 46 fonts, out of 3000000 for 9000
  714 hyphenation exceptions out of 8191
- 22i,10n,23p,1526b,256s stack positions out of 5000i,500n,10000p,200000b,50000s
-{/usr/local/texlive/2010/texmf-dist/fonts/enc/dvips/base/8r.enc}</usr/local/t
-exlive/2010/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></usr/local/te
-xlive/2010/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/local/tex
-live/2010/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi6.pfb></usr/local/texli
-ve/2010/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb></usr/local/texlive
-/2010/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/local/texlive/2
-010/texmf-dist/fonts/type1/public/amsfonts/cm/cmr6.pfb></usr/local/texlive/2010
-/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr/local/texlive/2010/te
-xmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/local/texlive/2010/tex
-mf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb></usr/local/texlive/2010/texmf
--dist/fonts/type1/urw/courier/ucrr8a.pfb></usr/local/texlive/2010/texmf-dist/fo
-nts/type1/urw/times/utmb8a.pfb></usr/local/texlive/2010/texmf-dist/fonts/type1/
-urw/times/utmr8a.pfb></usr/local/texlive/2010/texmf-dist/fonts/type1/urw/times/
-utmri8a.pfb>
-Output written on coconut.pdf (3 pages, 135729 bytes).
+ 22i,10n,19p,1261b,256s stack positions out of 5000i,500n,10000p,200000b,50000s
+{/usr/local/texlive/2010/texmf-dist/fonts/enc/dvips/base/8r.
+enc}</usr/local/texlive/2010/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.p
+fb></usr/local/texlive/2010/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pf
+b></usr/local/texlive/2010/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi6.pfb>
+</usr/local/texlive/2010/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb></
+usr/local/texlive/2010/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></us
+r/local/texlive/2010/texmf-dist/fonts/type1/public/amsfonts/cm/cmr6.pfb></usr/l
+ocal/texlive/2010/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr/loca
+l/texlive/2010/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/local
+/texlive/2010/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb></usr/local/t
+exlive/2010/texmf-dist/fonts/type1/urw/courier/ucrr8a.pfb></usr/local/texlive/2
+010/texmf-dist/fonts/type1/urw/times/utmb8a.pfb></usr/local/texlive/2010/texmf-
+dist/fonts/type1/urw/times/utmr8a.pfb></usr/local/texlive/2010/texmf-dist/fonts
+/type1/urw/times/utmri8a.pfb>
+Output written on coconut.pdf (3 pages, 136778 bytes).
 PDF statistics:
  67 PDF objects out of 1000 (max. 8388607)
  48 compressed objects within 1 object stream
