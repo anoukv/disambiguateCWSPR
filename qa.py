@@ -209,7 +209,7 @@ if __name__ == "__main__":
 		print "python qa.py wordvectors.txt questions"
 		sys.exit()
 
-	answers = qa_ambiguous(load_vectors(sys.argv[1]), load_questions(sys.argv[2]))
+	answers = qa_ambiguous_stricter(load_vectors(sys.argv[1]), load_questions(sys.argv[2]))
 	
 	print "Saving answers to file"
 	save_answers(answers, "precomputedAnswers/" + sys.argv[1].split("/")[-1] + "." + sys.argv[2].split("/")[-1].split(".")[0] + ".answered")

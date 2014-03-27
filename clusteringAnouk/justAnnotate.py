@@ -26,7 +26,6 @@ def annotate(inpt, clustered, vocabulary, skipsize):
 	queue = []
 	total = len(inpt)
 	for i, word in enumerate(inpt):
-		print i, "/", total, word
 		push(word, queue)
 		if queueIsReady(queue) and word in clusteredKeys:	
 			coc = set()
