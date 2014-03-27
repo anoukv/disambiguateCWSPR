@@ -84,11 +84,14 @@ To find the two senses of a word, we apply k-means clustering to the co-occurren
 % some tweaks
 
 \section{Corpus annotation and question answering.}
+Once a set of ambiguous words and their representation has been identified a new corpus is generated wherein the ambiguous words are annotated with their meaning. This is done by looping over the words in the corpus and again extracting the context of the words that are ambiguous. This context is then matched with either of the clusters that were found for that particular word. If the context of a word is closest to the representation of cluster 1, the word will be annotated with a `\_1' and if the word context corresponds more with the second meaning of the word the word is annotated with `\_2'. Then, the process described in Mikolov et al. is repeated to get the wordvector representation of the words in the annotated corpus. Now the question triplet \textit{a : b : c} can be translated many interpretations, namely \textit{a\_0 : b\_0 : c\_0}, \textit{a\_0 : b\_0 : c\_1}, etc. If all three words are ambiguous then there are 8 possible interpretations. Of course, not all interpretations are sensible. If the question is \textit{king : queen : man} then the interpretation of \textit{queen} as a band is not sensible, but should be interpreted as `queen as-in royalty'.
 
 \section{Latent Semantic Analysis}
+XXX I think this might be better in the related work section, also because we don't have measurements for this method XXX
 Unsupervised word sense disambiguation approaches exploit the idea that similar senses of a word have similar neighboring words. They try to induce word senses from input text by clustering word co-occurences, aiming to divide "the occurrences of a word into a number of classes by determining for any two occurrences whether they belong to the same sense or not" \cite{Schutze:98}.
 
 \section{Similarity Measures}
+XXX I don't think we should have a section on similarity measures. I think it would be good to mention it in the results section. XXX
 Measuring the similarity between two vectors can be seen as an equivalent to measuring their distance. Inversion or subtraction can be easily applied to transform a measure of distance between vectors into a measure of similarity. 
 
 The most common way to measure similarity between two vectors is to compute the \textit{cosine} of the angle between them as the inner product of the two vectors, after they have been normalized to unit length: $cos(x,y) = \frac{x \cdot y}{||x||\cdot||y||}$. Hence the length of the vectors is irrelevant. \cite{Bullinaria:97} show that the cosine is highly reliable and performs the best, after having compared it with distance measures like Hellinger, Bhattacharya, and Kullback-Leibler. Other common geometric metrics frequently used in the vector space are represented by the Euclidean, Manhattan and Mahalanobis distance, Dice, Jaccard, Pearson and Spearman correlation coefficients.

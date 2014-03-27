@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.3-1.40.12 (TeX Live 2011) (format=pdflatex 2011.7.3)  27 MAR 2014 14:38
+This is pdfTeX, Version 3.1415926-2.3-1.40.12 (TeX Live 2011) (format=pdflatex 2011.7.3)  27 MAR 2014 16:06
 entering extended mode
  \write18 enabled.
  file:line:error style messages enabled.
@@ -103,48 +103,45 @@ LaTeX Font Info:    Font shape `OMS/ptm/m/n' in size <10.95> not available
 ]
 LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <10.95> not available
 (Font)              Font shape `OT1/ptm/b/n' tried instead on input line 76.
-
-Underfull \hbox (badness 2941) in paragraph at lines 89--90
-\OT1/ptm/m/n/10.95 Unsupervised word sense dis-am-bigua-tion ap-
- []
-
-[2]
-Underfull \hbox (badness 1642) in paragraph at lines 98--99
+ [2]
+Underfull \hbox (badness 1642) in paragraph at lines 101--102
 \OT1/ptm/m/n/10.95 in a sim-i-lar man-ner with the Spear-man cor-
  []
 
 
-Underfull \hbox (badness 2799) in paragraph at lines 101--103
+Underfull \hbox (badness 2799) in paragraph at lines 104--106
 \OT1/ptm/m/n/10.95 We have eval-u-ated the per-for-mance of CO-
  []
 
-[3] (./coconut.aux) ) 
+[3] [4
+
+] (./coconut.aux) ) 
 Here is how much of TeX's memory you used:
- 473 strings out of 493633
- 6037 string characters out of 3143378
+ 474 strings out of 493633
+ 6055 string characters out of 3143378
  59983 words of memory out of 3000000
- 3811 multiletter control sequences out of 15000+200000
+ 3812 multiletter control sequences out of 15000+200000
  18977 words of font info for 46 fonts, out of 3000000 for 9000
  831 hyphenation exceptions out of 8191
  22i,10n,19p,2310b,256s stack positions out of 5000i,500n,10000p,200000b,50000s
-{/usr/local/texlive/2011/texmf-dist/fonts/enc/dvips/base/8
-r.enc}</usr/local/texlive/2011/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10
-.pfb></usr/local/texlive/2011/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.
-pfb></usr/local/texlive/2011/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi6.pf
-b></usr/local/texlive/2011/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb>
-</usr/local/texlive/2011/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></
-usr/local/texlive/2011/texmf-dist/fonts/type1/public/amsfonts/cm/cmr6.pfb></usr
-/local/texlive/2011/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr/lo
-cal/texlive/2011/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/loc
-al/texlive/2011/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb></usr/local
-/texlive/2011/texmf-dist/fonts/type1/urw/courier/ucrr8a.pfb></usr/local/texlive
-/2011/texmf-dist/fonts/type1/urw/times/utmb8a.pfb></usr/local/texlive/2011/texm
-f-dist/fonts/type1/urw/times/utmr8a.pfb></usr/local/texlive/2011/texmf-dist/fon
-ts/type1/urw/times/utmri8a.pfb>
-Output written on coconut.pdf (3 pages, 142204 bytes).
+{/usr/local/texlive/2011/texmf-dist/fonts/enc/dvips/base/8r.
+enc}</usr/local/texlive/2011/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.p
+fb></usr/local/texlive/2011/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pf
+b></usr/local/texlive/2011/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi6.pfb>
+</usr/local/texlive/2011/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb></
+usr/local/texlive/2011/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></us
+r/local/texlive/2011/texmf-dist/fonts/type1/public/amsfonts/cm/cmr6.pfb></usr/l
+ocal/texlive/2011/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr/loca
+l/texlive/2011/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/local
+/texlive/2011/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb></usr/local/t
+exlive/2011/texmf-dist/fonts/type1/urw/courier/ucrr8a.pfb></usr/local/texlive/2
+011/texmf-dist/fonts/type1/urw/times/utmb8a.pfb></usr/local/texlive/2011/texmf-
+dist/fonts/type1/urw/times/utmr8a.pfb></usr/local/texlive/2011/texmf-dist/fonts
+/type1/urw/times/utmri8a.pfb>
+Output written on coconut.pdf (4 pages, 144572 bytes).
 PDF statistics:
- 67 PDF objects out of 1000 (max. 8388607)
- 48 compressed objects within 1 object stream
+ 70 PDF objects out of 1000 (max. 8388607)
+ 50 compressed objects within 1 object stream
  0 named destinations out of 1000 (max. 500000)
  1 words of extra memory for PDF output out of 10000 (max. 10000000)
 
