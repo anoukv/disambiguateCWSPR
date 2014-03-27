@@ -22,5 +22,10 @@
 *.x86_64
 *.hex
 
+# latex
+*.synctex.gz
+*.pdf
+*.log
+
 
 *.DS_Store
