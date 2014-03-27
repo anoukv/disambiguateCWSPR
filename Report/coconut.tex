@@ -116,7 +116,23 @@ We have evaluated the performance of COCONUT on a dataset containing X unique wo
 % Description of the questions and answers?
 
 \subsection{Empirical Evaluation}
-%Maybe we need some sort of empirical evaluation in which we show how the clustering really works (and how it fails). 
+%Maybe we need some sort of empirical evaluation in which we show how the clustering really works (and how it fails).
+For the empirical evaluation we have inspected the results of COCONUT. We have tested our data on the dataset we used to answer the analogy questions, but we have performed small tests on a hand-made dataset as well. The hand-made dataset contains different fragments of wikipedia articles on ambiguous topics, it includes apple (fruit, company), queen (band, monarch), jaguar (cars, animal), eagles (band, animal), firm (law, firm grip), range (of numbers, farm fields) and more. For every ambiguous words we also took fragments from their superclasses. In addition to articles revolving around the ambiguous words, we have also added some random articles.
+
+The results obtained on this small dataset were promising, for example the words from two different clusters  (sorted based on relatedness) for the word `apple' are: 
+\begin{enumerate}
+\item also, fruit, june, announced, crisp, pie, crumble, inc, 9, is, apples, such, jelly, pomaceous, cake, 77, butter, processor, juice
+\item iphone, wwdc, operating, develops, on, x, os, are, 4, sauce, desserts, nokia, remote, towards, offers, system, largest, worlds
+\end{enumerate}
+Another example is `jaguar' for which we find: 
+\begin{enumerate}
+\item feline, fords, under, dropped, solitary, enjoys, waters, threatened, preferred, sustained, inland, 59, rainforest, swimming, across, ownership, largely, exceptionally, planned
+\item models, sported, has, plated, traditionally, chrome, prominently, forming, famous, changed, hunts, grounds, associated, featured, americas, fishing
+\end{enumerate}
+
+On dataset X we find for the same word two different clusters: 
+
+% Maybe some clusters here.
 
 
 \subsection{Quantitative Evaluation}
