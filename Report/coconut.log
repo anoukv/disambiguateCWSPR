@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.5-1.40.14 (MiKTeX 2.9) (preloaded format=pdflatex 2014.2.13)  24 MAR 2014 01:24
+This is pdfTeX, Version 3.1415926-2.5-1.40.14 (MiKTeX 2.9) (preloaded format=pdflatex 2014.2.13)  24 MAR 2014 15:28
 entering extended mode
 **coconut.tex
 (E:\UvA\ULL\Project\Code\disambiguateCWSPR\Report\coconut.tex
@@ -101,12 +101,7 @@ Underfull \hbox (badness 2941) in paragraph at lines 72--73
  []
 
 
-Underfull \hbox (badness 1642) in paragraph at lines 81--82
-\OT1/ptm/m/n/10.95 in a sim-i-lar man-ner with the Spear-man cor-
- []
-
-
-Underfull \hbox (badness 2799) in paragraph at lines 88--90
+Underfull \hbox (badness 2799) in paragraph at lines 90--92
 \OT1/ptm/m/n/10.95 We have eval-u-ated the per-for-mance of CO-
  []
 
@@ -139,7 +134,7 @@ ublic/amsfonts/cm/cmsy8.pfb><C:/Program Files (x86)/MiKTeX 2.9/fonts/type1/urw/
 courier/ucrr8a.pfb><C:/Program Files (x86)/MiKTeX 2.9/fonts/type1/urw/times/utm
 b8a.pfb><C:/Program Files (x86)/MiKTeX 2.9/fonts/type1/urw/times/utmr8a.pfb><C:
 /Program Files (x86)/MiKTeX 2.9/fonts/type1/urw/times/utmri8a.pfb>
-Output written on coconut.pdf (3 pages, 144466 bytes).
+Output written on coconut.pdf (3 pages, 144756 bytes).
 PDF statistics:
  65 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)
