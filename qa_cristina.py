@@ -147,6 +147,33 @@ def average(x):
         assert len(x) > 0
         return float(sum(x)) / len(x)
 
+<<<<<<< HEAD
+# def PearsonCorrelation(x, y):
+#         assert len(x) == len(y)
+#         n = len(x)
+#         assert n > 0
+#         avg_x = average(x)
+#         avg_y = average(y)
+#         diffprod = 0
+#         xdiff2 = 0
+#         ydiff2 = 0
+#         for i in range(n):
+# <<<<<<< HEAD
+# 	        xdiff = x[i] - avg_x
+# 	        ydiff = y[i] - avg_y
+# 	        diffprod += xdiff * ydiff
+# 	        xdiff2 += xdiff * xdiff
+# 	        ydiff2 += ydiff * ydiff
+# =======
+#                 xdiff = x[i] - avg_x
+#                 ydiff = y[i] - avg_y
+#                 diffprod += xdiff * ydiff
+#                 xdiff2 += xdiff * xdiff
+#                 ydiff2 += ydiff * ydiff
+# >>>>>>> af23aedc41d92947901841e99425af906cd5f0e4
+
+#         return diffprod / math.sqrt(xdiff2 * ydiff2)
+=======
 def PearsonCorrelation(x, y):
         assert len(x) == len(y)
         n = len(x)
@@ -164,6 +191,7 @@ def PearsonCorrelation(x, y):
                 ydiff2 += ydiff * ydiff
 
         return diffprod / math.sqrt(xdiff2 * ydiff2)
+>>>>>>> e885d9a794f29961a54dabb8454bbe74b2d77271
 
 def SpearmanCorrelation(x,y):
 	from scipy import stats

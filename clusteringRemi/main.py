@@ -1,5 +1,6 @@
 import sys
 from collections import defaultdict
+import shelve
 from time import time
 import pickle
 from math import sqrt
@@ -29,77 +30,112 @@ def anotate(inpt, skipsize):
 		queue.append(element)
 		if len(queue) > queueSize:
 			queue.pop(0)
+
+	def map_append(dic, key, elem):
+		if key in dic:
+			l = dic[key]
+			l.append(elem)
+			dic[key] = l
+		else:
+			dic[key] = [elem]
 	
 	vocabulary = get_document_vocabulary(inpt)
 	vocSize = len(vocabulary) + 1
 
-	print "Starting on determining word co-occurences."
+	totalWords = len(inpt)
+
+	print vocSize, "words in vocabulary."
+	print "Starting on determining word co-occurences of", totalWords, "words"
+
 
 	cocs = defaultdict(list)
 	queue = []
-	for word in inpt:
+	for i in xrange(queueSize):
+		word = inpt[i]
 		push(word, queue)
-		if queueIsReady(queue):
-			mid = queue[queueMid]
-			if mid in vocabulary:
-				coc = defaultdict(int)
-				for i in xrange(skipsize):
-					if queue[i] in vocabulary:
-						word1 = queue[i]
-					else:
-						word1 = "_UNKNOWN_"
-					if queue[i+1+skipsize] in vocabulary:
-						word2 = queue[i+1+skipsize]
-					else:
-						word2 = "_UNKNOWN_"
 
-					coc[word1] += 1
-					coc[word2] += 1
+	for counter in xrange(queueSize, len(inpt)):
+		word = inpt[counter]
+		if counter % 100000 == 0:
+			print "Part", counter / 100000, "of", totalWords / 100000, "parts."
+		push(word, queue)
+		mid = queue[queueMid]
+		if mid in vocabulary:
+			coc = defaultdict(int)
+			for i in xrange(skipsize):
+				if queue[i] in vocabulary:
+					word1 = queue[i]
+				else:
+					word1 = "_UNKNOWN_"
+				if queue[i+1+skipsize] in vocabulary:
+					word2 = queue[i+1+skipsize]
+				else:
+					word2 = "_UNKNOWN_"
 
-				cocs[mid].append(normalize_coc(coc))
+				coc[word1] += 1
+				coc[word2] += 1
+
+			cocs[mid].append(normalize_coc(coc))
+
+	print "Found",len(cocs),"co-occurence vectors."
 
 	print "Now clustering..."
 
-	clustered = dict()
-	for key in cocs.keys():
-		clustered[key] = kmeans_process(cocs[key])
+	clustered = []
+	for key in cocs:
+		c = kmeans_process(cocs[key])
+		if len(c) == 2:
+			clustered.append((c[0].cluster_distance(c[1]), key, c))
+
+	clustered = sorted(clustered, key = lambda x : x[0])
+	clustered = clustered[0:len(clustered)/2]
+	clustered = dict([ (x[1], x[2]) for x in clustered] )
+
+	clustered_words = set(clustered.keys())
+
+	print "Clustered words:", clustered_words
 
 	print "Starting anotating corpus."
 	anotated = []
 	queue = []
-	for word in inpt:
+	for i in xrange(queueSize):
+		word = inpt[i]
 		push(word, queue)
-		if queueIsReady(queue):
-			word = queue[queueMid]
-			if word in clustered and len(clustered[word]) > 1:
-				coc = defaultdict(int)
-				for i in xrange(skipsize):
-					if queue[i] in vocabulary:
-						word1 = queue[i]
-					else:
-						word1 = "_UNKNOWN_"
-					if queue[i+1+skipsize] in vocabulary:
-						word2 = queue[i+1+skipsize]
-					else:
-						word2 = "_UNKNOWN_"
 
-					coc[word1] += 1
-					coc[word2] += 1
 
-				coc = normalize_coc(coc)
+	for counter in xrange(queueSize, len(inpt)):
+		word = inpt[counter]
+		push(word, queue)
+		word = queue[queueMid]
+		if word in clustered_words:
+			coc = defaultdict(int)
+			for i in xrange(skipsize):
+				if queue[i] in vocabulary:
+					word1 = queue[i]
+				else:
+					word1 = "_UNKNOWN_"
+				if queue[i+1+skipsize] in vocabulary:
+					word2 = queue[i+1+skipsize]
+				else:
+					word2 = "_UNKNOWN_"
 
-				# Now get the best cluster
-				bestValue = 1
-				bestIndex = -1
-				for i in xrange(k):
-					distance = clustered[word][i].distance(coc)
-					if distance < bestValue:
-						bestValue = distance
-						bestIndex = i
-				word = word + "_" + str(bestIndex) + " "
-			anotated.append(word)
+				coc[word1] += 1
+				coc[word2] += 1
 
-	return (clustered, anotated)
+			coc = normalize_coc(coc)
+
+			# Now get the best cluster
+			bestValue = 1
+			bestIndex = -1
+			for i in xrange(k):
+				distance = clustered[word][i].distance(coc)
+				if distance < bestValue:
+					bestValue = distance
+					bestIndex = i
+			word = word + "_" + str(bestIndex)
+		anotated.append(word + " ")
+
+	return anotated
 
 def read_args():
 	def read_file(filename):
@@ -125,12 +161,11 @@ def main_cluster_remi():
 
  	print "Preparing data."
 
- 	(clustered, anotated) = anotate(inpt, skipsize)
+ 	anotated = anotate(inpt, skipsize)
 
  	f = open(output_file, 'w')
  	f.write("".join(anotated))
  	f.close()
- 	pickle.dump(clustered, open("clusters.pickle", 'wb'))
 
 
 if __name__ == "__main__":
