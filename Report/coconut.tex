@@ -67,13 +67,13 @@ Let $C$ be the set of words that co-occur with $A$, the word we want to disambig
 \subsection{Co-Occurrence Vectors}
 A global co-occurrence vector contains the frequencies indicating how many times two words co-occur. We obtain the global co-occurrence vector for every word in the corpus in a similar way to obtaining the local co-occurrence vector as described in section \ref{remi}. The only difference being that instead of maintaining all local co-occurrence vectors for a given word, we accumulate all local co-occurrence vectors in one global co-occurrence vector. 
 
-After obtaining the global co-occurrence vectors for every word in the corpus, we convert the co-occurrence vector for word $A$ by computing the relatedness of word $A$ with every other word in the $C$. We use the same function for relatedness as \cite{Guthrie:92}:
+After obtaining the global co-occurrence vectors for every word in the corpus, we convert the absolute frequencies in the global co-occurrence vector to a relatedness score. We use the same function for relatedness as \cite{Guthrie:92}:
 $$r(x, y) = \frac{f_xy}{f_x+f_y - f_{xy}}$$
 where $f_{xy}$ denotes the frequency of $x$ and $y$ occurring together and $f_x$ and $f_y$ denote the frequency of $x$, respectively $y$. 
 
 Words that are not closely related to $A$ do not contribute to either one of the meanings. Therefore, we will discard the words that have a relatedness score with $A$ that falls in the bottom $50\%$ of all relatedness-scores from $C$. The terms that are discarded are considered relevant to all meanings of $A$, we will call this set $R$.
 \subsection{Clustering and splitting}
-Next, we use the co-occurrence vectors from the remaining words in $C$, we will call this set of co-occurrence vectors $V$. After applying k-means clustering on the vectors in $V$ we expect to find two cluster centers that represent the two meanings for $A$. Note that we are only interested in describing the two meanings of $A$ using the words in $C$. Therefore, for every vector in $V$ we will discard all words that are not in $C$. The adjusted vectors can now be used to perform k-means clustering. 
+Let the set of co-occurrence vectors from the words in $C$, be called $V$. After applying k-means clustering on the vectors in $V$ we expect to find two cluster centers that represent the two meanings for $A$. Note that we are only interested in describing the two meanings of $A$ using the words in $C$. Therefore, for every vector in $V$ we will discard all words that are not in $C$. The adjusted vectors can now be used to perform k-means clustering. 
 
 The two new co-occurrence vectors for $A$ are initialized with the words in $R$. As the cluster centers define the different meanings of $A$, we can look at the words in each cluster to fill the new co-occurrence vectors for $A$. For example if the words `technology', `iPhone' and `company' are assigned to one cluster, they will be inserted into one of the new co-occurrence vectors for the word `apple' while the words `fruit', `pie', `baking' that were assigned to the other cluster will be inserted into the other co-occurrence vector. 
 
@@ -143,16 +143,14 @@ Meaning 1 is more centered around `belief'-as-in religion, whereas meaning 2 is 
 \subsection{Quantitative Evaluation}
 % Which test sets are we using? What are we comparing against? Some (but not many) statistics of our dataset.
 \section{Future work}
-XXX WORK OUT BULLET POINTS XXX
-\begin{itemize}
-\item would also be possible to use a soft-max or gaussian measure to weigh each word based on its distance, but we have weighted each of the 10 words in the 5 word window equally.
-\item multiple meanings
-\item better decision process for ambiguous or not
-\item cutting down on related words, we observe many not so related words
-\item capitalization can be a indication of a brand name
-\end{itemize}
+\subsection{Co-occurrence vectors}
+would also be possible to use a soft-max or gaussian measure to weigh each word based on its distance, but we have weighted each of the 10 words in the 5 word window equally.
+\subsection{Clustering}
+multiple meanings
+cutting down on related words, we observe many not so related words
+better decision process for ambiguous or not
 
-By inspecting the clusters, we found a lot of words that we would not consider ambiguous might occur in many different contexts An example of a word that we found has many different meanings is `red'. This word had so many different meanings, that two word senses were not enough, we provide a limited breakdown of the words that co-occur with `red':
+While inspecting the clusters, we found a lot of words that we would not consider ambiguous might occur in many different contexts An example of a word that we found has many different meanings is `red'. This word had so many different meanings, that two word senses were not enough, we provide a limited breakdown of the words that co-occur with `red':
 
 \begin{itemize}
 \item Boston Red Sox - sports
