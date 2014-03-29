@@ -1,5 +1,6 @@
 
 \documentclass[11pt]{article}
+\usepackage{float}
 \usepackage{acl2014}
 \usepackage{times}
 \usepackage{url}
@@ -167,6 +168,22 @@ We observe a lot of noise in this example. However, the meaning of `santa'-as-in
 Meaning 1 is more centered around `belief'-as-in religion, whereas meaning 2 is more centered around a multitude of beliefs. 
 
 \subsection{Quantitative Evaluation}
+For our quantitative evaluation we again trained on the enwiki8 dataset. We foun
+\begin{figure}[H]
+\center
+    \begin{tabular}{l|l}
+    \textbf{Similarity Metric} & \textbf{Accuracy}  \\ \hline
+    Cosine            & 16.20     \\ \hline
+    Euclidean         & 16.17     \\ \hline
+    Manhattan         & 16.49     \\
+    \end{tabular}
+    \caption{Results for various word split fractions.}
+    \label{metric1}
+\end{figure}
+
+
+
+
 \section{Future work}
 \subsection{Co-occurrence vectors}
 would also be possible to use a soft-max or gaussian measure to weigh each word based on its distance, but we have weighted each of the 10 words in the 5 word window equally.
