@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.5-1.40.14 (MiKTeX 2.9) (preloaded format=pdflatex 2014.2.13)  29 MAR 2014 13:52
+This is pdfTeX, Version 3.1415926-2.5-1.40.14 (MiKTeX 2.9) (preloaded format=pdflatex 2014.2.13)  29 MAR 2014 14:00
 entering extended mode
 **coconut.tex
 (E:\UvA\ULL\Project\Code\disambiguateCWSPR\Report\coconut.tex
@@ -148,66 +148,57 @@ Underfull \hbox (badness 5533) in paragraph at lines 53--54
 LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <10.95> not available
 (Font)              Font shape `OT1/ptm/b/n' tried instead on input line 67.
 [2]
-Underfull \hbox (badness 2941) in paragraph at lines 93--95
-\OT1/ptm/m/n/10.95 Unsupervised word sense dis-am-bigua-tion ap-
- []
-
-[3]
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <9> on input line 109.
+(Font)              <9> on input line 107.
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <5> on input line 109.
+(Font)              <5> on input line 107.
 
-Underfull \hbox (badness 2799) in paragraph at lines 109--110
+Underfull \hbox (badness 2799) in paragraph at lines 107--108
 \OT1/ptm/m/n/10.95 We have eval-u-ated the per-for-mance of CO-
  []
 
-
-Underfull \hbox (badness 4531) in paragraph at lines 124--125
+[3]
+Underfull \hbox (badness 4531) in paragraph at lines 137--138
 []\OT1/ptm/m/n/10.95 models, sported, has, plated, tra-di-tion-
  []
 
 
-Underfull \hbox (badness 1009) in paragraph at lines 124--125
+Underfull \hbox (badness 1009) in paragraph at lines 137--138
 \OT1/ptm/m/n/10.95 changed, hunts, grounds, as-so-ci-ated, fea-
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 126--129
+Underfull \hbox (badness 10000) in paragraph at lines 139--142
 
  []
 
-[4]
-Underfull \hbox (badness 10000) in paragraph at lines 133--135
+
+Underfull \hbox (badness 10000) in paragraph at lines 146--148
 
  []
 
-[5] (E:\UvA\ULL\Project\Code\disambiguateCWSPR\Report\coconut.aux) ) 
+[4] [5] (E:\UvA\ULL\Project\Code\disambiguateCWSPR\Report\coconut.aux) ) 
 Here is how much of TeX's memory you used:
- 496 strings out of 493921
- 6622 string characters out of 3144873
+ 497 strings out of 493921
+ 6628 string characters out of 3144873
  60936 words of memory out of 3000000
- 3819 multiletter control sequences out of 15000+200000
+ 3820 multiletter control sequences out of 15000+200000
  24856 words of font info for 57 fonts, out of 3000000 for 9000
  841 hyphenation exceptions out of 8191
  23i,10n,19p,1679b,256s stack positions out of 5000i,500n,10000p,200000b,50000s
-{C:/Program
- Files (x86)/MiKTeX 2.9/fonts/enc/dvips/fontname/8r.enc}<C:/Program Files (x86)
-/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmex10.pfb><C:/Program Files (x86)/M
-iKTeX 2.9/fonts/type1/public/amsfonts/cm/cmmi10.pfb><C:/Program Files (x86)/MiK
-TeX 2.9/fonts/type1/public/amsfonts/cm/cmmi6.pfb><C:/Program Files (x86)/MiKTeX
- 2.9/fonts/type1/public/amsfonts/cm/cmmi8.pfb><C:/Program Files (x86)/MiKTeX 2.
-9/fonts/type1/public/amsfonts/cm/cmr10.pfb><C:/Program Files (x86)/MiKTeX 2.9/f
-onts/type1/public/amsfonts/cm/cmr6.pfb><C:/Program Files (x86)/MiKTeX 2.9/fonts
-/type1/public/amsfonts/cm/cmr8.pfb><C:/Program Files (x86)/MiKTeX 2.9/fonts/typ
-e1/public/amsfonts/cm/cmsy10.pfb><C:/Program Files (x86)/MiKTeX 2.9/fonts/type1
-/public/amsfonts/cm/cmsy8.pfb><C:/Program Files (x86)/MiKTeX 2.9/fonts/type1/ur
-w/courier/ucrr8a.pfb><C:/Program Files (x86)/MiKTeX 2.9/fonts/type1/urw/times/u
-tmb8a.pfb><C:/Program Files (x86)/MiKTeX 2.9/fonts/type1/urw/times/utmr8a.pfb><
-C:/Program Files (x86)/MiKTeX 2.9/fonts/type1/urw/times/utmri8a.pfb>
-Output written on coconut.pdf (5 pages, 162397 bytes).
+{C:/Pro
+gram Files (x86)/MiKTeX 2.9/fonts/enc/dvips/fontname/8r.enc}<C:/Program Files (
+x86)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmmi10.pfb><C:/Program Files (x8
+6)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmmi8.pfb><C:/Program Files (x86)/
+MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr10.pfb><C:/Program Files (x86)/MiK
+TeX 2.9/fonts/type1/public/amsfonts/cm/cmsy10.pfb><C:/Program Files (x86)/MiKTe
+X 2.9/fonts/type1/urw/courier/ucrr8a.pfb><C:/Program Files (x86)/MiKTeX 2.9/fon
+ts/type1/urw/times/utmb8a.pfb><C:/Program Files (x86)/MiKTeX 2.9/fonts/type1/ur
+w/times/utmr8a.pfb><C:/Program Files (x86)/MiKTeX 2.9/fonts/type1/urw/times/utm
+ri8a.pfb>
+Output written on coconut.pdf (5 pages, 119610 bytes).
 PDF statistics:
- 71 PDF objects out of 1000 (max. 8388607)
+ 51 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)
  1 words of extra memory for PDF output out of 10000 (max. 10000000)
 

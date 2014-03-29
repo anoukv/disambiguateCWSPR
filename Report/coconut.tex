@@ -17,7 +17,7 @@ Anouk Visser \\
   {\tt remi.de.z@gmail.com}\\
    \\\And
   Cristina G\^arbacea \\
-  {\tt cr1st1na.garbacea@gmail.com}
+  {\tt 10407936}
   \\}
 
 \date{}
@@ -30,7 +30,7 @@ Let's decide on the abstract once we finish the body of the text.
 \end{abstract}
 
 \section{Introduction}
-Recently \cite{Mikolov:13} found that continuous space word representations capture syntactic and semantic regularities. For example they find that $\textit{queen} - \textit{king} \approx \textit{woman}  -\textit{man}$. The authors use these linguistics regularities to answer a set of analogy questions of the form of `$a$ is to $b$ as $c$ is to \dots'. In this framework, every word is represented by exactly one continuous space word representation. One potential problem when answering analogy questions is that words can be ambiguous. When the analogy is `\textit{seed} is to \textit{apple} as \textit{window} is to \textit{house}' then the word apple refers to a fruit. Another example of an analogy is `\textit{apple} is to \textit{computer} as \textit{porsche} is to \textit{cars}' where the company apple is implied. It is clear that there are words that have two very distinct meanings. By representing words with just one vector (a continuous space representation), as done in \cite{Mikolov:13}, it is not possible to differentiate between the two different meanings of a word. We propose to disambiguate between the various senses of a word in order to obtain multiple continuous space word representations for one word. We will annotate a training corpus to give ambiguous words two different representations. Then we reproduce the steps described in \cite{Mikolov:13} to obtain a continuous space word representation for the different meanings of a word.
+Recently \cite{Mikolov:13} found that continuous space word representations capture syntactic and semantic regularities. For example they find that $\textit{queen} - \textit{king} \approx \textit{woman}  -\textit{man}$. The authors use these linguistics regularities to answer a set of analogy questions of the form of `\textit{a} is to \textit{b} as \textit{c} is to \dots'. In this framework, every word is represented by exactly one continuous space word representation. One potential problem when answering analogy questions is that words can be ambiguous. When the analogy is `\textit{seed} is to \textit{apple} as \textit{window} is to \textit{house}' then the word apple refers to a fruit. Another example of an analogy is `\textit{apple} is to \textit{computer} as \textit{porsche} is to \textit{cars}' where the company apple is implied. It is clear that there are words that have two very distinct meanings. By representing words with just one vector (a continuous space representation), as done in \cite{Mikolov:13}, it is not possible to differentiate between the two different meanings of a word. We propose to disambiguate between the various senses of a word in order to obtain multiple continuous space word representations for one word. We will annotate a training corpus to give ambiguous words two different representations. Then we reproduce the steps described in \cite{Mikolov:13} to obtain a continuous space word representation for the different meanings of a word.
 
 We present two different methods for word-sense disambiguation. In section \ref{remi} we describe how word-sense disambiguation can be accomplished by local co-occurrence clustering. In section \ref{anouk} we propose another method, COCONUT, that uses global co-occurrences to disambiguate words.
 
@@ -87,28 +87,41 @@ COCONUT will split every word in the corpus in order to find two different meani
 In our experiments we allowed every word to be split into either one or two different meanings.
 Once a set of disambiguated words and their representation has been identified, a new corpus is generated wherein the ambiguous words are annotated with their meaning. This is done by looping over the words in the corpus and again extracting the context of the words that are ambiguous. This context is then matched with either of the clusters that were found for that particular word. We annotate a word with the index of the cluster that best describes its meaning. Then, the process described in \cite{Mikolov:13} is repeated to get the word-vector representation of the words in the annotated corpus. 
 
-Now the question triplet`$a$ is to $b$ as $c$ is to \dots' can be translated into many interpretations, namely `$a\_0$ is to $b\_0 $ as $c\_0 $ is to \dots', `$a\_1$ is to $b\_0 $ as $c\_0 $ is to \dots', etc. If all three words are ambiguous then there are 8 possible interpretations. Of course, not all interpretations are sensible. If the question is `\textit{king} is to \textit{queen} as \textit{man} is to \dots' then the interpretation of \textit{queen} as a band is not sensible, but should be interpreted as `queen as-in royalty'. To achieve this result we first ask the question `which a and which b are most similar?' This is done by combining all senses of \textit{a} and all senses of \textit{b} and measuring their distance. It is assumed that royalty king and royalty queen are closer together than, for example, card-game king and the band queen. We have now reduced the number of questions to only two questions, where \textit{c} is still ambiguous. Now both questions will be answered and an error $\mid\mid \textit{e} \mid\mid$ is determined for each answer, such that $\textit{b} - \textit{a} + \textit{c} \equiv \textit{answer} + \textit{e}$. Finally we choose the answer with the smallest error.
+Now the question triplet `$a$ is to $b$ as $c$ is to \dots' can be translated into many interpretations, namely `$a\_0$ is to $b\_0 $ as $c\_0 $ is to \dots', `$a\_1$ is to $b\_0 $ as $c\_0 $ is to \dots', etc. If all three words are ambiguous then there are 8 possible interpretations. Of course, not all interpretations are sensible. If the question is `\textit{king} is to \textit{queen} as \textit{man} is to \dots' then the interpretation of \textit{queen} as a band is not sensible, but should be interpreted as `queen as-in royalty'. To achieve this result we first ask the question `which a and which b are most similar?' This is done by combining all senses of \textit{a} and all senses of \textit{b} and measuring their distance. It is assumed that royalty king and royalty queen are closer together than, for example, card-game king and the band queen. We have now reduced the number of questions to only two questions, where \textit{c} is still ambiguous. Now both questions will be answered and an error $\mid\mid \textit{e} \mid\mid$ is determined for each answer, such that $\textit{b} - \textit{a} + \textit{c} \equiv \textit{answer} + \textit{e}$. Finally we choose the answer with the smallest error.
 
-\section{Latent Semantic Analysis}
-XXX I think this might be better in the related work section, also because we don't have measurements for this method XXX\\
-Unsupervised word sense disambiguation approaches exploit the idea that similar senses of a word have similar neighboring words. They try to induce word senses from input text by clustering word co-occurrences, aiming to divide "the occurrences of a word into a number of classes by determining for any two occurrences whether they belong to the same sense or not" \cite{Schutze:98}.
+%\section{Latent Semantic Analysis}
+%XXX I think this might be better in the related work section, also because we don't have measurements for this method XXX\\
+%Unsupervised word sense disambiguation approaches exploit the idea that similar senses of a word have similar neighboring words. They try to induce word senses from input text by clustering word co-occurrences, aiming to divide "the occurrences of a word into a number of classes by determining for any two occurrences whether they belong to the same sense or not" \cite{Schutze:98}.
 
-\section{Similarity Measures}
-XXX I don't think we should have a section on similarity measures. I think it would be good to mention it in the results section. XXX\\
-Measuring the similarity between two vectors can be seen as an equivalent to measuring their distance. Inversion or subtraction can be easily applied to transform a measure of distance between vectors into a measure of similarity. 
+%\section{Similarity Measures}
+%XXX I don't think we should have a section on similarity measures. I think it would be good to mention it in the results section. XXX\\
+%Measuring the similarity between two vectors can be seen as an equivalent to measuring their distance. Inversion or subtraction can be easily applied to transform a measure of distance between vectors into a measure of similarity. 
 
-The most common way to measure similarity between two vectors is to compute the \textit{cosine} of the angle between them as the inner product of the two vectors, after they have been normalized to unit length: $cos(x,y) = \frac{x \cdot y}{||x||\cdot||y||}$. Hence the length of the vectors is irrelevant. \cite{Bullinaria:97} show that the cosine is highly reliable and performs the best, after having compared it with distance measures like Hellinger, Bhattacharya, and Kullback-Leibler. Other common geometric metrics frequently used in the vector space are represented by the Euclidean, Manhattan and Mahalanobis distance, Dice, Jaccard, Pearson and Spearman correlation coefficients.
+%The most common way to measure similarity between two vectors is to compute the \textit{cosine} of the angle between them as the inner product of the two vectors, after they have been normalized to unit length: $cos(x,y) = \frac{x \cdot y}{||x||\cdot||y||}$. Hence the length of the vectors is irrelevant. \cite{Bullinaria:97} show that the cosine is highly reliable and performs the best, after having compared it with distance measures like Hellinger, Bhattacharya, and Kullback-Leibler. Other common geometric metrics frequently used in the vector space are represented by the Euclidean, Manhattan and Mahalanobis distance, Dice, Jaccard, Pearson and Spearman correlation coefficients.
 
-The \textit{Euclidean} distance between two points is defined as the length of the line connecting them. In the vector space, it is defined as $d(p,q) = d(q,p) = \sqrt{\sum_{i=1}^{n}(q_i-p_i)^2} $. The smaller this distance the more similar the objects are.  In a similar manner, the \textit{Manhattan} distance is defined as the sum of the absolute differences of the coordinates of two given points as $d(p,q) = |\sum_{i=1}^{n}(p_i - q_i)|$. The \textit{Mahalanobis} distance generalizes the standard Euclidean distance by modelling the relations of elements in different dimensions. Given two vectors $x$ and $y$, their squared Mahalanobis distance is $d_A = (x-y)^T A (x-y)$, where $A$ is a positive semidefinite matrix.
+%The \textit{Euclidean} distance between two points is defined as the length of the line connecting them. In the vector space, it is defined as $d(p,q) = d(q,p) = \sqrt{\sum_{i=1}^{n}(q_i-p_i)^2} $. The smaller this distance the more similar the objects are.  In a similar manner, the \textit{Manhattan} distance is defined as the sum of the absolute differences of the coordinates of two given points as $d(p,q) = |\sum_{i=1}^{n}(p_i - q_i)|$. The \textit{Mahalanobis} distance generalizes the standard Euclidean distance by modelling the relations of elements in different dimensions. Given two vectors $x$ and $y$, their squared Mahalanobis distance is $d_A = (x-y)^T A (x-y)$, where $A$ is a positive semidefinite matrix.
 
-The \textit{Pearson} correlation coefficient is defined in a similar manner with the Spearman correlation coefficient, with the mention that the last one is between the ranked variables: 
-
-$\rho=\frac{\sum_i(x_i - \bar{x})(y_i - \bar{y})}{\sqrt{\sum_i(x_i - \bar{x})^2 (y_i - \bar{y})^2 }}$, where $\bar{x} = \frac{\sum_{i=1}^{n}x_i}{n}$ and $\bar{y} = \frac{\sum_{i=1}^{n}y_i}{n}$. A value of 1 indicates total positive correlation, i.e. that a "best fit" line with a positive slope is generated which runs through all the datapoints, a value of 0 means no correlation and a value of -1 represents negative correlation between the two variables. The main advantage of this method over the Euclidean distance is that it is more robust against data which is not normalized.
+%The \textit{Pearson} correlation coefficient is defined in a similar manner with the Spearman correlation coefficient, with the mention that the last one is between the ranked variables: $\rho=\frac{\sum_i(x_i - \bar{x})(y_i - \bar{y})}{\sqrt{\sum_i(x_i - \bar{x})^2 (y_i - \bar{y})^2 }}$, where $\bar{x} = \frac{\sum_{i=1}^{n}x_i}{n}$ and $\bar{y} = \frac{\sum_{i=1}^{n}y_i}{n}$. A value of 1 indicates total positive correlation, i.e. that a "best fit" line with a positive slope is generated which runs through all the datapoints, a value of 0 means no correlation and a value of -1 represents negative correlation between the two variables. The main advantage of this method over the Euclidean distance is that it is more robust against data which is not normalized.
 
 \section{Evaluation}
 We have evaluated the performance of COCONUT on the \textit{enwik8}\footnote{http://cs.fit.edu/~mmahoney/compression/textdata.html} dataset containing a total of 12577300 words and 60237 unique words. 
 
 We performed an empirical evaluating, in which we inspect the two meanings of a word. We also did a quantitative evaluation by using the continuous space word representations to answer a number of analogy questions. Different sets of analogy questions are available. For example the 8000 analogy questions used in \cite{Mikolov:13} contain adjectives (big, bigger, rough, rougher), noun (car, cars, apple, apples) and verb (avoid, avoids, wait, waits) questions. There are also many other analogy questions such as man-woman relations ships, country-currency relationships and more.
+
+\subsection{Similarity Measures}
+In \cite{Mikolov:13} the cosine similarity measure is used to find $y$ in $y = b - a + c$. We have tried some other similarity measures or distances to see whether these would improve the accuracy on the set of 800 analogy questions proposed by the authors. Measuring the similarity between two vectors can be seen as an equivalent to measuring their distance. Inversion or subtraction can be easily applied to transform a measure of distance between vectors into a measure of similarity. We report the accuracy for the cosine similarity as well as the euclidean distance and the manhattan distance, using the 80-dimensional word projections from \cite{Mikolov:13} that can be found online\footnote{http://rnnlm.org}. Table \ref{sims} shows the results for the different similarity measures. Although the manhattan distance slightly outperformed the cosine similarity we have chosen to use cosine similarity because it is not only the most intuitive similarity measure for this problem, but the computation can be performed very efficiently. 
+
+\begin{figure}
+\center
+    \begin{tabular}{l|l}
+    \textbf{Similarity Metric} & \textbf{Accuracy}  \\ \hline
+    Cosine            & 16.20     \\ \hline
+    Euclidean         & 16.17     \\ \hline
+    Manhattan         & 16.49     \\
+    \end{tabular}
+    \label{sims}
+    \caption{Results for answering 8000 syntactic analogy questions using the 80-dimensional word projections from \cite{Mikolov:13}}
+\end{figure}
 \subsection{Empirical Evaluation}
 %Maybe we need some sort of empirical evaluation in which we show how the clustering really works (and how it fails).
 For the empirical evaluation we have inspected the results of COCONUT on a small hand-made dataset. The hand-made dataset contains different fragments of wikipedia articles on ambiguous topics, it includes apple (fruit, company), queen (band, monarch), jaguar (company, animal), eagles (band, animal), firm (law firm, firm grip), range (of numbers, farm fields) and more. For every ambiguous word we also took fragments from their superclasses. In addition to articles revolving around the ambiguous words, we have also added some random articles.
@@ -124,7 +137,7 @@ Another example is `jaguar' for which we find:
 \item models, sported, has, plated, traditionally, chrome, prominently, forming, famous, changed, hunts, grounds, associated, featured, americas, fishing
 \end{enumerate}
 There is a fair amount of noise in the different clusters, but overall there is a reasonably clear distinction between the two different meanings of these words.
-On the \textit{enwik8} dataset we find a lot more noise in the two clusters, including a lot of words that are relevant to both clusters. When inspecting the clusters we noticed that the words with the highest relatedness to the disambiguated word were most likely to be correct. However, the majority of the words that show little relatedness (XXXXX even in they are in the top $50\%$ of related words) do not describe the meaning as well. We provide two more examples of clusters formed on the \textit{enwik8} dataset:\\\\
+On the \textit{enwik8} dataset we find a lot more noise in the two clusters, including a lot of words that are relevant to both clusters. When inspecting the clusters we noticed that the words with the highest relatedness to the disambiguated word were most likely to be correct. However, the majority of the words that show little relatedness (XXXXX even if they are in the top $50\%$ of related words) do not describe the meaning as well. We provide two more examples of clusters formed on the \textit{enwik8} dataset:\\\\
 `santa'
 \begin{enumerate}
 \item claus, maria', monica, clara, tenerife, ana, san, croce, christmas
@@ -147,13 +160,10 @@ Meaning 1 is more centered around `belief'-as-in religion, whereas meaning 2 is 
 \section{Future work}
 \subsection{Co-occurrence vectors}
 would also be possible to use a soft-max or gaussian measure to weigh each word based on its distance, but we have weighted each of the 10 words in the 5 word window equally.
-\subsection{Clustering}
-multiple meanings
-cutting down on related words, we observe many not so related words
-better decision process for ambiguous or not
-
-While inspecting the clusters, we found a lot of words that we would not consider ambiguous might occur in many different contexts An example of a word that we found has many different meanings is `red'. This word had so many different meanings, that two word senses were not enough, we provide a limited breakdown of the words that co-occur with `red':
-
+\subsection{Detecting ambiguousness}
+One of the most challenging problems in word-sense disambiguation is deciding whether a word is ambiguous or not. At this point we discard all disambiguations that have a cluster distance that fall in the bottom $50\%$. In order to gain more insight in the distribution of these cluster distance we have made some plots. From these plots we see that most of the words are concentrated around a cluster distance of approximately 0.9. We do find that there are many words that have a cluster distance below 0.9 as well, in total this were X unique words, that together make up X$\%$ of the corpus. In future work, we might want to focus on finding a better way of detecting whether a word is ambiguous or not. 
+\subsection{Detecting number of meanings}
+In our work we only split the words, i.e. we assume that a word can have at most two meanings. This is not a very solid assumption, we find many difference meanings including 1) financial institute 2) land alongside a river 3) cushion of a pool table. While inspecting the clusters, we found a lot of words that we would not consider ambiguous might occur in many different contexts, slightly changing the meaning of a word. An example of a word that we found has many different meanings is `red'. This word had so many different meanings, that two word senses were not enough, we provide a limited breakdown of the words that co-occur with `red':
 \begin{itemize}
 \item Boston Red Sox - sports
 \item Red Sea, Red Square - places
@@ -161,6 +171,7 @@ While inspecting the clusters, we found a lot of words that we would not conside
 \item Relief, Red Cross - non-profits / brands
 \item \dots
 \end{itemize} 
+We believe that splitting the word vector for `red' should still boost the performance when answering analogy questions. The analogy question `\textit{red} is to \textit{sox} as \textit{blue} is to \dots' might be difficult to answer when all different meanings of the word `red' are encoded into one word representation. Once we are able to disambiguate the word `red' we find a word representation that is focused at sports and not so much at communism. (the answer to `\textit{red} is to \textit{sox} as \textit{blue} is to \dots' is `jays' as in Toronto Blue Jays, another question we could ask is `\textit{red} is to \textit{boston} as \textit{blue} is to \dots') In future work we should not restrict ourselves to a fixed number of meanings of one word, but investigate ways to determine how many meanings a word actually has. 
  
 \section{Conclusion}
 \begin{thebibliography}{}
