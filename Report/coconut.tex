@@ -1,18 +1,3 @@
-%
-% File acl2014.tex
-%
-% Contact: koller@ling.uni-potsdam.de, yusuke@nii.ac.jp
-%%
-%% Based on the style files for ACL-2013, which were, in turn,
-%% Based on the style files for ACL-2012, which were, in turn,
-%% based on the style files for ACL-2011, which were, in turn, 
-%% based on the style files for ACL-2010, which were, in turn, 
-%% based on the style files for ACL-IJCNLP-2009, which were, in turn,
-%% based on the style files for EACL-2009 and IJCNLP-2008...
-
-%% Based on the style files for EACL 2006 by 
-%%e.agirre@ehu.es or Sergi.Balari@uab.es
-%% and that of ACL 08 by Joakim Nivre and Noah Smith
 
 \documentclass[11pt]{article}
 \usepackage{acl2014}
@@ -22,15 +7,10 @@
 
 %\setlength\titlebox{5cm}
 
-% You can expand the titlebox if you need extra space
-% to show all the authors. Please do not make the titlebox
-% smaller than 5cm (the original size); we will check this
-% in the camera-ready version and ask you to change it back.
-
-
 \title{Clustering of Co-Occurring Neighboring Unambiguous Terms (COCONUT)}
 
-\author{Anouk Visser \\
+\author{
+Anouk Visser \\
 {\tt anouk.visser@student.uva.nl}\\
   \\\And
   R\'emi de Zoeten \\
@@ -50,7 +30,7 @@ Let's decide on the abstract once we finish the body of the text.
 \end{abstract}
 
 \section{Introduction}
-Recently \cite{Mikolov:13} found that continuous space word representations capture syntactic and semantic regularities. For example they find that $\textit{queen} - \textit{king} \approx \textit{woman}  -\textit{man}$. The authors use these linguistics regularities to answer a set of analogy questions of the form of `$a$ is to $b$ as $c$ is to \dots'. In this framework, every word is represented by exactly one continuous space word representation. One potential problem when answering analogy questions is that words can be ambiguous. When the analogy is `\textit{seed} is to \textit{apple} as \textit{window} is to \textit{house}' then the word apple refers to a fruit. Another example of an analogy is `\textit{apple} is to \textit{computer} as \textit{porsche} is to \textit{cars}' where the company apple is implied. It is clear that there are words that have two very distinct meanings. By representing words with just one vector (a continuous space representation), as done in \cite{Mikolov:13}, it is not possible to differentiate between the two different meanings of a word. We propose to disambiguate between the various senses of a word in order to obtain multiple continuous space words representations for one word. We will annotate a training corpus to give ambiguous words two different representations, doing so we are able to obtain different continuous space word representations as well.
+Recently \cite{Mikolov:13} found that continuous space word representations capture syntactic and semantic regularities. For example they find that $\textit{queen} - \textit{king} \approx \textit{woman}  -\textit{man}$. The authors use these linguistics regularities to answer a set of analogy questions of the form of `$a$ is to $b$ as $c$ is to \dots'. In this framework, every word is represented by exactly one continuous space word representation. One potential problem when answering analogy questions is that words can be ambiguous. When the analogy is `\textit{seed} is to \textit{apple} as \textit{window} is to \textit{house}' then the word apple refers to a fruit. Another example of an analogy is `\textit{apple} is to \textit{computer} as \textit{porsche} is to \textit{cars}' where the company apple is implied. It is clear that there are words that have two very distinct meanings. By representing words with just one vector (a continuous space representation), as done in \cite{Mikolov:13}, it is not possible to differentiate between the two different meanings of a word. We propose to disambiguate between the various senses of a word in order to obtain multiple continuous space word representations for one word. We will annotate a training corpus to give ambiguous words two different representations. Then we reproduce the steps described in \cite{Mikolov:13} to obtain a continues word space representation for the different meanings of a word.
 
 We present two different methods for word-sense disambiguation. In section \ref{remi} we describe how word-sense disambiguation can be accomplished by local co-occurrence clustering. In section \ref{anouk} we propose another method, COCONUT, that uses global co-occurrences to disambiguate words.
 
