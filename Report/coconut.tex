@@ -7,6 +7,8 @@
 \usepackage{subfig}
 \usepackage{graphicx}
 \usepackage{latexsym}
+\usepackage{slashbox}
+
 
 %\setlength\titlebox{5cm}
 
@@ -60,6 +62,7 @@ Linguistic regularities can be used in many different unsupervised language lear
 \caption{In these two examples for the window around `apple' the black words will be count as co-occurring words, whereas the grey words will be ignored.}
 \label{window}
 \end{figure}
+
 To find the two senses of a word, one approach would be to cluster different meanings of a word based on the words that it co-occurs with in the corpus. This is done by generating a co-occurrence vector for every time the word is observed in the corpus (this is a local co-occurrence vector). A co-occurrence vector is derived by observing the context of a word. In our experiments the frequency of the words that fall within a window of 5 words from the word that is being observed are encoded into the vector, an illustration can be found in figure \ref{window}. This means that each vector is a sparse vector with the length of the vocabulary size, but can be encoded with at most 10 terms. These co-occurrence vectors are then clustered using k-means clustering. It is possible (even likely) that two co-occurrence vectors do not have a word in common, but still end up in the same cluster. For example, in the case of apple the words \{\textit{technology, iphone, company, revenue}\} might be in the same cluster. Given the co-occurrence vectors, 1:\{\textit{technology, iphone}\}, 2:\{\textit{iphone, revenue}\}, 3:\{\textit{technology, company}\} and 4:\{\textit{company, revenue}\} then 1 and 4 have nothing in common, but can still be bound together by 2 and 3. It should be noted that extracting all co-occurrence vectors from a corpus can require a significant amount of memory, even when using sparse-vector encoding. However, it is possible to have a fine-tunable tradeoff between memory requirements and the number of loops over the corpus (which is more cpu-intensive), by only recording a specific subset of the vocabulary on each iteration.
 
 \section{COCONUT}
@@ -100,8 +103,8 @@ COCONUT will split every word in the corpus in order to find two different meani
 
 \section{Corpus annotation and question answering.}
 In our experiments we allowed every word to be split into either one or two different meanings.
-Once a set of disambiguated words and their representation has been identified, a new corpus is generated wherein the ambiguous words are annotated with their meaning. This is done by looping over the words in the corpus and again extracting the context of the words that are ambiguous. This context is then matched with either of the clusters that were found for that particular word. We annotate a word with the index of the cluster that best describes its meaning. Then, the process described in \cite{Mikolov:13} is repeated to get the word-vector representation of the words in the annotated corpus. 
-
+Once a set of disambiguated words and their representation has been identified, a new corpus is generated wherein the ambiguous words are annotated with their meaning. This is done by looping over the words in the corpus and again extracting the context of the words that are ambiguous. This context is then matched with either of the clusters that were found for that particular word. We annotate a word with the index of the cluster that best describes its meaning. Then, the process described in \cite{Mikolov:13} is repeated to get the word-vector representation of the words in the annotated corpus. \\
+It might not be desirable to split every word in the vocabulary. For example, it might not be informative to split stop words like \textit{the, and, a, an}. That is why in our experiments we did not split the 75 most frequent words. We also do not want to split words for which we do not have sufficient data. We addressed this by only splitting words that occur more than $20$ times in the corpus. Furthermore, some words might be clustered into very distinct representations, and some might produce more similar clusters. We ordered the clustered words according to the cosine similarity of their distinct clusters, and only split a certain fraction of the words in the vocabulary for which the cluster distances were the greatest. We have done measurements for splitting $\frac{1}{1}$, $\frac{1}{3}$ and $\frac{1}{10}$ of the words in our vocabulary and evaluated the performance of each in \ref{qual}.\\
 Now the question triplet `$a$ is to $b$ as $c$ is to \dots' can be translated into many interpretations, namely `$a\_0$ is to $b\_0 $ as $c\_0 $ is to \dots', `$a\_1$ is to $b\_0 $ as $c\_0 $ is to \dots', etc. If all three words are ambiguous then there are 8 possible interpretations. Of course, not all interpretations are sensible. If the question is `\textit{king} is to \textit{queen} as \textit{man} is to \dots' then the interpretation of \textit{queen} as a band is not sensible, but should be interpreted as `queen as-in royalty'. To achieve this result we first ask the question `which a and which b are most similar?' This is done by combining all senses of \textit{a} and all senses of \textit{b} and measuring their distance. It is assumed that royalty king and royalty queen are closer together than, for example, card-game king and the band queen. We have now reduced the number of questions to only two questions, where \textit{c} is still ambiguous. Now both questions will be answered and an error $\mid\mid \textit{e} \mid\mid$ is determined for each answer, such that $\textit{b} - \textit{a} + \textit{c} \equiv \textit{answer} + \textit{e}$. Finally we choose the answer with the smallest error.
 
 %\section{Latent Semantic Analysis}
@@ -132,9 +135,8 @@ We performed an empirical evaluating, in which we inspect the two meanings of a 
     Euclidean         & 16.17     \\ \hline
     Manhattan         & 16.49     \\
     \end{tabular}
-    \caption{Results for answering 8000 syntactic analogy questions using the 80-dimensional word projections from \cite{Mikolov:13}}
-    \label{sims}
-
+    \caption{Results for various word split fractions.}
+    \label{metric1}
 \end{figure}
 
 In \cite{Mikolov:13} the cosine similarity measure is used to find $y$ in $y = b - a + c$. We have tried some other similarity measures or distances to see whether these would improve the accuracy on the set of 800 analogy questions proposed by the authors. Measuring the similarity between two vectors can be seen as an equivalent to measuring their distance. Inversion or subtraction can be easily applied to transform a measure of distance between vectors into a measure of similarity. We report the accuracy for the cosine similarity as well as the euclidean distance and the manhattan distance, using the 80-dimensional word projections from \cite{Mikolov:13} that can be found online\footnote{http://rnnlm .org}. Figure \ref{sims} shows the results for the different similarity measures. Although the manhattan distance slightly outperformed the cosine similarity we have chosen to use cosine similarity because it is not only the most intuitive similarity measure for this problem, but the computation can be performed very efficiently. 
@@ -168,26 +170,65 @@ We observe a lot of noise in this example. However, the meaning of `santa'-as-in
 Meaning 1 is more centered around `belief'-as-in religion, whereas meaning 2 is more centered around a multitude of beliefs. 
 
 \subsection{Quantitative Evaluation}
-For our quantitative evaluation we again trained on the enwiki8 dataset. We evaluated on the set of $8.000$ questions from \cite{Mikolov:13} and also evaluated on some question sets described in \cite{Mikolov:13c}. Splitting 
+\label{qual}
+For our quantitative evaluation we again trained on the enwiki8 dataset. We measured the cluster distances as $1-cos(a,b)$ where \textit{a} and \textit{b} are length normalized vectors that define a cluster center. The distribution over cluster distances in the vocabulary is shown in figure \ref{dist}.
 
 \begin{figure}[H]
-\center
-    \begin{tabular}{l|l}
-    \textbf{Similarity Metric} & \textbf{Accuracy}  \\ \hline
-    Cosine            & 16.20     \\ \hline
-    Euclidean         & 16.17     \\ \hline
-    Manhattan         & 16.49     \\
-    \end{tabular}
-    \caption{Results for various word split fractions.}
-    \label{metric1}
+	\center
+	\subfloat[]
+	{
+		\includegraphics[scale=0.35]{distances_step500.png}
+		\label{dist1}
+	}\newline
+	\subfloat[]
+	{
+		\includegraphics[scale=0.35]{distances_normed_cumulative.png}
+		\label{dist2}
+	}
+	\caption{Distribution over cluster distances as they occur in the enwiki8 vocabulary. \ref{dist1} shows the distribution over cluster distances and \ref{dist2} shows the cumulative distribution over cluster distances. (\textit{y} axis are proportional to to the vocabulary size.)}
+	\label{dist}
 \end{figure}
 
+In the distribution showed in \ref{dist} all words carry equal weight, regardless of their frequency in the corpus. When the frequency of cluster distances is adjusted for word frequency in the corpus the distribution looks different, as can be seen in \ref{distN}. Graphs \ref{dist} and \ref{distN} suggest that frequent words are less likely to have a large cluster distance. 
+
+\begin{figure}[H]
+	\center
+	\subfloat[]
+	{
+		\includegraphics[scale=0.35]{weighted_distances.png}
+		\label{distN1}
+	}\newline
+	\subfloat[]
+	{
+		\includegraphics[scale=0.35]{weighted_cumulative_normed.png}
+		\label{distN2}
+	}
+	\caption{Distribution over cluster distances as they occur in the enwiki8 corpus. \ref{distN1} shows the distribution over cluster distances and \ref{distN2} shows the cumulative distribution over cluster distances. (\textit{y} axis are proportional to to the vocabulary size.)}
+	\label{distN}
+\end{figure}
+
+We evaluated on the set of $8.000$ questions from \cite{Mikolov:13}, which are syntactic questions and also evaluated on some question sets described in \cite{Mikolov:13c}. In our experiments we only split a fraction of the vocabulary, for which the cluster distances were greatest. Splitting a fraction of $0$ words therefore serves as a baseline.
+\begin{table}[H]
+    \begin{tabular}{|l|l|l|l|}
+    \hline
+	\backslashbox{Questions}{Split} & 0 & $\frac{1}{10}$ & $\frac{1}{3}$  \\ \hline
+	Syntactic  & \textbf{11.86}  & 11.26  & 10.99      \\ \hline
+	Family  & 32.61  & 33.60 & \textbf{34.19}     \\ \hline
+	Plurals  & \textbf{21.85}  & 19.00 & 21.02     \\ \hline
+	Plural Verbs  & 8.16 & 9.20 & \textbf{10.11}     \\ \hline
+	Nationality adjectives  & 23.51 & \textbf{25.58} & 25.32     \\ \hline
+	Opposites  & \textbf{5.42} & 4.43 & 3.94    \\ \hline
+
+    \end{tabular}
+     \caption{Results for answering analogy questions using the 80-dimensional word projections.}
+    \label{accuracy}
+\end{table}
 
 
 
 \section{Future work}
 \subsection{Co-occurrence vectors}
-would also be possible to use a soft-max or gaussian measure to weigh each word based on its distance, but we have weighted each of the 10 words in the 5 word window equally.
+For our experiments would also be possible to use a soft-max or gaussian measure to weigh each word based on its distance, but we have weighted each of the 10 words in the 5 word window equally.
 \subsection{Detecting ambiguousness}
 One of the most challenging problems in word-sense disambiguation is deciding whether a word is ambiguous or not. At this point we discard all disambiguations that have a cluster distance that fall in the bottom $50\%$. In order to gain more insight in the distribution of these cluster distance we have made some plots. From these plots we see that most of the words are concentrated around a cluster distance of approximately 0.9. We do find that there are many words that have a cluster distance below 0.9 as well, in total this were X unique words, that together make up X$\%$ of the corpus. In future work, we might want to focus on finding a better way of detecting whether a word is ambiguous or not. 
 \subsection{Detecting number of meanings}
