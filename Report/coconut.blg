@@ -3,9 +3,9 @@ Capacity: max_strings=35307, hash_size=35307, hash_prime=30011
 The top-level auxiliary file: coconut.aux
 I found no \bibdata command---while reading file coconut.aux
 I found no \bibstyle command---while reading file coconut.aux
-You've used 6 entries,
+You've used 3 entries,
             0 wiz_defined-function locations,
-            95 strings with 622 characters,
+            89 strings with 552 characters,
 and the built_in function-call counts, 0 in all, are:
 = -- 0
 > -- 0
