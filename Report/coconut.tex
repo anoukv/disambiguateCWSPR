@@ -65,7 +65,6 @@ To find the two senses of a word, one approach would be to cluster different mea
 
 \section{COCONUT}
 \label{anouk}
-% Describe intuition
 The COCONUT method for disambiguating words is based on two assumptions: 
 \begin{enumerate}
 \item the meaning of a word is highly dependent on the words accompanying it
@@ -76,9 +75,6 @@ For example, for the two different meanings of the word `apple', `iPhone' and `t
 In assumption $(1)$ we talk about `words that accompany a word'. In COCONUT, words that accompany a word are co-occurring words. COCONUT will split the co-occurrence vector for `apple' into two co-occurrence vectors, one containing `iPhone', `technology' and `company', the other containing `fruit', `orchard' and `pie'. 
 
 Let $C$ be the set of words that co-occur with $A$, the word we want to disambiguate. COCONUT first constructs and converts the global co-occurrence vectors of the words in $C$ to relatedness vectors. It will then cluster these relatedness vectors in order to determine the two possibly different meanings of $A$. 
-% Let A denote the word we want to disambiguate
-%The meaning of the word 'apple' can be determined by looking at its surrounding words, which could be: technology, iPhone, company for `Apple', the company or: fruit, orchard, pie for `apple' the fruit.
-%Building a good decision process for defining when a word is closely related to another word is beyond the scope of this project and will most likely not necessarily lead to significant performance improvements. 
 
 \subsection{Co-Occurrence Vectors}
 A global co-occurrence vector contains the frequencies indicating how many times two words co-occur. We obtain the global co-occurrence vector for every word in the corpus in a similar way to how we obtaining the local co-occurrence vector as described in section \ref{remi}. The only difference being that instead of maintaining all local co-occurrence vectors for a given word, we accumulate all local co-occurrence vectors in one global co-occurrence vector. This significantly reduces memory requirements which makes the COCONUT algorithm much more usable. 
@@ -95,9 +91,6 @@ Let the set of co-occurrence vectors from the words in $C$, be called $V$. After
 The two new co-occurrence vectors for $A$ are initialized with the words in $R$. As the cluster centers define the different meanings of $A$, we can look at the words in each cluster to fill the new co-occurrence vectors for $A$. For example if the words `technology', `iPhone' and `company' are assigned to one cluster, they will be inserted into one of the new co-occurrence vectors for the word `apple' while the words `fruit', `pie', `baking' that were assigned to the other cluster will be inserted into the other co-occurrence vector. 
 
 COCONUT will split every word in the corpus in order to find two different meanings (we excluded the 75 most frequent words), but not all words are ambiguous. We expect that words that have two distinct meanings will have a greater cluster distance (i.e. a greater distance between the two meanings) than words that do not. We discard all disambiguations for the words that have a cluster distance that falls in the bottom $50\%$ of all cluster distances.
-
-%To find the two senses of a word, we apply k-means clustering to the co-occurrence vectors of the co-occurring words. COCONUT assumes that the words assigned to each cluster represent a different meaning of a word. Let the set of words that remains be called $C$. We can use the co-occurrence vectors of the words in $C$ to find clusters, but these vectors will contain a lot of words that are not in $C$, do not occur together with $A$ or do occur with $A$ but not in $C$. We are only interested in finding clusters representing the different meanings of word $A$, therefore we will only use the co-occurring words in the vectors of $C$ that are present in $C$.
-% some tweaks
 
 \section{Corpus annotation and question answering.}
 In our experiments we allowed every word to be split into either one or two different meanings.
@@ -141,7 +134,6 @@ We performed an empirical evaluating, in which we inspect the two meanings of a 
 In \cite{Mikolov:13} the cosine similarity measure is used to find $y$ in $y = b - a + c$. We have tried some other similarity measures or distances to see whether these would improve the accuracy on the set of 800 analogy questions proposed by the authors. Measuring the similarity between two vectors can be seen as an equivalent to measuring their distance. Inversion or subtraction can be easily applied to transform a measure of distance between vectors into a measure of similarity. We report the accuracy for the cosine similarity as well as the euclidean distance and the manhattan distance, using the 80-dimensional word projections from \cite{Mikolov:13} that can be found online\footnote{http://rnnlm.org}. Figure \ref{sims} shows the results for the different similarity measures. Although the manhattan distance slightly outperformed the cosine similarity we have chosen to use cosine similarity because it is not only the most intuitive similarity measure for this problem, but the computation can be performed very efficiently. 
 
 \subsection{Empirical Evaluation}
-%Maybe we need some sort of empirical evaluation in which we show how the clustering really works (and how it fails).
 For the empirical evaluation we have inspected the results of COCONUT on a small hand-made dataset. The hand-made dataset contains different fragments of wikipedia articles on ambiguous topics, it includes apple (fruit, company), queen (band, monarch), jaguar (company, animal), eagles (band, animal), firm (law firm, firm grip), range (of numbers, farm fields) and more. For every ambiguous word we also took fragments from their superclasses. In addition to articles revolving around the ambiguous words, we have also added some random articles.
 
 The results obtained on this small dataset were promising, for example the words from two different clusters  (sorted based on relatedness) for the word `apple' are: 
@@ -169,12 +161,7 @@ We observe a lot of noise in this example. However, the meaning of `santa'-as-in
 \end{enumerate}
 Meaning 1 is more centered around `belief'-as-in religion, whereas meaning 2 is more centered around a multitude of beliefs. 
 
-
-% Maybe some clusters here.
-
-
 \subsection{Quantitative Evaluation}
-% Which test sets are we using? What are we comparing against? Some (but not many) statistics of our dataset.
 \section{Future work}
 \subsection{Co-occurrence vectors}
 would also be possible to use a soft-max or gaussian measure to weigh each word based on its distance, but we have weighted each of the 10 words in the 5 word window equally.
