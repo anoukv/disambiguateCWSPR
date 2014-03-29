@@ -28,7 +28,7 @@ while True:
 		for term in sense0:
 			if term not in commonTerms:
 				one.append(term[0])
-		print one
+		print one[:50]
 		print
 		print " ----------------- "
 		print
@@ -38,7 +38,7 @@ while True:
 		for term in sense1:
 			if term not in commonTerms:
 				two.append(term[0])
-		print two
+		print two[:50]
 		print
 		print "Cluster distance: ", wordRep['clusterDistance']
 
