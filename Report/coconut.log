@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.3-1.40.12 (TeX Live 2011) (format=pdflatex 2011.7.3)  27 MAR 2014 16:50
+This is pdfTeX, Version 3.1415926-2.3-1.40.12 (TeX Live 2011) (format=pdflatex 2011.7.3)  27 MAR 2014 17:15
 entering extended mode
  \write18 enabled.
  file:line:error style messages enabled.
@@ -104,17 +104,17 @@ LaTeX Font Info:    Font shape `OMS/ptm/m/n' in size <10.95> not available
 LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <10.95> not available
 (Font)              Font shape `OT1/ptm/b/n' tried instead on input line 76.
  [2]
-Underfull \hbox (badness 2941) in paragraph at lines 90--92
+Underfull \hbox (badness 2941) in paragraph at lines 91--93
 \OT1/ptm/m/n/10.95 Unsupervised word sense dis-am-bigua-tion ap-
  []
 
 
-Underfull \hbox (badness 1642) in paragraph at lines 101--102
+Underfull \hbox (badness 1642) in paragraph at lines 102--103
 \OT1/ptm/m/n/10.95 in a sim-i-lar man-ner with the Spear-man cor-
  []
 
 
-Underfull \hbox (badness 2799) in paragraph at lines 104--106
+Underfull \hbox (badness 2799) in paragraph at lines 105--107
 \OT1/ptm/m/n/10.95 We have eval-u-ated the per-for-mance of CO-
  []
 
@@ -143,7 +143,7 @@ exlive/2011/texmf-dist/fonts/type1/urw/courier/ucrr8a.pfb></usr/local/texlive/2
 011/texmf-dist/fonts/type1/urw/times/utmb8a.pfb></usr/local/texlive/2011/texmf-
 dist/fonts/type1/urw/times/utmr8a.pfb></usr/local/texlive/2011/texmf-dist/fonts
 /type1/urw/times/utmri8a.pfb>
-Output written on coconut.pdf (4 pages, 145634 bytes).
+Output written on coconut.pdf (4 pages, 145628 bytes).
 PDF statistics:
  70 PDF objects out of 1000 (max. 8388607)
  50 compressed objects within 1 object stream
