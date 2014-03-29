@@ -19,7 +19,7 @@ Anouk Visser \\
   {\tt remi.de.z@gmail.com}\\
    \\\And
   Cristina G\^arbacea \\
-  {\tt cr1st1na.garbacea@gmail.com}
+  {\tt 10407936}
   \\}
 
 \date{}
@@ -96,7 +96,6 @@ The two new co-occurrence vectors for $A$ are initialized with the words in $R$.
 
 COCONUT will split every word in the corpus in order to find two different meanings (we excluded the 75 most frequent words), but not all words are ambiguous. We expect that words that have two distinct meanings will have a greater cluster distance (i.e. a greater distance between the two meanings) than words that do not. We discard all disambiguations for the words that have a cluster distance that falls in the bottom $50\%$ of all cluster distances.
 
-
 %To find the two senses of a word, we apply k-means clustering to the co-occurrence vectors of the co-occurring words. COCONUT assumes that the words assigned to each cluster represent a different meaning of a word. Let the set of words that remains be called $C$. We can use the co-occurrence vectors of the words in $C$ to find clusters, but these vectors will contain a lot of words that are not in $C$, do not occur together with $A$ or do occur with $A$ but not in $C$. We are only interested in finding clusters representing the different meanings of word $A$, therefore we will only use the co-occurring words in the vectors of $C$ that are present in $C$.
 % some tweaks
 
@@ -129,7 +128,7 @@ We performed an empirical evaluating, in which we inspect the two meanings of a 
 \begin{figure}
 \center
     \begin{tabular}{l|l}
-    Similarity Metirc & Accuracy  \\ \hline
+    \textbf{Similarity Metric} & \textbf{Accuracy}  \\ \hline
     Cosine            & 16.20     \\ \hline
     Euclidean         & 16.17     \\ \hline
     Manhattan         & 16.49     \\
