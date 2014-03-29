@@ -230,10 +230,10 @@ We evaluated on the set of $8.000$ questions from \cite{Mikolov:13}, which are s
 	\backslashbox{Questions}{Split} & 0 & $\frac{1}{10}$ & $\frac{1}{3}$  \\ \hline
 	Syntactic  & 13.48  & \textbf{13.85}  & 13.175      \\ \hline
 	Family  & 36.76  & 34.58 & \textbf{37.94}     \\ \hline
-	Plurals  & 24.10  & \textbf{26.65} & 23.35     \\ \hline
+	Plurals Nouns & 24.10  & \textbf{26.65} & 23.35     \\ \hline
 	Plural Verbs  & \textbf{15.75} & 11.72 & 11.96     \\ \hline
 	Nationality adjectives  & 32.83 & \textbf{37.46} & 33.52     \\ \hline
-	Opposites  & \textbf{0} & 0 & 0    \\ \hline
+	Opposites  & \textbf{7.88} & 6.77 & 7.51    \\ \hline
 
     \end{tabular}
      \caption{Results for answering analogy questions using the 320-dimensional word projections.}
@@ -257,6 +257,9 @@ In our work we have assumed that a word can have at most two meanings. This is n
 We believe that splitting the word vector for `red' should still boost the performance when answering analogy questions. The analogy question `\textit{red} is to \textit{sox} as \textit{blue} is to \dots' might be difficult to answer when all different meanings of the word `red' are encoded into one word representation. Once we are able to disambiguate the word `red' we find a word representation that is focused at sports and not so much at communism. (the answer to `\textit{red} is to \textit{sox} as \textit{blue} is to \dots' is `jays' as in Toronto Blue Jays, another question we could ask is `\textit{red} is to \textit{boston} as \textit{blue} is to \dots')
  
 \section{Conclusion}
+
+
+
 \begin{thebibliography}{}
 
 \bibitem[\protect\citename{Mikolov \bgroup et al.\egroup }2013c]{Mikolov:13c}
