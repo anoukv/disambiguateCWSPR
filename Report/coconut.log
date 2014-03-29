@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.5-1.40.14 (MiKTeX 2.9) (preloaded format=pdflatex 2014.2.13)  28 MAR 2014 23:14
+This is pdfTeX, Version 3.1415926-2.5-1.40.14 (MiKTeX 2.9) (preloaded format=pdflatex 2014.2.13)  29 MAR 2014 13:52
 entering extended mode
 **coconut.tex
 (E:\UvA\ULL\Project\Code\disambiguateCWSPR\Report\coconut.tex
@@ -47,109 +47,142 @@ LaTeX Font Info:    Overwriting symbol font `lasy' in version `bold'
 (Font)                  U/lasy/m/n --> U/lasy/b/n on input line 47.
 )
 (E:\UvA\ULL\Project\Code\disambiguateCWSPR\Report\coconut.aux)
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 45.
-LaTeX Font Info:    ... okay on input line 45.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 45.
-LaTeX Font Info:    ... okay on input line 45.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 45.
-LaTeX Font Info:    ... okay on input line 45.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 45.
-LaTeX Font Info:    ... okay on input line 45.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 45.
-LaTeX Font Info:    ... okay on input line 45.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 45.
-LaTeX Font Info:    ... okay on input line 45.
-LaTeX Font Info:    Try loading font information for OT1+ptm on input line 45.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 25.
+LaTeX Font Info:    ... okay on input line 25.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 25.
+LaTeX Font Info:    ... okay on input line 25.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 25.
+LaTeX Font Info:    ... okay on input line 25.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 25.
+LaTeX Font Info:    ... okay on input line 25.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 25.
+LaTeX Font Info:    ... okay on input line 25.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 25.
+LaTeX Font Info:    ... okay on input line 25.
+LaTeX Font Info:    Try loading font information for OT1+ptm on input line 25.
 
 ("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\psnfss\ot1ptm.fd"
 File: ot1ptm.fd 2001/06/04 font definitions for OT1/ptm.
 )
 LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <14.4> not available
-(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 46.
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 26.
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <12> on input line 46.
+(Font)              <12> on input line 26.
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <8> on input line 46.
+(Font)              <8> on input line 26.
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <6> on input line 46.
-LaTeX Font Info:    Try loading font information for U+lasy on input line 46.
+(Font)              <6> on input line 26.
+LaTeX Font Info:    Try loading font information for U+lasy on input line 26.
 
 ("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\base\ulasy.fd"
 File: ulasy.fd 1998/08/17 v2.2e LaTeX symbol font definitions
 )
 LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <12> not available
-(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 46.
-LaTeX Font Info:    Try loading font information for OT1+pcr on input line 46.
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 26.
+LaTeX Font Info:    Try loading font information for OT1+pcr on input line 26.
 
 ("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\psnfss\ot1pcr.fd"
 File: ot1pcr.fd 2001/06/04 font definitions for OT1/pcr.
 )
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <10.95> on input line 53.
+(Font)              <10.95> on input line 33.
 
-Underfull \hbox (badness 1270) in paragraph at lines 58--59
+Underfull \hbox (badness 1270) in paragraph at lines 38--39
 \OT1/ptm/m/n/10.95 word rep-re-sen-ta-tions used in (Mikolov et al.,
  []
 
-LaTeX Font Info:    Try loading font information for OMS+ptm on input line 64.
-("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\psnfss\omsptm.fd"
-File: omsptm.fd 
-)
-LaTeX Font Info:    Font shape `OMS/ptm/m/n' in size <10.95> not available
-(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 64.
 
-Underfull \hbox (badness 1087) in paragraph at lines 64--65
-\OT1/ptm/m/n/10.95 co-occurrence vec-tors, 1:\OMS/cmsy/m/n/10.95 f\OT1/ptm/m/it
-/10.95 technology, iphone\OMS/cmsy/m/n/10.95 g\OT1/ptm/m/n/10.95 ,
+Underfull \hbox (badness 1292) in paragraph at lines 43--45
+$\OML/cmm/m/it/10.95 y$ \OT1/ptm/m/n/10.95 com-puted in this mat-ter ac-tu-ally
+ ex-ist, we
  []
 
-[1{C:/ProgramData/MiKTeX/2.9/pdftex/config/pdftex.map}
+
+Underfull \hbox (badness 1297) in paragraph at lines 43--45
+\OT1/ptm/m/n/10.95 de-noted by the word pair \OT1/ptm/m/it/10.95 ap-ple\OT1/ptm
+/m/n/10.95 :\OT1/ptm/m/it/10.95 dell\OT1/ptm/m/n/10.95 . When
+ []
+
+
+Underfull \hbox (badness 1231) in paragraph at lines 43--45
+\OT1/ptm/m/n/10.95 we are given two new word pairs \OT1/ptm/m/it/10.95 china\OT
+1/ptm/m/n/10.95 :\OT1/ptm/m/it/10.95 nike
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 43--45
+
+ []
+
+
+Underfull \hbox (badness 3058) in paragraph at lines 43--45
+\OT1/ptm/m/n/10.95 Linguistic reg-u-lar-i-ties can be used in many
+ []
+
+
+Underfull \vbox (badness 1789) has occurred while \output is active []
+
+ [1{C:/ProgramData/MiKTeX/2.9/pdftex/config/pdftex.map}
 
 
 
 ]
-Underfull \hbox (badness 5533) in paragraph at lines 69--70
+LaTeX Font Info:    Try loading font information for OMS+ptm on input line 48.
+
+("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\psnfss\omsptm.fd"
+File: omsptm.fd 
+)
+LaTeX Font Info:    Font shape `OMS/ptm/m/n' in size <10.95> not available
+(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 48.
+
+Underfull \hbox (badness 1087) in paragraph at lines 48--49
+\OT1/ptm/m/n/10.95 co-occurrence vec-tors, 1:\OMS/cmsy/m/n/10.95 f\OT1/ptm/m/it
+/10.95 technology, iphone\OMS/cmsy/m/n/10.95 g\OT1/ptm/m/n/10.95 ,
+ []
+
+
+Underfull \hbox (badness 5533) in paragraph at lines 53--54
 \OT1/ptm/m/n/10.95 The CO-CONUT method for dis-am-biguat-ing
  []
 
 LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <10.95> not available
-(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 83.
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 67.
 [2]
-Underfull \hbox (badness 2941) in paragraph at lines 106--108
+Underfull \hbox (badness 2941) in paragraph at lines 93--95
 \OT1/ptm/m/n/10.95 Unsupervised word sense dis-am-bigua-tion ap-
  []
 
 [3]
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <9> on input line 122.
+(Font)              <9> on input line 109.
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <5> on input line 122.
+(Font)              <5> on input line 109.
 
-Underfull \hbox (badness 2799) in paragraph at lines 122--124
+Underfull \hbox (badness 2799) in paragraph at lines 109--110
 \OT1/ptm/m/n/10.95 We have eval-u-ated the per-for-mance of CO-
  []
 
 
-Underfull \hbox (badness 4531) in paragraph at lines 136--137
+Underfull \hbox (badness 4531) in paragraph at lines 124--125
 []\OT1/ptm/m/n/10.95 models, sported, has, plated, tra-di-tion-
  []
 
 
-Underfull \hbox (badness 1009) in paragraph at lines 136--137
+Underfull \hbox (badness 1009) in paragraph at lines 124--125
 \OT1/ptm/m/n/10.95 changed, hunts, grounds, as-so-ci-ated, fea-
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 138--141
+Underfull \hbox (badness 10000) in paragraph at lines 126--129
 
  []
 
-
-Underfull \hbox (badness 10000) in paragraph at lines 145--147
+[4]
+Underfull \hbox (badness 10000) in paragraph at lines 133--135
 
  []
 
-[4] [5] (E:\UvA\ULL\Project\Code\disambiguateCWSPR\Report\coconut.aux) ) 
+[5] (E:\UvA\ULL\Project\Code\disambiguateCWSPR\Report\coconut.aux) ) 
 Here is how much of TeX's memory you used:
  496 strings out of 493921
  6622 string characters out of 3144873
@@ -157,22 +190,22 @@ Here is how much of TeX's memory you used:
  3819 multiletter control sequences out of 15000+200000
  24856 words of font info for 57 fonts, out of 3000000 for 9000
  841 hyphenation exceptions out of 8191
- 23i,10n,19p,1975b,256s stack positions out of 5000i,500n,10000p,200000b,50000s
-{C:/Pro
-gram Files (x86)/MiKTeX 2.9/fonts/enc/dvips/fontname/8r.enc}<C:/Program Files (
-x86)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmex10.pfb><C:/Program Files (x8
-6)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmmi10.pfb><C:/Program Files (x86)
-/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmmi6.pfb><C:/Program Files (x86)/Mi
-KTeX 2.9/fonts/type1/public/amsfonts/cm/cmmi8.pfb><C:/Program Files (x86)/MiKTe
-X 2.9/fonts/type1/public/amsfonts/cm/cmr10.pfb><C:/Program Files (x86)/MiKTeX 2
-.9/fonts/type1/public/amsfonts/cm/cmr6.pfb><C:/Program Files (x86)/MiKTeX 2.9/f
-onts/type1/public/amsfonts/cm/cmr8.pfb><C:/Program Files (x86)/MiKTeX 2.9/fonts
-/type1/public/amsfonts/cm/cmsy10.pfb><C:/Program Files (x86)/MiKTeX 2.9/fonts/t
-ype1/public/amsfonts/cm/cmsy8.pfb><C:/Program Files (x86)/MiKTeX 2.9/fonts/type
-1/urw/courier/ucrr8a.pfb><C:/Program Files (x86)/MiKTeX 2.9/fonts/type1/urw/tim
-es/utmb8a.pfb><C:/Program Files (x86)/MiKTeX 2.9/fonts/type1/urw/times/utmr8a.p
-fb><C:/Program Files (x86)/MiKTeX 2.9/fonts/type1/urw/times/utmri8a.pfb>
-Output written on coconut.pdf (5 pages, 161497 bytes).
+ 23i,10n,19p,1679b,256s stack positions out of 5000i,500n,10000p,200000b,50000s
+{C:/Program
+ Files (x86)/MiKTeX 2.9/fonts/enc/dvips/fontname/8r.enc}<C:/Program Files (x86)
+/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmex10.pfb><C:/Program Files (x86)/M
+iKTeX 2.9/fonts/type1/public/amsfonts/cm/cmmi10.pfb><C:/Program Files (x86)/MiK
+TeX 2.9/fonts/type1/public/amsfonts/cm/cmmi6.pfb><C:/Program Files (x86)/MiKTeX
+ 2.9/fonts/type1/public/amsfonts/cm/cmmi8.pfb><C:/Program Files (x86)/MiKTeX 2.
+9/fonts/type1/public/amsfonts/cm/cmr10.pfb><C:/Program Files (x86)/MiKTeX 2.9/f
+onts/type1/public/amsfonts/cm/cmr6.pfb><C:/Program Files (x86)/MiKTeX 2.9/fonts
+/type1/public/amsfonts/cm/cmr8.pfb><C:/Program Files (x86)/MiKTeX 2.9/fonts/typ
+e1/public/amsfonts/cm/cmsy10.pfb><C:/Program Files (x86)/MiKTeX 2.9/fonts/type1
+/public/amsfonts/cm/cmsy8.pfb><C:/Program Files (x86)/MiKTeX 2.9/fonts/type1/ur
+w/courier/ucrr8a.pfb><C:/Program Files (x86)/MiKTeX 2.9/fonts/type1/urw/times/u
+tmb8a.pfb><C:/Program Files (x86)/MiKTeX 2.9/fonts/type1/urw/times/utmr8a.pfb><
+C:/Program Files (x86)/MiKTeX 2.9/fonts/type1/urw/times/utmri8a.pfb>
+Output written on coconut.pdf (5 pages, 162397 bytes).
 PDF statistics:
  71 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)
