@@ -126,8 +126,6 @@ We have evaluated the performance of COCONUT on the \textit{enwik8}\footnote{htt
 We performed an empirical evaluating, in which we inspect the two meanings of a word. We also did a quantitative evaluation by using the continuous space word representations to answer a number of analogy questions. Different sets of analogy questions are available. For example the 8000 analogy questions used in \cite{Mikolov:13} contain adjectives (big, bigger, rough, rougher), noun (car, cars, apple, apples) and verb (avoid, avoids, wait, waits) questions. There are also many other analogy questions such as man-woman relations ships, country-currency relationships and more.
 
 \subsection{Similarity Measures}
-In \cite{Mikolov:13} the cosine similarity measure is used to find $y$ in $y = b - a + c$. We have tried some other similarity measures or distances to see whether these would improve the accuracy on the set of 800 analogy questions proposed by the authors. Measuring the similarity between two vectors can be seen as an equivalent to measuring their distance. Inversion or subtraction can be easily applied to transform a measure of distance between vectors into a measure of similarity. We report the accuracy for the cosine similarity as well as the euclidean distance and the manhattan distance, using the 80-dimensional word projections from \cite{Mikolov:13} that can be found online\footnote{http://rnnlm.org}. Table \ref{sims} shows the results for the different similarity measures. Although the manhattan distance slightly outperformed the cosine similarity we have chosen to use cosine similarity because it is not only the most intuitive similarity measure for this problem, but the computation can be performed very efficiently. 
-
 \begin{figure}
 \center
     \begin{tabular}{l|l}
@@ -136,9 +134,13 @@ In \cite{Mikolov:13} the cosine similarity measure is used to find $y$ in $y = b
     Euclidean         & 16.17     \\ \hline
     Manhattan         & 16.49     \\
     \end{tabular}
-    \label{sims}
     \caption{Results for answering 8000 syntactic analogy questions using the 80-dimensional word projections from \cite{Mikolov:13}}
+    \label{sims}
+
 \end{figure}
+
+In \cite{Mikolov:13} the cosine similarity measure is used to find $y$ in $y = b - a + c$. We have tried some other similarity measures or distances to see whether these would improve the accuracy on the set of 800 analogy questions proposed by the authors. Measuring the similarity between two vectors can be seen as an equivalent to measuring their distance. Inversion or subtraction can be easily applied to transform a measure of distance between vectors into a measure of similarity. We report the accuracy for the cosine similarity as well as the euclidean distance and the manhattan distance, using the 80-dimensional word projections from \cite{Mikolov:13} that can be found online\footnote{http://rnnlm.org}. Figure \ref{sims} shows the results for the different similarity measures. Although the manhattan distance slightly outperformed the cosine similarity we have chosen to use cosine similarity because it is not only the most intuitive similarity measure for this problem, but the computation can be performed very efficiently. 
+
 \subsection{Empirical Evaluation}
 %Maybe we need some sort of empirical evaluation in which we show how the clustering really works (and how it fails).
 For the empirical evaluation we have inspected the results of COCONUT on a small hand-made dataset. The hand-made dataset contains different fragments of wikipedia articles on ambiguous topics, it includes apple (fruit, company), queen (band, monarch), jaguar (company, animal), eagles (band, animal), firm (law firm, firm grip), range (of numbers, farm fields) and more. For every ambiguous word we also took fragments from their superclasses. In addition to articles revolving around the ambiguous words, we have also added some random articles.
