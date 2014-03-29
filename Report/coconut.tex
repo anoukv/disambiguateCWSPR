@@ -124,7 +124,7 @@ We have evaluated the performance of COCONUT on the \textit{enwik8}\footnote{htt
 We performed an empirical evaluating, in which we inspect the two meanings of a word. We also did a quantitative evaluation by using the continuous space word representations to answer a number of analogy questions. Different sets of analogy questions are available. For example the 8000 analogy questions used in \cite{Mikolov:13} contain adjectives (big, bigger, rough, rougher), noun (car, cars, apple, apples) and verb (avoid, avoids, wait, waits) questions. There are also many other analogy questions such as man-woman relations ships, country-currency relationships and more.
 
 \subsection{Similarity Measures}
-\begin{figure}
+\begin{figure}[H]
 \center
     \begin{tabular}{l|l}
     \textbf{Similarity Metric} & \textbf{Accuracy}  \\ \hline
@@ -168,7 +168,8 @@ We observe a lot of noise in this example. However, the meaning of `santa'-as-in
 Meaning 1 is more centered around `belief'-as-in religion, whereas meaning 2 is more centered around a multitude of beliefs. 
 
 \subsection{Quantitative Evaluation}
-For our quantitative evaluation we again trained on the enwiki8 dataset. We foun
+For our quantitative evaluation we again trained on the enwiki8 dataset. We evaluated on the set of $8.000$ questions from \cite{Mikolov:13} and also evaluated on some question sets described in \cite{Mikolov:13c}. Splitting 
+
 \begin{figure}[H]
 \center
     \begin{tabular}{l|l}
@@ -202,6 +203,12 @@ We believe that splitting the word vector for `red' should still boost the perfo
  
 \section{Conclusion}
 \begin{thebibliography}{}
+
+\bibitem[\protect\citename{Mikolov \bgroup et al.\egroup }2013c]{Mikolov:13c}
+Tomas Mikolov, Kai Chen, Greg Corrado, and Jeffrey Dean.
+\newblock 2013c.
+\newblock Efficient Estimation of Word Representations in Vector Space.
+\newblock Proceedings of Workshop at ICLR
 
 \bibitem[\protect\citename{Mikolov \bgroup et al.\egroup }2013a]{Mikolov:13}
 Tomas Mikolov, Wen-tau Yih, and Geoffrey Zweig.
