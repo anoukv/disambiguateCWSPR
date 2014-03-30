@@ -28,8 +28,8 @@ Anouk Visser \\
 \begin{document}
 \maketitle
 \begin{abstract}
-Let's decide on the abstract once we finish the body of the text.
-  %Vector space models for word representation have shown to be useful in capturing the relationships between words' functions and meanings. Similarities between words are encoded under the form of distance or angle in a high dimensional space. Neural language models, although less used than the traditional \textit{n}-gram models because of their notoriously long training times, present superior performance on the task of word prediction. Leaving from the work of \cite{Mikolov:13}, we propose three new methods for word sense disambiguation based on the co-occurence frequency of the context words near a given target word. We show that these are valid approaches in an unsupervised setting and can increase the accuracy of capturing syntactic and semantic regularities for the English language.
+In this paper we propose the COCONUT algorithm for unsupervised word sense disambiguation. We show how word co-occurrence vectors can be used to identify and classify distinct word senses, and quantify how distinct two word senses are. We build upon the findings of \cite{Mikolov:13} and show that COCONUT can improve accuracy when answering analogy questions.
+
 \end{abstract}
 
 \section{Introduction}
@@ -45,7 +45,6 @@ To obtain the continuous space word representations a recurrent neural network l
 
 To answer the question `$a$ is to $b$ as $c$ is to \dots', we use the word vectors $x_a, x_b, x_c$ to determine the word which is assumed to be the best answer to a question. Following the example from the introduction, $\textit{queen} - \textit{king} \approx \textit{woman}  -\textit{man}$, we find that the answer to the question must be $y = x_b - x_a + x_c$. Because it is unlikely that this exact $y$ exist, we find the answer to the question by maximizing the cosine similarity between y and the words in the corpus. We can also use this method in order to define a similarity between word pairs $a$:$b$ and $c$:$d$. In this case we can answer less obvious analogy questions, we might for example want to find the relationship of competitors as denoted by the word pair \textit{apple}:\textit{dell}. When we are given two new word pairs \textit{china}:\textit{nike} and \textit{ford}:\textit{mercedes} we can rank them by computing the relational similarity: $cos(x_b - x_a + x_c, x_d)$.\\\\
 Linguistic regularities can be used in many different unsupervised language learning applications. An example is presented by \cite{MikolovMT:13}, where a method is proposed to exploit similarities among languages for machine translation. For machine translation some sense of a dictionary or phrase table is required. However, these are not always available, or are incomplete. By using two monolingual corpora a model can be trained and linguistic regularities can be learned for the two different languages. If the dictionary entry for \textit{queen} is missing, but, for example, the entry for \textit{king} is available, we can find the translation for \textit{queen} by using the vector offset method as described above.
-
 \section{Word-sense disambiguation by local co-occurrence clustering}
 \label{remi}
 \begin{figure}
@@ -60,9 +59,7 @@ Linguistic regularities can be used in many different unsupervised language lear
 \caption{In these two examples for the window around `apple' the black words will be count as co-occurring words, whereas the grey words will be ignored.}
 \label{window}
 \end{figure}
-
 To find the two senses of a word, one approach would be to cluster different meanings of a word based on the words that it co-occurs with in the corpus. This is done by generating a co-occurrence vector for every time the word is observed in the corpus (this is a local co-occurrence vector). A co-occurrence vector is derived by observing the context of a word. In our experiments the frequency of the words that fall within a window of 5 words from the word that is being observed are encoded into the vector, an illustration can be found in figure \ref{window}. This means that each vector is a sparse vector with the length of the vocabulary size, but can be encoded with at most 10 terms. These co-occurrence vectors are then clustered using k-means clustering. It is possible (even likely) that two co-occurrence vectors do not have a word in common, but still end up in the same cluster. For example, in the case of apple the words \{\textit{technology, iphone, company, revenue}\} might be in the same cluster. Given the co-occurrence vectors, 1:\{\textit{technology, iphone}\}, 2:\{\textit{iphone, revenue}\}, 3:\{\textit{technology, company}\} and 4:\{\textit{company, revenue}\} then 1 and 4 have nothing in common, but can still be bound together by 2 and 3. It should be noted that extracting all co-occurrence vectors from a corpus can require a significant amount of memory, even when using sparse-vector encoding. However, it is possible to have a fine-tunable tradeoff between memory requirements and the number of loops over the corpus (which is more cpu-intensive), by only recording a specific subset of the vocabulary on each iteration.
-
 \section{COCONUT}
 \label{anouk}
 The COCONUT method for disambiguating words is based on two assumptions: 
@@ -75,7 +72,6 @@ In assumption $(1)$ we talk about `words that accompany a word'. In COCONUT, wor
 An example to further explain assumption (2) can be found in figure \ref{cococ}. Here one meaning of the word \textit{apple} can be characterized by the words \textit{technology}, \textit{company} and \textit{iPhone}, while the other can be characterized by the words \textit{fruit}, \textit{baking} and \textit{pie}. We hypothesize that two words describing one meaning of \textit{apple}, for example, \textit{iPhone} and \textit{technology} are more likely to occur together than two words describing two different meanings, for instance, \textit{iPhone} and \textit{baking}.
 
 Let $C$ be the set of words that co-occur with $A$, the word we want to disambiguate. COCONUT first constructs and converts the global co-occurrence vectors of the words in $C$ to relatedness vectors. It will then cluster these relatedness vectors in order to determine the two possibly different meanings of $A$. 
-
 \begin{figure}
 \center
 	\includegraphics[scale=0.20]{cococ.png}
@@ -88,9 +84,7 @@ A global co-occurrence vector contains the frequencies indicating how many times
 
 After obtaining the global co-occurrence vectors for every word in the corpus, we convert the absolute frequencies in the global co-occurrence vector to a relatedness score. We use the same function for relatedness as \cite{Guthrie:92}:
 $$r(x, y) = \frac{f_xy}{f_x+f_y - f_{xy}}$$
-where $f_{xy}$ denotes the frequency of $x$ and $y$ occurring together and $f_x$ and $f_y$ denote the frequency of $x$, respectively $y$. 
-
-Words that are not closely related to $A$ do not contribute to either one of the meanings. Therefore, we will discard the words that have a relatedness score with $A$ that falls in the bottom $50\%$ of all relatedness-scores from $C$. The terms that are discarded are considered relevant to all meanings of $A$, we will call this set $R$.
+where $f_{xy}$ denotes the frequency of $x$ and $y$ occurring together and $f_x$ and $f_y$ denote the frequency of $x$, respectively $y$. Words that are not closely related to $A$ do not contribute to either one of the meanings. Therefore, we will discard the words that have a relatedness score with $A$ that falls in the bottom $50\%$ of all relatedness-scores from $C$. The terms that are discarded are considered relevant to all meanings of $A$, we will call this set $R$.
 
 \subsection{Clustering and splitting}
 Let the set of co-occurrence vectors from the words in $C$, be called $V$. After applying k-means clustering on the vectors in $V$ we expect to find two cluster centers that represent the two meanings for $A$. Note that we are only interested in describing the two meanings of $A$ using the words in $C$. Therefore, for every vector in $V$ we will discard all words that are not in $C$. The adjusted vectors can now be used to perform k-means clustering. 
@@ -126,7 +120,7 @@ We performed an empirical evaluating, in which we inspect the two meanings of a 
 In \cite{Mikolov:13} the cosine similarity measure is used to find $y$ in $y = b - a + c$. We have tried some other similarity measures to see whether these would improve the accuracy on the set of 8000 syntactic analogy questions proposed by the authors. Measuring the similarity between two vectors can be seen as an equivalent to measuring their distance. Inversion or subtraction can easily be applied to transform a measure of distance between vectors into a measure of similarity. We report the accuracy for the cosine similarity as well as the euclidean distance and the manhattan distance, using the 80-dimensional word projections from \cite{Mikolov:13} that can be found online\footnote{http://rnnlm .org}. Figure \ref{metric1} shows the results for the different similarity measures. Although the manhattan distance slightly outperformed the cosine similarity we have chosen to use cosine similarity because the differences are not very significant.
 
 \subsection{Empirical Evaluation}
-For the empirical evaluation we have inspected the results of COCONUT on a small hand-made dataset. The hand-made dataset contains different fragments of wikipedia articles on ambiguous topics, it includes apple (fruit, company), queen (band, monarch), jaguar (company, animal), eagles (band, animal), firm (law firm, firm grip), range (of numbers, farm fields) and more. For every ambiguous word we also took fragments from their superclasses. In addition to articles revolving around the ambiguous words, we have also added some random articles.
+For the empirical evaluation we have inspected the results of COCONUT and local co-occurrence clustering on a small hand-made dataset. The results for both methods are very similar and we only present our evaluation for COCONUT, because it is the only algorithm that can scale to larger datasets, for which a quantitative evaluation is described in section \ref{qual}. The hand-made dataset used for empirical evaluation contains different fragments of wikipedia articles on ambiguous topics. It includes apple (fruit, company), queen (band, monarch), jaguar (company, animal), eagles (band, animal), firm (law firm, firm grip), range (of numbers, farm fields) and more. For every ambiguous word we also took fragments from their superclasses. In addition to articles revolving around the ambiguous words, we have also added some random articles.
 
 The results obtained on this small dataset were promising, for example the words from two different clusters  (sorted based on relatedness) for the word `apple' are: 
 \begin{enumerate}
@@ -155,7 +149,62 @@ Meaning 1 is more centered around `belief'-as-in religion, whereas meaning 2 is 
 
 \subsection{Quantitative Evaluation}
 \label{qual}
-For our quantitative evaluation we again trained on the enwiki8 dataset. We measured the cluster distances as $1-cos(a,b)$ where \textit{a} and \textit{b} are length normalized vectors that define a cluster center. The distribution over cluster distances in the vocabulary is shown in figure \ref{dist}.
+For our quantitative evaluation we trained on the enwiki8 dataset. We measured the cluster distances as $1-cos(a,b)$ where \textit{a} and \textit{b} are length normalized vectors that define a cluster center. The distribution over cluster distances in the vocabulary is shown in figure \ref{dist}.
+
+We evaluated on the set of $8.000$ questions from \cite{Mikolov:13}, which are syntactic questions and also evaluated on some question sets described in \cite{Mikolov:13c}. In our experiments we only split a fraction of the vocabulary, for which the cluster distances were greatest. Splitting a fraction of $0$ words therefore serves as a baseline.
+\begin{table}[H]
+    \begin{tabular}{|l|l|l|l|}
+    \hline
+	\backslashbox{Questions}{Split} & 0 & $\frac{1}{10}$ & $\frac{1}{3}$  \\ \hline
+	Syntactic  & \textbf{11.86}  & 11.26  & 10.99      \\ \hline
+	Family  & 32.61  & 33.60 & \textbf{34.19}     \\ \hline
+	Plurals  & \textbf{21.85}  & 19.00 & 21.02     \\ \hline
+	Plural Verbs  & 8.16 & 9.20 & \textbf{10.11}     \\ \hline
+	Nationality adjectives  & 23.51 & \textbf{25.58} & 25.32     \\ \hline
+	Opposites  & \textbf{5.42} & 4.43 & 3.94    \\ \hline
+
+    \end{tabular}
+     \caption{Results for answering analogy questions using 80-dimensional word projections. Numbers indicate \% correctly answered questions.}
+    \label{accuracy80}
+\end{table}
+
+\begin{table}[H]
+    \begin{tabular}{|l|l|l|l|}
+    \hline
+	\backslashbox{Questions}{Split} & 0 & $\frac{1}{10}$ & $\frac{1}{3}$  \\ \hline
+	Syntactic  & 13.48  & \textbf{13.85}  & 13.175      \\ \hline
+	Family  & 36.76  & 34.58 & \textbf{37.94}     \\ \hline
+	Plurals Nouns & 24.10  & \textbf{26.65} & 23.35     \\ \hline
+	Plural Verbs  & \textbf{15.75} & 11.72 & 11.96     \\ \hline
+	Nationality adjectives  & 32.83 & \textbf{37.46} & 33.52     \\ \hline
+	Opposites  & \textbf{7.88} & 6.77 & 7.51    \\ \hline
+
+    \end{tabular}
+     \caption{Results for answering analogy questions using 320-dimensional word projections. Numbers indicate \% correctly answered questions.}
+    \label{accuracy320}
+\end{table}
+
+As can be seen in tables \ref{accuracy80} and \ref{accuracy320} the COCONUT results improve more compared to the baseline results when larger word vector representations are used. At the same time, it would also appear that splitting a smaller fraction of the vocabulary leads to better results on larger word vector representations, while at the same time, having no split does not perform best.
+
+In order to gain more insight in the distribution of the cluster distances we have made plots \ref{dist} and \ref{distN}. In the distribution showed in \ref{dist} all words carry equal weight, regardless of their frequency in the corpus. When the frequency of cluster distances is adjusted for word frequency in the corpus the distribution looks different, as can be seen in \ref{distN}. Graphs \ref{dist} and \ref{distN} suggest that frequent words are less likely to have a large cluster distance. This difference indicates that ambiguous words are less frequent than unambiguous words in the enwiki8 corpus.
+
+\section{Discussion and future work}
+The results presented in \ref{qual} might be somewhat sparse given the number of variables. In future work we would like to discover more about the relationship between split fraction and word vector size.
+
+\subsection{Co-occurrence vectors}
+For our experiments we have used a window of 5 words to determine the co-occurrence vector, where each of the 10 words that fall in this window are weighted equally. It is also possible to use a soft-max or gaussian measure to weigh each word based on its distance.
+
+\subsection{Detecting ambiguousness}
+One of the most challenging problems in word-sense disambiguation is deciding whether a word is ambiguous or not. We have discard all disambiguations that have a cluster distance that fall outside a certain split. In future work, we might want to focus on finding a better way of detecting whether a word is ambiguous or not. 
+In our work we have assumed that a word can have at most two meanings. This is not a very solid assumption, we find many difference meanings including 1) financial institute 2) land alongside a river 3) cushion of a pool table. While inspecting the clusters, we found a lot of words that we would not consider ambiguous might occur in many different contexts, slightly changing the meaning of a word. An example of a word we found that has many different meanings is `red'. This word had so many different meanings, that two word senses were not enough. We provide a limited breakdown of the words that co-occur with `red':
+\begin{itemize}
+\item Boston Red Sox - sports
+\item Red Sea, Red Square - places
+\item Communism, love - concepts
+\item Relief, Red Cross, red label whisky - non-profits / brands
+\end{itemize} 
+
+We believe that splitting the word vector for `red' should still boost the performance when answering analogy questions. The analogy question `\textit{red} is to \textit{sox} as \textit{blue} is to \dots' might be difficult to answer when all different meanings of the word `red' are encoded into one word representation. Once we are able to disambiguate the word `red' we find a word representation that is focused at sports and not so much at communism. (the answer to `\textit{red} is to \textit{sox} as \textit{blue} is to \dots' would be `jays' as in Toronto Blue Jays, another question we could ask is `\textit{red} is to \textit{boston} as \textit{blue} is to \dots')
 
 \begin{figure}
 	\center
@@ -173,8 +222,6 @@ For our quantitative evaluation we again trained on the enwiki8 dataset. We meas
 	\label{dist}
 \end{figure}
 
-In the distribution showed in \ref{dist} all words carry equal weight, regardless of their frequency in the corpus. When the frequency of cluster distances is adjusted for word frequency in the corpus the distribution looks different, as can be seen in \ref{distN}. Graphs \ref{dist} and \ref{distN} suggest that frequent words are less likely to have a large cluster distance. This difference indicates that ambiguous words are less frequent than unambiguous words in the enwiki8 corpus.
-
 \begin{figure}
 	\center
 	\subfloat[]
@@ -190,60 +237,10 @@ In the distribution showed in \ref{dist} all words carry equal weight, regardles
 	\caption{Distribution over cluster distances as they occur in the enwiki8 corpus. \ref{distN1} shows the distribution over cluster distances and \ref{distN2} shows the cumulative distribution over cluster distances. (\textit{y} axis are proportional to to the vocabulary size.)}
 	\label{distN}
 \end{figure}
+\pagebreak
 
-We evaluated on the set of $8.000$ questions from \cite{Mikolov:13}, which are syntactic questions and also evaluated on some question sets described in \cite{Mikolov:13c}. In our experiments we only split a fraction of the vocabulary, for which the cluster distances were greatest. Splitting a fraction of $0$ words therefore serves as a baseline.
-\begin{table}[H]
-    \begin{tabular}{|l|l|l|l|}
-    \hline
-	\backslashbox{Questions}{Split} & 0 & $\frac{1}{10}$ & $\frac{1}{3}$  \\ \hline
-	Syntactic  & \textbf{11.86}  & 11.26  & 10.99      \\ \hline
-	Family  & 32.61  & 33.60 & \textbf{34.19}     \\ \hline
-	Plurals  & \textbf{21.85}  & 19.00 & 21.02     \\ \hline
-	Plural Verbs  & 8.16 & 9.20 & \textbf{10.11}     \\ \hline
-	Nationality adjectives  & 23.51 & \textbf{25.58} & 25.32     \\ \hline
-	Opposites  & \textbf{5.42} & 4.43 & 3.94    \\ \hline
-
-    \end{tabular}
-     \caption{Results for answering analogy questions using the 80-dimensional word projections. Numbers indicate \% correctly answered questions.}
-    \label{accuracy80}
-\end{table}
-
-\begin{table}[H]
-    \begin{tabular}{|l|l|l|l|}
-    \hline
-	\backslashbox{Questions}{Split} & 0 & $\frac{1}{10}$ & $\frac{1}{3}$  \\ \hline
-	Syntactic  & 13.48  & \textbf{13.85}  & 13.175      \\ \hline
-	Family  & 36.76  & 34.58 & \textbf{37.94}     \\ \hline
-	Plurals Nouns & 24.10  & \textbf{26.65} & 23.35     \\ \hline
-	Plural Verbs  & \textbf{15.75} & 11.72 & 11.96     \\ \hline
-	Nationality adjectives  & 32.83 & \textbf{37.46} & 33.52     \\ \hline
-	Opposites  & \textbf{7.88} & 6.77 & 7.51    \\ \hline
-
-    \end{tabular}
-     \caption{Results for answering analogy questions using the 320-dimensional word projections. Numbers indicate \% correctly answered questions.}
-    \label{accuracy320}
-\end{table}
-
-As can be seen in tables \ref{accuracy80} and \ref{accuracy320} the COCONUT results improve more compared to the baseline results when larger word vector representations are used. At the same time, it would also appear that splitting a smaller fraction of the vocabulary leads to better results on larger word vector representations, while at the same time, having no split does not perform best.
-
-\section{Discussion and future work}
-The results presented in \ref{qual} might be somewhat sparse given the number of variables. In future work we would like to discover more about the relationship between split fraction and word vector size.
-\subsection{Co-occurrence vectors}
-For our experiments we have used a window of 5 words to determine the co-occurrence vector, where each of the 10 words that fall in this window are weighted equally. It is also possible to use a soft-max or gaussian measure to weigh each word based on its distance.
-\subsection{Detecting ambiguousness}
-One of the most challenging problems in word-sense disambiguation is deciding whether a word is ambiguous or not. We have discard all disambiguations that have a cluster distance that fall in the bottom third. In order to gain more insight in the distribution of these cluster distances we have made some plots. From these plots we see that most of the words are concentrated around a cluster distance of approximately 0.9. We do find that there are many words that have a cluster distance below 0.9 as well, in total this were X unique words, that together make up X$\%$ of the corpus. In future work, we might want to focus on finding a better way of detecting whether a word is ambiguous or not. 
-In our work we have assumed that a word can have at most two meanings. This is not a very solid assumption, we find many difference meanings including 1) financial institute 2) land alongside a river 3) cushion of a pool table. While inspecting the clusters, we found a lot of words that we would not consider ambiguous might occur in many different contexts, slightly changing the meaning of a word. An example of a word we found that has many different meanings is `red'. This word had so many different meanings, that two word senses were not enough. We provide a limited breakdown of the words that co-occur with `red':
-\begin{itemize}
-\item Boston Red Sox - sports
-\item Red Sea, Red Square - places
-\item Communism, love - concepts
-\item Relief, Red Cross, red label whisky - non-profits / brands
-\item \dots
-\end{itemize} 
-We believe that splitting the word vector for `red' should still boost the performance when answering analogy questions. The analogy question `\textit{red} is to \textit{sox} as \textit{blue} is to \dots' might be difficult to answer when all different meanings of the word `red' are encoded into one word representation. Once we are able to disambiguate the word `red' we find a word representation that is focused at sports and not so much at communism. (the answer to `\textit{red} is to \textit{sox} as \textit{blue} is to \dots' would be `jays' as in Toronto Blue Jays, another question we could ask is `\textit{red} is to \textit{boston} as \textit{blue} is to \dots')
- 
 \section{Conclusion}
-We invented the COCONUT algorithm for unsupervised word disambiguation. We have shown that ... improvements
+We proposed the COCONUT algorithm for unsupervised word sense disambiguation and demonstrated that pre-processing a corpus using COCONUT can improve accuracy of answering analogy questions. Not only can COCONUT be used for word disambiguation, it can also quantify how distinct two senses of a word are. 
 
 
 \begin{thebibliography}{}
